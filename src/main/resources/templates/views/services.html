@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="notranslate" lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="layout :: header"></div>
+<body class="alt-menu sidebar-noneoverflow">
+<!-- BEGIN LOADER -->
+<div id="load_screen">
+    <div class="loader">
+        <div class="loader-content">
+            <div class="spinner-grow align-self-center"></div>
+        </div>
+    </div>
+</div>
+<!--  END LOADER -->
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+
+    <div th:insert="layout :: topbar"></div>
+
+    <!--  BEGIN CONTENT PART  -->
+    <div class="main-content" id="content">
+        <div class="layout-px-spacing">
+            <br><br>
+            <div id="tableHover">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <br>
+                                <h4> Services</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-4" id="inst_table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th width="700">Description</th>
+                                    <th>Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="service : ${services}">
+                                    <tr>
+                                        <td th:text="${service.service_id}"></td>
+                                        <td th:text="${service.service_name}"></td>
+                                        <td th:text="${service.description}"></td>
+                                        <td th:text="${service.active}"></td>
+                                        <td>
+                                            <button class="btn btn-danger"
+                                                    onclick="deleteInst($(this).attr('data-service-id'))"
+                                                    th:data-service-id="${service.service_id}">Delete
+                                            </button>
+                                            <button class="btn btn-primary" data-row="${service}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#editModal'+service.service_id}">Update
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h6>Add New Service</h6>
+            <input class="mb-4 btn btn-primary" data-target="#myModal" data-toggle="modal" name="newConfiguration"
+                   type="submit" value="New Configuration Mapping">
+            <br><br><br>
+            <div class="footer-wrapper">
+                <div class="footer-section f-section-1">
+                    <p class="">Copyright © 2020 <a href="https://designreset.com" target="_blank">DesignReset</a>, All
+                        rights reserved.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Choose Configuration Mapping Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form>
+                            <div class="form-row mb-4">
+                                <div class="col-4">
+                                    <h5>Service Name</h5>
+                                    <input class="form-control" id="serviceName" placeholder="Name" type="text">
+                                </div>
+                                <div class="col-4">
+                                    <h5>Service Description</h5>
+                                    <input class="form-control" id="serviceDes" placeholder="Description" type="text">
+                                </div>
+                                <div class="col-4">
+                                    <h5>Active</h5>
+                                    <select class="form-control form-small" id="serviceDropdown">
+                                        <option selected="selected">--- Service ---</option>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" onclick="createInstitutionConfigMapping()"
+                            type="submit">Save
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update Modal -->
+    <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1"
+         th:attr="id=${'editModal' + service.service_id}" th:each="service : ${services}">
+        <div class="modal-dialog modal-xl center" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-body"> You are about to edit Service with id :
+                        <div th:text="${service.service_id}"/>
+                        <div class="container">
+                            <form>
+                                <div class="form-row mb-4">
+
+                                    <div class="col-4">
+                                        <h5>Service Name</h5>
+                                        <input class="form-control" th:attr="id=${'serNameUpdate' +service.service_id}"
+                                               th:value="${service.service_name}" type="text">
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Service Description</h5>
+                                        <input class="form-control" th:attr="id=${'desUpdate' + service.service_id}"
+                                               th:value="${service.description}" type="text">
+                                    </div>
+                                    <div class="col-4">
+                                        <h5> Active </h5>
+                                        <select class="form-control form-small"
+                                                th:attr="id=${'activeUpdate' + service.service_id}">
+                                            <option th:text="${service.active}" th:value="${service.active}"></option>
+                                            <option th:text="${!service.active}" th:value="${!service.active}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                        <button class="btn btn-primary" onclick="update($(this).attr('data-mapping-id'))"
+                                th:data-mapping-id="${service.service_id}" type="button">Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTAINER -->
+
+<div th:insert="layout :: scripts"></div>
+<script th:inline="javascript">
+    function createInstitutionConfigMapping() {
+        var name = $("#serviceName").val();
+        var description = $("#serviceDes").val();
+        var active = $("#serviceDropdown").val();
+        var institution = {};
+        institution.service_name = name;
+        institution.description = description;
+        institution.active = active;
+        console.log(institution);
+
+        $.ajax({
+            type: 'post',
+            url: '/autocops/services',
+            data: JSON.stringify(institution),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: function (res) {
+                window.location.reload();
+            }
+        });
+    }
+
+    function update(id) {
+        var ser = {};
+        ser.service_name = $('#serNameUpdate' + id).val();
+        ser.description = $('#desUpdate' + id).val();
+        ser.active = $("#activeUpdate" + id).val();
+        console.log(ser);
+
+        $.ajax({
+            type: 'put',
+            url: '/autocops/services/' + id,
+            data: JSON.stringify(ser),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+
+    function deleteInst(id) {
+        $.ajax({
+            url: '/autocops/services/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

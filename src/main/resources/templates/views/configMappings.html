@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="notranslate" lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="layout :: header"></div>
+<body class="alt-menu sidebar-noneoverflow">
+<!-- BEGIN LOADER -->
+<div id="load_screen">
+    <div class="loader">
+        <div class="loader-content">
+            <div class="spinner-grow align-self-center"></div>
+        </div>
+    </div>
+</div>
+<!--  END LOADER -->
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+    <div th:insert="layout :: topbar"></div>
+
+    <!--  BEGIN CONTENT PART  -->
+    <div class="main-content" id="content">
+        <div class="layout-px-spacing">
+            <br><br>
+            <div id="tableHover">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <br>
+                                <h4> Institution Configurations Mappings For Configuration <small
+                                        th:text="${config.id}"></small></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-4" id="inst_table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Import Field</th>
+                                    <th>Export Field</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="mapping : ${mappings}">
+                                    <tr>
+                                        <td th:text="${mapping.id}"></td>
+                                        <td th:text="${mapping.getImport_field()}"></td>
+                                        <td th:text="${mapping.getExport_field()}"></td>
+
+                                        <td>
+                                            <button class="btn btn-danger"
+                                                    onclick="deleteInst($(this).attr('data-mapping-id'))"
+                                                    th:data-mapping-id="${mapping.id}">Delete
+                                            </button>
+                                            <button class="btn btn-primary" data-row="${mapping}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#editModal'+mapping.id}">Update
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h6>Add New Institution Configuration Mapping</h6>
+            <input class="mb-4 btn btn-primary" data-target="#myModal" data-toggle="modal" name="newConfiguration"
+                   type="submit" value="New Configuration Mapping">
+            <br><br><br>
+
+            <div th:insert="layout :: footer"></div>
+
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Choose Configuration Mapping Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div hidden id="configError" style="color: red;margin: 10px 10px 20px 10px;"
+                         th:text="#{CONFIG_ERROR}"></div>
+                    <div class="container">
+                        <form>
+                            <div class="form-row mb-6">
+
+                                <div class="col-6">
+                                    <input class="form-control" id="import_field" placeholder="Import Field"
+                                           type="text">
+                                </div>
+                                <div class="col-6">
+                                    <input class="form-control" id="export_field" placeholder="Export Field"
+                                           type="text">
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" onclick="createInstitutionConfigMapping()"
+                            type="submit">Save
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1" th:attr="id=${'editModal' + mapping.id}"
+         th:each="mapping : ${mappings}">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-body"> You are about to edit mapping with id :
+                        <div th:text="${mapping.id}"/>
+                        <div class="container">
+                            <form>
+                                <div class="form-row mb-6">
+
+                                    <div class="col-6">
+                                        <h5>Import Field</h5>
+                                        <input class="form-control" th:attr="id=${'import_field_update' + mapping.id}"
+                                               th:value="${mapping.import_field}"
+                                               type="text">
+                                    </div>
+
+                                    <div class="col-6">
+                                        <h5>Export Field</h5>
+                                        <input class="form-control" th:attr="id=${'export_field_update' + mapping.id}"
+                                               th:value="${mapping.export_field}"
+                                               type="text">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                        <button class="btn btn-primary" onclick="update($(this).attr('data-mapping-id'))"
+                                th:data-mapping-id="${mapping.id}" type="button">Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END MAIN CONTAINER -->
+
+<div th:insert="layout :: scripts"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function createInstitutionConfigMapping() {
+        var queryString = window.location.href;
+        console.log(queryString);
+        const words = queryString.split('/');
+        var configId = words[words.length - 1];
+        var importField = $("#import_field").val();
+        var exportField = $("#export_field").val();
+        var institution = {};
+        institution.configId = configId;
+        institution.imp_field = importField;
+        institution.exp_field = exportField;
+        console.log(institution);
+
+        $.ajax({
+            type: 'post',
+            url: '/autocops/inst-configs-mappings',
+            data: jQuery.param(institution),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+
+
+    function update(id) {
+        var queryString = window.location.href;
+        console.log(queryString);
+        const words = queryString.split('/');
+        var configId = words[words.length - 1];
+        var importField = $("#import_field_update" + id).val();
+        var exportField = $("#export_field_update" + id).val();
+        var institution = {};
+        institution.configId = configId;
+        institution.imp_field = importField;
+        institution.exp_field = exportField;
+
+        console.log(institution);
+
+        $.ajax({
+            type: 'put',
+            url: '/autocops/inst-configs-mappings/' + id,
+            data: jQuery.param(institution),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+
+    function deleteInst(id) {
+        $.ajax({
+            // url: /*[[@{/institutionsConfigs/}]]*/ + id '',
+            url: '/autocops/inst-configs-mappings/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+
+    /*]]>*/
+
+</script>
+</body>
+</html>

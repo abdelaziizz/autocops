@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="notranslate" lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+<!--<div class="nmhjgfdsa"></div>-->
+<div th:insert="layout :: header"></div>
+<body class="alt-menu sidebar-noneoverflow">
+
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+
+    <div th:insert="layout :: topbar"></div>
+
+    <!--  BEGIN CONTENT PART  -->
+    <div class="main-content" id="content">
+        <div class="layout-px-spacing">
+            <br><br>
+            <div id="tableHover">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <br>
+                                <h4> Institution Configurations</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-4" id="inst_table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Import Format</th>
+                                    <th>export Format</th>
+                                    <th>Fail On Error</th>
+                                    <th>Active</th>
+                                    <th>Service</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="config : ${configs}">
+                                    <tr>
+                                        <td th:text="${config.id}"></td>
+                                        <td th:text="${config.import_format.format_type}"></td>
+                                        <td th:text="${config.export_format.format_type}"></td>
+                                        <td th:text="${config.fail_on_error}"></td>
+                                        <td th:text="${config.active}"></td>
+                                        <td th:text="${config.service.service_name}"></td>
+                                        <td>
+                                            <button class="btn btn-danger"
+                                                    onclick="deleteInst($(this).attr('data-config-id'))"
+                                                    th:data-config-id="${config.id}">Delete
+                                            </button>
+                                            <button class="btn btn-primary" data-row="${config}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#editModal'+config.id}">Update
+                                            </button>
+                                            <button class="btn btn-primary"
+                                                    onclick="redirectMappings($(this).attr('data-config-id'))"
+                                                    th:data-config-id="${config.id}">Mappings
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h6>Add New Institution Configuration</h6>
+            <input class="mb-4 btn btn-primary" data-target="#myModal" data-toggle="modal" name="newConfiguration"
+                   type="submit" value="New Configuration">
+            <br><br><br>
+
+            <div th:insert="layout :: footer"></div>
+
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Choose Configuration Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div hidden id="configError" style="color: red;margin: 10px 10px 20px 10px;"
+                         th:text="#{CONFIG_ERROR}"></div>
+                    <div class="container">
+                        <form>
+                            <div class="form-row mb-4">
+                                <div class="col-4">
+                                    <select class="form-control form-small" id="serviceDropdown">
+                                        <option selected="selected">--- Service ---</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <select class="form-control form-small" id="inputFormatDropdown">
+                                        <option selected="selected">--- Import Format ---</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <select class="form-control form-small" id="outputFormatDropdown">
+                                        <option selected="selected">--- Export Format ---</option>
+                                    </select>
+                                </div>
+                                <br><br>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <select class="form-control form-small" id="failDropdown">
+                                        <option selected="selected">--- Fail On Error ---</option>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <select class="form-control form-small" id="activeDropdown">
+                                        <option selected="selected">--- Active ---</option>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" onclick="createInstitutionConfig()"
+                            type="submit">Save
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Update Modal -->
+    <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1" th:attr="id=${'editModal' + config.id}"
+         th:each="config : ${configs}">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-body"> You are about to edit configuration with id :
+                        <h6 th:text="${config.id}"/>
+                        <br>
+                        <div class="container">
+                            <form>
+                                <div class="form-row mb-4">
+                                    <div class="col-4">
+                                        <h5>Service Type</h5>
+                                        <select class="form-control form-small" th:attr="id=${'serTypeUpdate' +config.id}">
+                                            <option  th:text="${config.service.service_name}" th:value="${config.service.service_id}" th:selected="${config.service.service_name}"></option>
+                                            <th:block th:each="service : ${availableServices}">
+                                                <option  th:text="${service.service_name}" th:value="${service.service_id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Import Format Type</h5>
+                                        <select class="form-control form-small" th:attr="id=${'serImportUpdate' +config.id}">
+                                            <option  th:text="${config.import_format.format_type}" th:value="${config.import_format.format_id}" th:selected="${config.import_format.format_type}"></option>
+                                            <th:block th:each="format : ${formats}">
+                                                <option  th:text="${format.format_type}" th:value="${format.format_id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Export Format Type</h5>
+                                        <select class="form-control form-small" th:attr="id=${'serExportUpdate' +config.id}">
+                                            <option  th:text="${config.export_format.format_type}" th:value="${config.export_format.format_id}" th:selected="${config.export_format.format_type}"></option>
+                                            <th:block th:each="format : ${formats}">
+                                                <option  th:text="${format.format_type}" th:value="${format.format_id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Fail On Error</h5>
+                                        <select class="form-control form-small" th:attr="id=${'failUpdate' +config.id}">
+                                            <option  th:text="${config.fail_on_error}" th:value="${config.fail_on_error}" th:selected="${config.fail_on_error}"></option>
+                                            <option  th:text="${!config.fail_on_error}" th:value="${!config.fail_on_error}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Active</h5>
+                                        <select class="form-control form-small" th:attr="id=${'activeUpdate' +config.id}">
+                                            <option  th:text="${config.active}" th:value="${config.active}" th:selected="${config.active}"></option>
+                                            <option  th:text="${!config.active}" th:value="${!config.active}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                        <button class="btn btn-primary" onclick="update($(this).attr('data-mapping-id'))"
+                                th:data-mapping-id="${config.id}" type="button">Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END MAIN CONTAINER -->
+
+<div th:insert="layout :: scripts"></div>
+<script th:inline="javascript">
+    function createInstitutionConfig() {
+        var queryString = window.location.href;
+        console.log(queryString);
+        const words = queryString.split('/');
+        var instId = words[words.length - 1];
+        var confService = $("#serviceDropdown").val();
+        var inputFormat = $("#inputFormatDropdown").val();
+        var outputFormat = $("#outputFormatDropdown").val();
+        var failError = $("#failDropdown").val();
+        var active = $("#activeDropdown").val();
+        var institution = {};
+        institution.import_format = inputFormat;
+        institution.export_format = outputFormat;
+        institution.fail_on_error = failError;
+        institution.active = active;
+        institution.service_id = confService;
+        console.log(institution);
+        $.ajax({
+            type: 'post',
+            url: '/autocops/inst-configs/' + instId,
+            data: jQuery.param(institution),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+
+    function update(id) {
+        var confService = $("#serTypeUpdate"+id).val();
+        var inputFormat = $("#serImportUpdate"+id).val();
+        var outputFormat = $("#serExportUpdate"+id).val();
+        var failError = $("#failUpdate"+id).val();
+        var active = $("#activeUpdate"+id).val();
+        var institution = {};
+        console.log(id);
+        institution.import_format = inputFormat;
+        institution.export_format = outputFormat;
+        institution.fail_on_error = failError;
+        institution.active = active;
+        institution.service_id = confService;
+        $.ajax({
+            type: 'put',
+            url: '/autocops/inst-configs/' + id,
+            data: jQuery.param(institution),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+
+    function deleteInst(id) {
+        $.ajax({
+            url: '/autocops/inst-configs/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+
+    function redirectMappings(id) {
+        var queryString = window.location.href;
+        console.log(queryString);
+        const words = queryString.split('/');
+        var instId = words[words.length - 1];
+        $.ajax({
+            url: "/autocops/configMappings/" + instId + "/" + id,
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/configMappings/" + instId + "/" + id;
+            }
+        });
+    }
+
+    $(function () {
+        var queryString = window.location.href;
+        console.log(queryString);
+        const words = queryString.split('/');
+        var instId = words[words.length - 1];
+        $.ajax({
+            url: "/autocops/inst-configs/availableServices/" + instId,
+            type: 'GET',
+            success: function (res) {
+                tmp = res;
+                // console.log(res);
+                $.each(res, function (key, val) {
+                    $("#serviceDropdown").append(
+                        $("<option></option>").val(val.service_id).html(val.service_name)
+                    );
+                });
+            }
+        });
+    }());
+
+    $(function () {
+        $.ajax({
+            url: "/autocops/formats",
+            type: 'GET',
+            success: function (res) {
+
+                console.log(res);
+                $.each(res, function (key, val) {
+                    $("#inputFormatDropdown").append(
+                        $("<option></option>").val(val.format_id).html(val.format_type)
+                    );
+                });
+                $.each(res, function (key, val) {
+                    $("#outputFormatDropdown").append(
+                        $("<option></option>").val(val.format_id).html(val.format_type)
+                    );
+                });
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

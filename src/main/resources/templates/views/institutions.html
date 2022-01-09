@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="notranslate" lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="layout :: header"></div>
+<body class="alt-menu sidebar-noneoverflow">
+<!-- BEGIN LOADER -->
+<div id="load_screen">
+    <div class="loader">
+        <div class="loader-content">
+            <div class="spinner-grow align-self-center"></div>
+        </div>
+    </div>
+</div>
+<!--  END LOADER -->
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+    <div th:insert="layout :: topbar"></div>
+
+    <!--  BEGIN CONTENT PART  -->
+    <div class="main-content" id="content">
+        <div class="layout-px-spacing">
+            <br><br>
+            <div id="tableHover">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <br>
+                                <h4> Institutions</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-4" id="inst_table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                                <th:block th:each="institution : ${institutions}">
+                                    <tr>
+                                        <td th:text="${institution.inst_id}"></td>
+                                        <td th:text="${institution.inst_name}"></td>
+                                        <td>
+                                            <button class="btn btn-danger"
+                                                    onclick="deleteInst($(this).attr('data-inst-id'))"
+                                                    th:data-inst-id="${institution.inst_id}">Delete
+                                            </button>
+                                            <button class="btn btn-primary"
+                                                    onclick="goToConfigs($(this).attr('data-inst-id'))"
+                                                    th:data-inst-id="${institution.inst_id}">Configurations
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h6>Add New Institution</h6>
+            <div>
+                <form>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <input class="form-control" id="instId" placeholder="Institution ID" type="text">
+                        </div>
+                        <div class="col">
+                            <input class="form-control" id="instName" placeholder="Institution Name" type="text">
+                        </div>
+                    </div>
+                    <input class="mb-4 btn btn-primary" name="addInstitution" onclick="createInstitution()"
+                           type="submit"
+                           value="Add">
+                </form>
+            </div>
+            <br>
+            <h6>Update Institution</h6>
+            <div>
+                <form>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <select class="form-control form-small" id="InstDropdown">
+                                <option selected="selected">Choose Option</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" id="instNameNew" placeholder="New Institution Name" type="text">
+                        </div>
+                    </div>
+                    <input class="mb-4 btn btn-primary" name="addInstitution" onclick="update()" type="submit"
+                           value="Update">
+                </form>
+            </div>
+            <br>
+            <div th:insert="layout :: footer"></div>
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+</div>
+<!-- END MAIN CONTAINER -->
+<div th:insert="layout :: scripts"></div>
+<script>
+    function createInstitution() {
+        var inst_Id = $("#instId").val();
+        var inst_Name = $("#instName").val();
+        var institution = {};
+        institution.inst_id = inst_Id;
+        institution.inst_name = inst_Name;
+        $.ajax({
+            type: 'post',
+            url: '/autocops/institutions',
+            data: JSON.stringify(institution),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: function (res) {
+                window.location.reload();
+            }
+        });
+    }
+
+    function goToConfigs(instId) {
+        console.log(instId);
+        $.ajax({
+            url: "/autocops/institutionsConfig/" + instId,
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/institutionsConfig/" + instId;
+            }
+        });
+    }
+
+    $(function () {
+        $.ajax({
+            url: "/autocops/institutions",
+            type: 'GET',
+            success: function (res) {
+                $.each(res, function (key, val) {
+                    $("#InstDropdown").append(
+                        $("<option></option>").val(val.inst_id).html(val.inst_name)
+                    );
+                });
+                $.each(res, function (key, val) {
+                    $("#InstDropdownDelete").append(
+                        $("<option></option>").val(val.inst_id).html(val.inst_name)
+                    );
+                });
+            }
+        });
+    });
+
+    function update() {
+        var instId = $("#InstDropdown").val();
+        var instName = $("#instNameNew").val();
+        var institution = {};
+        institution.inst_name = instName;
+        $.ajax({
+            type: 'put',
+            url: '/autocops/institutions/' + instId,
+            data: JSON.stringify(institution),
+            contentType: "application/json; charset=utf-8",
+            traditional: true
+        });
+    }
+
+    function deleteInst(id) {
+        $.ajax({
+            url: '/autocops/institutions/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+</script>
+<!-- END PAGE LEVEL CUSTOM SCRIPTS -->
+</body>
+</html>
