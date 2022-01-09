@@ -1,8 +1,8 @@
 package com.mdp.autocops.service.impl;
 
-import com.mdp.autocops.dao.FormatsDao;
-import com.mdp.autocops.model.entity.Format;
-import com.mdp.autocops.service.framework.FormatService;
+import com.mdp.autocops.dao.FileFormatsDao;
+import com.mdp.autocops.model.entity.FileFormat;
+import com.mdp.autocops.service.framework.FileFormatService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,19 +13,19 @@ import java.util.Optional;
 
 @Service
 @Log4j2
-public class FormatServiceImpl implements FormatService {
+public class FileFormatServiceImpl implements FileFormatService {
 
     @Autowired
-    FormatsDao formatsDao;
+    FileFormatsDao fileFormatsDao;
 
     @Override
-    public Format create(String type) {
+    public FileFormat create(String type) {
         try {
-            Format format = new Format();
+            FileFormat fileFormat = new FileFormat();
 
-            format.setFormat_type(type);
-            formatsDao.save(format);
-            return formatsDao.save(format);
+            fileFormat.setFormat_type(type);
+            fileFormatsDao.save(fileFormat);
+            return fileFormatsDao.save(fileFormat);
         } catch (Exception e) {
             log.info(e.getMessage());
             return null;
@@ -33,12 +33,12 @@ public class FormatServiceImpl implements FormatService {
     }
 
     @Override
-    public Format delete(long id) {
-        Optional<Format> format = null;
+    public FileFormat delete(long id) {
+        Optional<FileFormat> format = null;
         try {
-            format = formatsDao.findById(id);
+            format = fileFormatsDao.findById(id);
             if (format.isPresent()) {
-                formatsDao.delete(format.get());
+                fileFormatsDao.delete(format.get());
             } else {
                 log.info("Error retreiving this format");
             }
@@ -49,24 +49,24 @@ public class FormatServiceImpl implements FormatService {
     }
 
     @Override
-    public List<Format> getAll() {
-        List<Format> formats = new ArrayList<>();
+    public List<FileFormat> getAll() {
+        List<FileFormat> fileFormats = new ArrayList<>();
         try {
-            formats = formatsDao.findAll();
+            fileFormats = fileFormatsDao.findAll();
         } catch (Exception e) {
             log.info(e.getMessage());
         }
-        return formats;
+        return fileFormats;
     }
 
     @Override
-    public Format put(long id, String type) {
-        Optional<Format> format = null;
+    public FileFormat put(long id, String type) {
+        Optional<FileFormat> format = null;
         try {
-            format = formatsDao.findById(id);
+            format = fileFormatsDao.findById(id);
             if (format.isPresent()) {
                 format.get().setFormat_type(type);
-                formatsDao.save(format.get());
+                fileFormatsDao.save(format.get());
             } else {
                 log.info("Error retreiving this format");
             }
@@ -77,10 +77,10 @@ public class FormatServiceImpl implements FormatService {
     }
 
     @Override
-    public Format getById(long id) {
-        Optional<Format> format = null;
+    public FileFormat getById(long id) {
+        Optional<FileFormat> format = null;
         try {
-            format = formatsDao.findById(id);
+            format = fileFormatsDao.findById(id);
         } catch (Exception e) {
             log.info(e.getMessage());
         }

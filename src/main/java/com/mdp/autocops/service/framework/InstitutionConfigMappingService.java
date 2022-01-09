@@ -10,11 +10,11 @@ public interface InstitutionConfigMappingService {
 
     InstitutionsConfigMapping getById(long id);
 
-    InstitutionsConfigMapping create(long configId, int imp_field, int exp_field);
+    InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, String exp_field);
 
     InstitutionsConfigMapping delete(long id);
 
-    InstitutionsConfigMapping put(long id, long configId, int imp_field, int exp_field);
+    InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long formatId, String exp_field);
 
     List<InstitutionsConfigMapping> findByInstConfig(long id);
 

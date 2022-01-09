@@ -20,11 +20,11 @@ public class InstitutionConfig {
 
     @ManyToOne
     @JoinColumn(name = "import_format_id")
-    private Format import_format;
+    private FileFormat import_File_format;
 
     @ManyToOne
     @JoinColumn(name = "export_format_id")
-    private Format export_format;
+    private FileFormat export_File_format;
 
     @Column(name = "fail_on_error")
     private boolean fail_on_error;

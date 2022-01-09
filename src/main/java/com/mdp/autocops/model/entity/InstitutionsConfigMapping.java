@@ -18,10 +18,18 @@ public class InstitutionsConfigMapping {
     @JoinColumn(name = "inst_config_id", referencedColumnName = "id")
     private InstitutionConfig institution_config;
 
-    @Column(name = "import_field")
-    private int import_field;
+    @Column(name = "import_field_index")
+    private int import_field_index;
 
-    @Column(name = "export_field")
-    private int export_field;
+    @OneToOne
+    @JoinColumn(name = "import_field_type")
+    private FieldType import_field_type;
+
+    @OneToOne
+    @JoinColumn(name = "import_field_format")
+    private FieldFormat import_field_format;
+
+    @Column(name = "export_field_head")
+    private String export_field_head;
 
 }

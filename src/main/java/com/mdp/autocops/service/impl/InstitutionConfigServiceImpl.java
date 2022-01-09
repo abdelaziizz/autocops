@@ -1,7 +1,7 @@
 package com.mdp.autocops.service.impl;
 
 import com.mdp.autocops.dao.InstitutionsConfigDao;
-import com.mdp.autocops.model.entity.Format;
+import com.mdp.autocops.model.entity.FileFormat;
 import com.mdp.autocops.model.entity.Institution;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.ServiceEntity;
@@ -31,27 +31,27 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
     ServiceService serviceService;
 
     @Autowired
-    FormatService formatService;
+    FileFormatService fileFormatService;
 
 
     @Override
     public InstitutionConfig create(long instId, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
         InstitutionConfig institutionConfigNew = new InstitutionConfig();
         Institution inst = new Institution();
-        Format importFormat = new Format();
-        Format exportFormat = new Format();
+        FileFormat importFileFormat = new FileFormat();
+        FileFormat exportFileFormat = new FileFormat();
         ServiceEntity service = new ServiceEntity();
         try {
             inst = institutionService.getById(instId);
-            importFormat = formatService.getById(import_format);
-            exportFormat = formatService.getById(export_format);
+            importFileFormat = fileFormatService.getById(import_format);
+            exportFileFormat = fileFormatService.getById(export_format);
             service = serviceService.getById(service_id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         institutionConfigNew.setInstitution(inst);
-        institutionConfigNew.setImport_format(importFormat);
-        institutionConfigNew.setExport_format(exportFormat);
+        institutionConfigNew.setImport_File_format(importFileFormat);
+        institutionConfigNew.setExport_File_format(exportFileFormat);
         institutionConfigNew.setFail_on_error(fail_on_error);
         institutionConfigNew.setService(service);
         institutionConfigNew.setActive(active);
@@ -121,18 +121,18 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
     public InstitutionConfig put(long id, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
         Optional<InstitutionConfig> institutionConfigUpdate = null;
         ServiceEntity service = serviceService.getById(service_id);
-        Format importFormat = formatService.getById(import_format);
-        Format exportFormat = formatService.getById(export_format);
+        FileFormat importFileFormat = fileFormatService.getById(import_format);
+        FileFormat exportFileFormat = fileFormatService.getById(export_format);
 
         try {
             institutionConfigUpdate = institutionsConfigDao.findById(id);
             if (!institutionConfigUpdate.isPresent()) log.info("Error retrieving institution configuration");
             else {
 
-                if (importFormat != null)
-                    institutionConfigUpdate.get().setImport_format(importFormat);
-                if (exportFormat != null)
-                    institutionConfigUpdate.get().setExport_format(exportFormat);
+                if (importFileFormat != null)
+                    institutionConfigUpdate.get().setImport_File_format(importFileFormat);
+                if (exportFileFormat != null)
+                    institutionConfigUpdate.get().setExport_File_format(exportFileFormat);
                 if (fail_on_error != null) institutionConfigUpdate.get().setFail_on_error(fail_on_error);
                 if (active != null) institutionConfigUpdate.get().setActive(active);
                 if (service != null) institutionConfigUpdate.get().setService(service);

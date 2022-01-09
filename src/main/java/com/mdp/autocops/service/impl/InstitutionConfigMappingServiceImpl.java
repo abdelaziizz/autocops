@@ -1,8 +1,11 @@
 package com.mdp.autocops.service.impl;
 
 import com.mdp.autocops.dao.InstitutionsConfigMappingDao;
+import com.mdp.autocops.model.entity.FieldType;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
+import com.mdp.autocops.service.framework.FieldFormatService;
+import com.mdp.autocops.service.framework.FieldTypeService;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +25,12 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
 
     @Autowired
     InstitutionConfigService institutionConfigService;
+
+    @Autowired
+    FieldTypeService fieldTypeService;
+
+    @Autowired
+    FieldFormatService fieldFormatService;
 
     @Override
     public List<InstitutionsConfigMapping> getAll() {
@@ -46,14 +55,16 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping create(long configId, int imp_field, int exp_field) {
+    public InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, String exp_field) {
 
         InstitutionConfig config = institutionConfigService.getById(configId);
         InstitutionsConfigMapping instConfigMapping = new InstitutionsConfigMapping();
         instConfigMapping.setInstitution_config(config);
-        instConfigMapping.setImport_field(imp_field);
-        instConfigMapping.setExport_field(exp_field);
+        instConfigMapping.setImport_field_index(imp_field_index);
+        instConfigMapping.setExport_field_head(exp_field);
         try {
+            instConfigMapping.setImport_field_type(fieldTypeService.getById(typeId));
+            instConfigMapping.setImport_field_format(fieldFormatService.getById(format_id));
             institutionsConfigMappingDao.save(instConfigMapping);
             return instConfigMapping;
         } catch (Exception e) {
@@ -77,7 +88,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping put(long id, long configId, int imp_field, int exp_field) {
+    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long formatId, String exp_field) {
 
         Optional<InstitutionsConfigMapping> instConfigMapping = null;
         try {
@@ -85,10 +96,11 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             if (instConfigMapping.isPresent()) {
                 InstitutionConfig config = institutionConfigService.getById(configId);
                 if ( config != null ) instConfigMapping.get().setInstitution_config(config);
-                Integer import_field = imp_field;
-                Integer export_field = exp_field;
-                if ( import_field != null ) instConfigMapping.get().setImport_field(import_field);
-                if ( export_field != null ) instConfigMapping.get().setExport_field(export_field);
+                Integer import_field_index = imp_field_index;
+                if ( import_field_index != null ) instConfigMapping.get().setImport_field_index(import_field_index);
+                if (fieldTypeService.getById(typeId) != null) instConfigMapping.get().setImport_field_type(fieldTypeService.getById(typeId));
+                if (fieldFormatService.getAllByType(formatId) != null) instConfigMapping.get().setImport_field_format(fieldFormatService.getById(formatId));
+                if (exp_field != null) instConfigMapping.get().setExport_field_head(exp_field);
                 institutionsConfigMappingDao.save(instConfigMapping.get());
             } else log.info("Error retrieving Institution Configuration Mapping");
         } catch (Exception e) {

@@ -19,7 +19,7 @@ public class SecurityController {
     private final InstitutionService institutionService;
     private final InstitutionConfigMappingService mappingService;
     private final ServiceService serviceService;
-    private final FormatService formatService;
+    private final FileFormatService fileFormatService;
 
     @GetMapping("/login")
     public String loginPage() {
@@ -41,9 +41,9 @@ public class SecurityController {
         model.addAttribute("configs",institutionConfigs);
         model.addAttribute("inst",institution);
         List<ServiceEntity> availableServices = institutionConfigService.getAvailableServices(institution.getInst_id());
-        List<Format> formats = formatService.getAll();
+        List<FileFormat> fileFormats = fileFormatService.getAll();
         model.addAttribute("availableServices", availableServices);
-        model.addAttribute("formats", formats);
+        model.addAttribute("formats", fileFormats);
         return "views/institutionConfig";
     }
 

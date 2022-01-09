@@ -39,14 +39,15 @@ public class InstitutionConfigMappingController {
 
     @ResponseBody
     @PostMapping
-    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam int imp_field, @RequestParam int exp_field) {
-        return institutionConfigMappingService.create(configId, imp_field, exp_field);
+    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam int imp_field, @RequestParam long typeId, @RequestParam long formatId, @RequestParam String exp_field) {
+        return institutionConfigMappingService.create(configId, imp_field, typeId, formatId, exp_field);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
-    public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field, @RequestParam int exp_field) {
-        return institutionConfigMappingService.put(id, configId, imp_field, exp_field);
+    public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field,
+                                         @RequestParam long typeId, @RequestParam long formatId, @RequestParam String exp_field) {
+        return institutionConfigMappingService.put(id, configId, imp_field,typeId, formatId, exp_field);
     }
 
 }

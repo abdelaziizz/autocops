@@ -86,6 +86,10 @@
                         <div class="col">
                             <select class="form-control form-small" id="InstDropdown">
                                 <option selected="selected">Choose Option</option>
+                                <th:block th:each="institute : ${institutions}">
+                                    <option th:text="${institute.inst_name}"
+                                            th:value="${institute.inst_id}"></option>
+                                </th:block>
                             </select>
                         </div>
                         <div class="col">
@@ -133,25 +137,6 @@
             }
         });
     }
-
-    $(function () {
-        $.ajax({
-            url: "/autocops/institutions",
-            type: 'GET',
-            success: function (res) {
-                $.each(res, function (key, val) {
-                    $("#InstDropdown").append(
-                        $("<option></option>").val(val.inst_id).html(val.inst_name)
-                    );
-                });
-                $.each(res, function (key, val) {
-                    $("#InstDropdownDelete").append(
-                        $("<option></option>").val(val.inst_id).html(val.inst_name)
-                    );
-                });
-            }
-        });
-    });
 
     function update() {
         var instId = $("#InstDropdown").val();

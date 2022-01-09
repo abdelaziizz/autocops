@@ -170,17 +170,11 @@
     /*<![CDATA[*/
     function createInstitutionConfigMapping() {
         var queryString = window.location.href;
-        console.log(queryString);
         const words = queryString.split('/');
-        var configId = words[words.length - 1];
-        var importField = $("#import_field").val();
-        var exportField = $("#export_field").val();
         var institution = {};
-        institution.configId = configId;
-        institution.imp_field = importField;
-        institution.exp_field = exportField;
-        console.log(institution);
-
+        institution.configId = words[words.length - 1];
+        institution.imp_field = $("#import_field").val();
+        institution.exp_field = $("#export_field").val();
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs-mappings',
@@ -192,21 +186,13 @@
         });
     }
 
-
     function update(id) {
         var queryString = window.location.href;
-        console.log(queryString);
         const words = queryString.split('/');
-        var configId = words[words.length - 1];
-        var importField = $("#import_field_update" + id).val();
-        var exportField = $("#export_field_update" + id).val();
         var institution = {};
-        institution.configId = configId;
-        institution.imp_field = importField;
-        institution.exp_field = exportField;
-
-        console.log(institution);
-
+        institution.configId = words[words.length - 1];
+        institution.imp_field = $("#import_field_update" + id).val();
+        institution.exp_field = $("#export_field_update" + id).val();
         $.ajax({
             type: 'put',
             url: '/autocops/inst-configs-mappings/' + id,
@@ -220,7 +206,6 @@
 
     function deleteInst(id) {
         $.ajax({
-            // url: /*[[@{/institutionsConfigs/}]]*/ + id '',
             url: '/autocops/inst-configs-mappings/' + id,
             type: 'DELETE',
             success: function (result) {
