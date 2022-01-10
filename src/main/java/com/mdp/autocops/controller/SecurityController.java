@@ -20,6 +20,8 @@ public class SecurityController {
     private final InstitutionConfigMappingService mappingService;
     private final ServiceService serviceService;
     private final FileFormatService fileFormatService;
+    private final FieldTypeService fieldTypeService;
+    private final FieldFormatService fieldFormatService;
 
     @GetMapping("/login")
     public String loginPage() {
@@ -52,6 +54,10 @@ public class SecurityController {
         List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(configId);
         Institution institution = institutionService.getById(institutionId);
         InstitutionConfig config = institutionConfigService.getById(configId);
+        List<FieldType> fieldTypes = fieldTypeService.getAll();
+        List<FieldFormat> fieldFormats = fieldFormatService.getAll();
+        model.addAttribute("fieldTypes", fieldTypes);
+        model.addAttribute("fieldFormats", fieldFormats);
         model.addAttribute("mappings",mappings);
         model.addAttribute("inst",institution);
         model.addAttribute("config", config);

@@ -107,7 +107,7 @@
                                 <div class="col-4">
                                     <select class="form-control form-small" id="inputFormatDropdown">
                                         <option selected="selected">--- Import Format ---</option>
-                                        <th:block th:each="fileFormat : ${fileFormats}">
+                                        <th:block th:each="fileFormat : ${formats}">
                                             <option th:text="${fileFormat.format_type}"
                                                     th:value="${fileFormat.format_id}"></option>
                                         </th:block>
@@ -116,7 +116,7 @@
                                 <div class="col-4">
                                     <select class="form-control form-small" id="outputFormatDropdown">
                                         <option selected="selected">--- Export Format ---</option>
-                                        <th:block th:each="fileFormat : ${fileFormats}">
+                                        <th:block th:each="fileFormat : ${formats}">
                                             <option th:text="${fileFormat.format_type}"
                                                     th:value="${fileFormat.format_id}"></option>
                                         </th:block>
@@ -186,7 +186,7 @@
                                             <option th:selected="${config.getImport_File_format.format_type}"
                                                     th:text="${config.getImport_File_format.format_type}"
                                                     th:value="${config.getImport_File_format.format_id}"></option>
-                                            <th:block th:each="fileFormat : ${fileFormats}">
+                                            <th:block th:each="fileFormat : ${formats}">
                                                 <option th:text="${fileFormat.format_type}"
                                                         th:value="${fileFormat.format_id}"></option>
                                             </th:block>
@@ -199,7 +199,7 @@
                                             <option th:selected="${config.getExport_File_format.format_type}"
                                                     th:text="${config.getExport_File_format.format_type}"
                                                     th:value="${config.getExport_File_format.format_id}"></option>
-                                            <th:block th:each="fileFormat : ${fileFormats}">
+                                            <th:block th:each="fileFormat : ${formats}">
                                                 <option th:text="${fileFormat.format_type}"
                                                         th:value="${fileFormat.format_id}"></option>
                                             </th:block>
