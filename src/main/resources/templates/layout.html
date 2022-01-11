@@ -401,8 +401,8 @@
                     </a>
                 </li>
 
-                <li class="menu single-menu">
-                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" onclick="navServices()">
+                <li class="menu single-menu" id="services">
+                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" onclick="navServices()" style="cursor: pointer;">
                         <div class="">
                             <span>Services</span>
                         </div>
@@ -886,6 +886,24 @@
                 }
             });
         }
+
+        $(document).ready(function () {
+            var url = window.location.href;
+            const urlSplit = url.split('/');
+            const length = urlSplit.length;
+            if(urlSplit[length-1] == "institutionsPage" || urlSplit[length-2] == "institutionsConfig" || urlSplit[length-3] == "configMappings") {
+                if (document.getElementById("services").classList.contains('active')) {
+                    document.getElementById("services").classList.remove('active');
+                }
+                document.getElementById("institutions").classList.add('active');
+            }
+            if (urlSplit[length-1] == "servicesView") {
+                if (document.getElementById("institutions").classList.contains('active')) {
+                    document.getElementById("institutions").classList.remove('active');
+                }
+                document.getElementById("services").classList.add('active');
+            }
+        });
     </script>
 </div>
 
