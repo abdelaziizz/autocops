@@ -358,7 +358,7 @@
 
             <ul class="list-unstyled menu-categories" id="topAccordion">
 
-                <li class="menu single-menu active">
+                <li class="menu single-menu ">
                     <a aria-expanded="true" class="dropdown-toggle autodroprown" data-toggle="collapse"
                        href="#dashboard">
                         <div class="">
@@ -387,8 +387,8 @@
 <!--                    </ul>-->
                 </li>
 
-                <li class="menu single-menu">
-                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"  onclick="navInstitutions()">
+                <li class="menu single-menu" id="institutions">
+                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"  onclick="navInstitutions()" style="cursor: pointer;">
                         <div class="" href="#dashboard">
                             <span>Institutions</span>
                         </div>
@@ -399,15 +399,6 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="app">
-                        <li>
-                            <a onclick="navInstitutions()"> Institutions Page </a>
-                        </li>
-                        <li>
-                            <a onclick="navConfigurations()"> Configurations Page </a>
-                        </li>
-
-                    </ul>
                 </li>
 
                 <li class="menu single-menu">
@@ -881,8 +872,10 @@
                 type: 'GET',
                 success: function (res) {
                     window.location.href = "/autocops/institutionsPage";
+                    document.getElementById("institutions").classList.add('active');
                 }
             });
+
         }
         function navServices() {
             $.ajax({
