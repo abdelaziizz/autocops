@@ -256,6 +256,7 @@
     function populateDropdown () {
         var id = $("#type").val()
         var select = document.getElementById("format");
+        select.options.length = 0;
         $.ajax({
             url: "/autocops/field-formats/type/" + id,
             type: 'GET',
@@ -274,15 +275,13 @@
         });
     }
     function populateUpdateDropdown (id) {
-        console.log(id);
-        var id = $("#type_update"+id).val()
+        var select_id = $("#type_update"+id).val()
         var select = document.getElementById("format_update"+id);
+        select.options.length = 0;
         $.ajax({
-            url: "/autocops/field-formats/type/" + id,
+            url: "/autocops/field-formats/type/" + select_id,
             type: 'GET',
             success: function (res) {
-                console.log(res);
-                console.log(res[0].format);
                 var options = res;
                 for (var i = 0 ; i < options.length ; i++) {
                     var opt = options[i];
