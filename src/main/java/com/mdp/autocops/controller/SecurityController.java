@@ -22,6 +22,7 @@ public class SecurityController {
     private final FileFormatService fileFormatService;
     private final FieldTypeService fieldTypeService;
     private final FieldFormatService fieldFormatService;
+    private final ExportFieldService exportFieldService;
 
     @GetMapping("/login")
     public String loginPage() {
@@ -56,6 +57,8 @@ public class SecurityController {
         InstitutionConfig config = institutionConfigService.getById(configId);
         List<FieldType> fieldTypes = fieldTypeService.getAll();
         List<FieldFormat> fieldFormats = fieldFormatService.getAll();
+        List<ExportField> exportFields = exportFieldService.getAllByService(config.getService().getService_id());
+        model.addAttribute("exportFields", exportFields);
         model.addAttribute("fieldTypes", fieldTypes);
         model.addAttribute("fieldFormats", fieldFormats);
         model.addAttribute("mappings",mappings);

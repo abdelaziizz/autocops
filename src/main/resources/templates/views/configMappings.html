@@ -119,10 +119,6 @@
                                 <div class="col-3">
                                     <select class="form-control form-small" id="export">
                                         <option selected="selected">--- Import Field Type ---</option>
-<!--                                        <th:block th:each="fileFormat : ${fieldTypes}">-->
-<!--                                            <option th:text="${fileFormat.field_type}"-->
-<!--                                                    th:value="${fileFormat.id}"></option>-->
-<!--                                        </th:block>-->
                                     </select>
                                 </div>
 
@@ -189,9 +185,10 @@
                                         <h5>Export Field</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'export_update' +mapping.id}">
-                                            <option th:selected="${mapping.export_field_head.field_name}"
-                                                    th:text="${mapping.export_field_head.field_name}"
-                                                    th:value="${mapping.export_field_head.id}"></option>
+                                            <th:block th:each="field : ${exportFields}">
+                                                <option th:text="${field.field_name}"
+                                                        th:value="${field.id}"></option>
+                                            </th:block>
                                         </select>
                                     </div>
                                 </div>
@@ -226,7 +223,7 @@
         institution.imp_field = $("#import_index").val();
         institution.typeId = $("#type").val();
         institution.formatId = $("#format").val();
-        institution.exp_field = $("#export_field").val();
+        institution.exp_field = $("#export").val();
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs-mappings',
@@ -248,7 +245,7 @@
         institution.imp_field = $("#import_index_update" + id).val();
         institution.typeId = $("#type_update" + id).val();
         institution.formatId = $("#format_update" + id).val();
-        institution.exp_field = $("#export_field_update" + id).val();
+        institution.exp_field = $("#export_update" + id).val();
         console.log(institution);
         $.ajax({
             type: 'put',
