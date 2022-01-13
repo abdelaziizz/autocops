@@ -35,7 +35,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
 
     @Override
-    public InstitutionConfig create(long instId, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
+    public InstitutionConfig create(long instId, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
         InstitutionConfig institutionConfigNew = new InstitutionConfig();
         Institution inst = new Institution();
         FileFormat importFileFormat = new FileFormat();
@@ -50,6 +50,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             System.out.println(e.getMessage());
         }
         institutionConfigNew.setInstitution(inst);
+        institutionConfigNew.setReading_line(reading_line);
         institutionConfigNew.setImport_File_format(importFileFormat);
         institutionConfigNew.setExport_File_format(exportFileFormat);
         institutionConfigNew.setFail_on_error(fail_on_error);
@@ -118,7 +119,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
     }
 
     @Override
-    public InstitutionConfig put(long id, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
+    public InstitutionConfig put(long id, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
         Optional<InstitutionConfig> institutionConfigUpdate = null;
         ServiceEntity service = serviceService.getById(service_id);
         FileFormat importFileFormat = fileFormatService.getById(import_format);
@@ -128,11 +129,9 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             institutionConfigUpdate = institutionsConfigDao.findById(id);
             if (!institutionConfigUpdate.isPresent()) log.info("Error retrieving institution configuration");
             else {
-
-                if (importFileFormat != null)
-                    institutionConfigUpdate.get().setImport_File_format(importFileFormat);
-                if (exportFileFormat != null)
-                    institutionConfigUpdate.get().setExport_File_format(exportFileFormat);
+                if(reading_line != null) institutionConfigUpdate.get().setReading_line(reading_line);
+                if (importFileFormat != null) institutionConfigUpdate.get().setImport_File_format(importFileFormat);
+                if (exportFileFormat != null) institutionConfigUpdate.get().setExport_File_format(exportFileFormat);
                 if (fail_on_error != null) institutionConfigUpdate.get().setFail_on_error(fail_on_error);
                 if (active != null) institutionConfigUpdate.get().setActive(active);
                 if (service != null) institutionConfigUpdate.get().setService(service);

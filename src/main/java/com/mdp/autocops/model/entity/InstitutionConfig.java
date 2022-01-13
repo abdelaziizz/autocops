@@ -32,6 +32,9 @@ public class InstitutionConfig {
     @Column(name = "active")
     private boolean active;
 
+    @Column(name = "reading_line")
+    private Integer reading_line;
+
     @OneToOne
     @JoinColumn(name = "service")
     private ServiceEntity service;

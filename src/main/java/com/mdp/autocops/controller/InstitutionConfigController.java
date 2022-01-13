@@ -43,17 +43,17 @@ public class InstitutionConfigController {
 
     @ResponseBody
     @PutMapping("/{id}")
-    public InstitutionConfig put(@PathVariable long id, @RequestParam long import_format, @RequestParam long export_format,
+    public InstitutionConfig put(@PathVariable long id,@RequestParam Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
                                  @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id) {
-        return institutionConfigService.put(id, import_format, export_format, fail_on_error, active, service_id);
+        return institutionConfigService.put(id, reading_line, import_format, export_format, fail_on_error, active, service_id);
     }
 
 
     @ResponseBody
     @PostMapping("/{instId}")
-    public InstitutionConfig create(@PathVariable long instId, @RequestParam long import_format, @RequestParam long export_format,
+    public InstitutionConfig create(@PathVariable long instId, @RequestParam Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
                                     @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id) {
-        return institutionConfigService.create(instId, import_format, export_format, fail_on_error, active, service_id);
+        return institutionConfigService.create(instId, reading_line, import_format, export_format, fail_on_error, active, service_id);
     }
 
     @ResponseBody

@@ -1,5 +1,6 @@
 package com.mdp.autocops.controller;
 
+import com.mdp.autocops.model.entity.ExportField;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +40,21 @@ public class InstitutionConfigMappingController {
 
     @ResponseBody
     @PostMapping
-    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam int imp_field, @RequestParam long typeId, @RequestParam long formatId, @RequestParam String exp_field) {
+    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam int imp_field, @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field) {
         return institutionConfigMappingService.create(configId, imp_field, typeId, formatId, exp_field);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
     public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field,
-                                         @RequestParam long typeId, @RequestParam long formatId, @RequestParam String exp_field) {
+                                         @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field) {
         return institutionConfigMappingService.put(id, configId, imp_field,typeId, formatId, exp_field);
+    }
+
+    @ResponseBody
+    @GetMapping("/export-fields/{config_id}")
+    public List<ExportField> getAvailableFields(@PathVariable long config_id) {
+        return institutionConfigMappingService.getAvailableFields(config_id);
     }
 
 }

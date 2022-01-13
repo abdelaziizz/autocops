@@ -51,7 +51,7 @@
                                         <td th:text="${mapping.import_field_index}"></td>
                                         <td th:text="${mapping.import_field_type.field_type}"></td>
                                         <td th:text="${mapping.import_field_format.format}"></td>
-                                        <td th:text="${mapping.export_field_head}"></td>
+                                        <td th:text="${mapping.export_field_head.field_name}"></td>
 
                                         <td>
                                             <button class="btn btn-danger"
@@ -117,8 +117,13 @@
                                     </select>
                                 </div>
                                 <div class="col-3">
-                                    <input class="form-control" id="export_field" placeholder="Export Field"
-                                           type="text">
+                                    <select class="form-control form-small" id="export">
+                                        <option selected="selected">--- Import Field Type ---</option>
+<!--                                        <th:block th:each="fileFormat : ${fieldTypes}">-->
+<!--                                            <option th:text="${fileFormat.field_type}"-->
+<!--                                                    th:value="${fileFormat.id}"></option>-->
+<!--                                        </th:block>-->
+                                    </select>
                                 </div>
 
                             </div>
@@ -182,9 +187,12 @@
 
                                     <div class="col-3">
                                         <h5>Export Field</h5>
-                                        <input class="form-control" th:attr="id=${'export_field_update' + mapping.id}"
-                                               th:value="${mapping.export_field_head}"
-                                               type="text">
+                                        <select class="form-control form-small"
+                                                th:attr="id=${'export_update' +mapping.id}">
+                                            <option th:selected="${mapping.export_field_head.field_name}"
+                                                    th:text="${mapping.export_field_head.field_name}"
+                                                    th:value="${mapping.export_field_head.id}"></option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -303,6 +311,27 @@
             }
         });
     }
+
+    $(document).ready(function () {
+        var config = [[${config}]];
+        var select = document.getElementById("export");
+        select.options.length = 0;
+        $.ajax({
+            url: "/autocops/inst-configs-mappings/export-fields/" + config.id ,
+            type: 'GET',
+            success: function (res) {
+                var options = res;
+                for (var i = 0 ; i < options.length ; i++) {
+                    var opt = options[i];
+                    var el = document.createElement("option");
+                    el.textContent = opt.field_name;
+                    el.value = opt.id;
+                    select.appendChild(el);
+                }
+            }
+        });
+
+    });
 
     /*]]>*/
 

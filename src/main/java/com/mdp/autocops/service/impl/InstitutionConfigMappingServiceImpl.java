@@ -1,13 +1,11 @@
 package com.mdp.autocops.service.impl;
 
 import com.mdp.autocops.dao.InstitutionsConfigMappingDao;
+import com.mdp.autocops.model.entity.ExportField;
 import com.mdp.autocops.model.entity.FieldType;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
-import com.mdp.autocops.service.framework.FieldFormatService;
-import com.mdp.autocops.service.framework.FieldTypeService;
-import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
-import com.mdp.autocops.service.framework.InstitutionConfigService;
+import com.mdp.autocops.service.framework.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +30,9 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     @Autowired
     FieldFormatService fieldFormatService;
 
+    @Autowired
+    ExportFieldService exportFieldService;
+
     @Override
     public List<InstitutionsConfigMapping> getAll() {
         List<InstitutionsConfigMapping> institutionsConfigMappings = new ArrayList<>();
@@ -55,14 +56,15 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, String exp_field) {
+    public InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, long exp_field) {
 
         InstitutionConfig config = institutionConfigService.getById(configId);
         InstitutionsConfigMapping instConfigMapping = new InstitutionsConfigMapping();
         instConfigMapping.setInstitution_config(config);
         instConfigMapping.setImport_field_index(imp_field_index);
-        instConfigMapping.setExport_field_head(exp_field);
         try {
+            ExportField exportField = exportFieldService.getById(exp_field);
+            instConfigMapping.setExport_field_head(exportField);
             instConfigMapping.setImport_field_type(fieldTypeService.getById(typeId));
             instConfigMapping.setImport_field_format(fieldFormatService.getById(format_id));
             institutionsConfigMappingDao.save(instConfigMapping);
@@ -88,7 +90,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long formatId, String exp_field) {
+    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long formatId, long exp_field) {
 
         Optional<InstitutionsConfigMapping> instConfigMapping = null;
         try {
@@ -100,7 +102,8 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
                 if ( import_field_index != null ) instConfigMapping.get().setImport_field_index(import_field_index);
                 if (fieldTypeService.getById(typeId) != null) instConfigMapping.get().setImport_field_type(fieldTypeService.getById(typeId));
                 if (fieldFormatService.getAllByType(formatId) != null) instConfigMapping.get().setImport_field_format(fieldFormatService.getById(formatId));
-                if (exp_field != null) instConfigMapping.get().setExport_field_head(exp_field);
+                ExportField exportField = exportFieldService.getById(exp_field);
+                if (exportField != null) instConfigMapping.get().setExport_field_head(exportField);
                 institutionsConfigMappingDao.save(instConfigMapping.get());
             } else log.info("Error retrieving Institution Configuration Mapping");
         } catch (Exception e) {
@@ -118,5 +121,26 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             }
         }
         return mappingList;
+    }
+
+    public List<ExportField> getAvailableFields(long config_id) {
+        try {
+            List<InstitutionsConfigMapping> mappings = findByInstConfig(config_id);
+            InstitutionConfig config = institutionConfigService.getById(config_id);
+            List<ExportField> serviceFields = exportFieldService.getAllByService(config.getService().getService_id());
+            for ( int i = 0 ; i < serviceFields.size() ; i++ ) {
+                for ( int j = 0 ; j < mappings.size() ; j++ ) {
+                    if (mappings.get(j).getExport_field_head() == serviceFields.get(i)) {
+                        serviceFields.remove(i);
+                        break;
+                    }
+                }
+            }
+            return serviceFields;
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
     }
 }

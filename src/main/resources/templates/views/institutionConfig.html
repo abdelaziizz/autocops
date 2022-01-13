@@ -30,6 +30,7 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Data Start Line</th>
                                     <th>Import Format</th>
                                     <th>export Format</th>
                                     <th>Fail On Error</th>
@@ -42,6 +43,7 @@
                                 <th:block th:each="config : ${configs}">
                                     <tr>
                                         <td th:text="${config.id}"></td>
+                                        <td th:text="${config.reading_line}"></td>
                                         <td th:text="${config.getImport_File_format.format_type}"></td>
                                         <td th:text="${config.getExport_File_format.format_type}"></td>
                                         <td th:text="${config.fail_on_error}"></td>
@@ -105,6 +107,9 @@
                                     </select>
                                 </div>
                                 <div class="col-4">
+                                    <input class="form-control" id="reading_line" type="text" placeholder="--- Data Start Line ---">
+                                </div>
+                                <div class="col-4">
                                     <select class="form-control form-small" id="inputFormatDropdown">
                                         <option selected="selected">--- Import Format ---</option>
                                         <th:block th:each="fileFormat : ${formats}">
@@ -113,7 +118,7 @@
                                         </th:block>
                                     </select>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4" style="margin-top:10px;">
                                     <select class="form-control form-small" id="outputFormatDropdown">
                                         <option selected="selected">--- Export Format ---</option>
                                         <th:block th:each="fileFormat : ${formats}">
@@ -180,6 +185,12 @@
                                         </select>
                                     </div>
                                     <div class="col-4">
+                                        <h5>Data Start Line</h5>
+                                    <input class="form-control" th:attr="id=${'reading_line_update' + config.id}"
+                                           th:value="${config.reading_line}"
+                                           type="text">
+                                    </div>
+                                    <div class="col-4">
                                         <h5>Import Format Type</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'serImportUpdate' +config.id}">
@@ -192,7 +203,7 @@
                                             </th:block>
                                         </select>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-4" style="margin-top:10px;">
                                         <h5>Export Format Type</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'serExportUpdate' +config.id}">
@@ -205,7 +216,7 @@
                                             </th:block>
                                         </select>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-4" style="margin-top:10px;">
                                         <h5>Fail On Error</h5>
                                         <select class="form-control form-small" th:attr="id=${'failUpdate' +config.id}">
                                             <option th:selected="${config.fail_on_error}" th:text="${config.fail_on_error}"
@@ -214,7 +225,7 @@
                                                     th:value="${!config.fail_on_error}"></option>
                                         </select>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-4" style="margin-top:10px;">
                                         <h5>Active</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'activeUpdate' +config.id}">
@@ -251,6 +262,7 @@
         const words = queryString.split('/');
         var instId = words[words.length - 1];
         var institution = {};
+        institution.reading_line = $("#reading_line").val();
         institution.import_format = $("#inputFormatDropdown").val();
         institution.export_format = $("#outputFormatDropdown").val();
         institution.fail_on_error = $("#failDropdown").val();
@@ -269,6 +281,7 @@
 
     function update(id) {
         var institution = {};
+        institution.reading_line = $("#reading_line_update" + id).val();
         institution.import_format = $("#serImportUpdate" + id).val();
         institution.export_format = $("#serExportUpdate" + id).val();
         institution.fail_on_error = $("#failUpdate" + id).val();

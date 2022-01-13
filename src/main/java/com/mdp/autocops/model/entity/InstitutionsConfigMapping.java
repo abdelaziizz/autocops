@@ -29,7 +29,8 @@ public class InstitutionsConfigMapping {
     @JoinColumn(name = "import_field_format")
     private FieldFormat import_field_format;
 
-    @Column(name = "export_field_head")
-    private String export_field_head;
+    @OneToOne
+    @JoinColumn(name = "export_field_head")
+    private ExportField export_field_head;
 
 }
