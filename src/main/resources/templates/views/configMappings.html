@@ -112,7 +112,7 @@
                                     </select>
                                 </div>
                                 <div class="col-3">
-                                    <select class="form-control form-small" id="format" >
+                                    <select class="form-control form-small" id="format">
                                         <option selected="selected">--- Import Field Format ---</option>
                                     </select>
                                 </div>
@@ -159,7 +159,8 @@
                                     <div class="col-3">
                                         <h5>Import Field Type</h5>
                                         <select class="form-control form-small"
-                                                th:attr="id=${'type_update' +mapping.id}" onchange="populateUpdateDropdown($(this).attr('data-mapping-id'))"
+                                                onchange="populateUpdateDropdown($(this).attr('data-mapping-id'))"
+                                                th:attr="id=${'type_update' +mapping.id}"
                                                 th:data-mapping-id="${mapping.id}">
                                             <option th:selected="${mapping.import_field_type.field_type}"
                                                     th:text="${mapping.import_field_type.field_type}"
@@ -258,7 +259,7 @@
         });
     }
 
-    function populateDropdown () {
+    function populateDropdown() {
         var id = $("#type").val()
         var select = document.getElementById("format");
         select.options.length = 0;
@@ -269,7 +270,7 @@
                 console.log(res);
                 console.log(res[0].format);
                 var options = res;
-                for (var i = 0 ; i < options.length ; i++) {
+                for (var i = 0; i < options.length; i++) {
                     var opt = options[i];
                     var el = document.createElement("option");
                     el.textContent = opt.format;
@@ -279,16 +280,17 @@
             }
         });
     }
-    function populateUpdateDropdown (id) {
-        var select_id = $("#type_update"+id).val()
-        var select = document.getElementById("format_update"+id);
+
+    function populateUpdateDropdown(id) {
+        var select_id = $("#type_update" + id).val()
+        var select = document.getElementById("format_update" + id);
         select.options.length = 0;
         $.ajax({
             url: "/autocops/field-formats/type/" + select_id,
             type: 'GET',
             success: function (res) {
                 var options = res;
-                for (var i = 0 ; i < options.length ; i++) {
+                for (var i = 0; i < options.length; i++) {
                     var opt = options[i];
                     var el = document.createElement("option");
                     el.textContent = opt.format;
@@ -314,11 +316,11 @@
         var select = document.getElementById("export");
         select.options.length = 0;
         $.ajax({
-            url: "/autocops/inst-configs-mappings/export-fields/" + config.id ,
+            url: "/autocops/inst-configs-mappings/export-fields/" + config.id,
             type: 'GET',
             success: function (res) {
                 var options = res;
-                for (var i = 0 ; i < options.length ; i++) {
+                for (var i = 0; i < options.length; i++) {
                     var opt = options[i];
                     var el = document.createElement("option");
                     el.textContent = opt.field_name;

@@ -2,7 +2,6 @@ package com.mdp.autocops.service.impl;
 
 import com.mdp.autocops.dao.InstitutionsConfigMappingDao;
 import com.mdp.autocops.model.entity.ExportField;
-import com.mdp.autocops.model.entity.FieldType;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
 import com.mdp.autocops.service.framework.*;
@@ -50,7 +49,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
         try {
             institutionsConfigMapping = institutionsConfigMappingDao.findById(id);
         } catch (Exception e) {
-            log.info(e.getMessage());;
+            log.info(e.getMessage());
         }
         return institutionsConfigMapping.get();
     }
@@ -97,11 +96,13 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             instConfigMapping = institutionsConfigMappingDao.findById(id);
             if (instConfigMapping.isPresent()) {
                 InstitutionConfig config = institutionConfigService.getById(configId);
-                if ( config != null ) instConfigMapping.get().setInstitution_config(config);
+                if (config != null) instConfigMapping.get().setInstitution_config(config);
                 Integer import_field_index = imp_field_index;
-                if ( import_field_index != null ) instConfigMapping.get().setImport_field_index(import_field_index);
-                if (fieldTypeService.getById(typeId) != null) instConfigMapping.get().setImport_field_type(fieldTypeService.getById(typeId));
-                if (fieldFormatService.getAllByType(formatId) != null) instConfigMapping.get().setImport_field_format(fieldFormatService.getById(formatId));
+                if (import_field_index != null) instConfigMapping.get().setImport_field_index(import_field_index);
+                if (fieldTypeService.getById(typeId) != null)
+                    instConfigMapping.get().setImport_field_type(fieldTypeService.getById(typeId));
+                if (fieldFormatService.getAllByType(formatId) != null)
+                    instConfigMapping.get().setImport_field_format(fieldFormatService.getById(formatId));
                 ExportField exportField = exportFieldService.getById(exp_field);
                 if (exportField != null) instConfigMapping.get().setExport_field_head(exportField);
                 institutionsConfigMappingDao.save(instConfigMapping.get());
@@ -115,7 +116,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     public List<InstitutionsConfigMapping> findByInstConfig(long id) {
         List<InstitutionsConfigMapping> mappings = getAll();
         List<InstitutionsConfigMapping> mappingList = new ArrayList<>();
-        for ( int i = 0 ; i < mappings.size() ; i++ ) {
+        for (int i = 0; i < mappings.size(); i++) {
             if (mappings.get(i).getInstitution_config().getId() == id) {
                 mappingList.add(mappings.get(i));
             }
@@ -128,8 +129,8 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             List<InstitutionsConfigMapping> mappings = findByInstConfig(config_id);
             InstitutionConfig config = institutionConfigService.getById(config_id);
             List<ExportField> serviceFields = exportFieldService.getAllByService(config.getService().getService_id());
-            for ( int i = 0 ; i < serviceFields.size() ; i++ ) {
-                for ( int j = 0 ; j < mappings.size() ; j++ ) {
+            for (int i = 0; i < serviceFields.size(); i++) {
+                for (int j = 0; j < mappings.size(); j++) {
                     if (mappings.get(j).getExport_field_head() == serviceFields.get(i)) {
                         serviceFields.remove(i);
                         break;
@@ -137,8 +138,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
                 }
             }
             return serviceFields;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }

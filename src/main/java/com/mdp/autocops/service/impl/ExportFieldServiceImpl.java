@@ -28,8 +28,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
         List<ExportField> exportFields = null;
         try {
             exportFields = exportFieldDao.findAll();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
         return exportFields;
@@ -44,8 +43,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
                 log.error("Export Field Not Present");
                 return null;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
@@ -57,12 +55,11 @@ public class ExportFieldServiceImpl implements ExportFieldService {
             ServiceEntity service = serviceService.getById(service_id);
             List<ExportField> fields = exportFieldDao.findAll();
             List<ExportField> serviceFields = new ArrayList<>();
-            for (int i = 0 ; i < fields.size() ; i++ ) {
+            for (int i = 0; i < fields.size(); i++) {
                 if (fields.get(i).getService() == service) serviceFields.add(fields.get(i));
             }
             return serviceFields;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
@@ -77,8 +74,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
             exportField.setField_name(field_name);
             exportFieldDao.save(exportField);
             return exportField;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
@@ -86,7 +82,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
 
     @Override
     public ExportField put(long id, long service_id, String field_name) {
-        try{
+        try {
             ExportField field = getById(id);
             ServiceEntity service = serviceService.getById(service_id);
             if (field != null) {
@@ -94,13 +90,11 @@ public class ExportFieldServiceImpl implements ExportFieldService {
                 if (field_name != null) field.setField_name(field_name);
                 exportFieldDao.save(field);
                 return field;
-            }
-            else {
+            } else {
                 log.error("Export Field Not Found");
                 return null;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
@@ -113,13 +107,11 @@ public class ExportFieldServiceImpl implements ExportFieldService {
             if (exportField.isPresent()) {
                 exportFieldDao.delete(exportField.get());
                 return exportField.get();
-            }
-            else {
+            } else {
                 log.error("Export Field Not Found");
                 return null;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }

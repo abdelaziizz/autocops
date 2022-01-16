@@ -4,7 +4,6 @@ import com.mdp.autocops.model.entity.FieldFormat;
 import com.mdp.autocops.service.framework.FieldFormatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,42 +15,41 @@ import java.util.List;
 @RequestMapping("/field-formats")
 public class FieldFormatController {
 
-    @Autowired
-    FieldFormatService fieldFormatService;
+    private final FieldFormatService fieldFormatService;
 
     @ResponseBody
     @GetMapping
-    public List<FieldFormat> getAll () {
+    public List<FieldFormat> getAll() {
         return fieldFormatService.getAll();
     }
 
     @ResponseBody
     @GetMapping("/{id}")
-    public FieldFormat getById (@PathVariable long id) {
+    public FieldFormat getById(@PathVariable long id) {
         return fieldFormatService.getById(id);
     }
 
     @ResponseBody
     @PostMapping
-    public FieldFormat create (@RequestParam long typeId, @RequestParam String format) {
+    public FieldFormat create(@RequestParam long typeId, @RequestParam String format) {
         return fieldFormatService.create(typeId, format);
     }
 
     @ResponseBody
     @DeleteMapping("/{id}")
-    public FieldFormat delete (@PathVariable long id) {
+    public FieldFormat delete(@PathVariable long id) {
         return fieldFormatService.delete(id);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
-    public FieldFormat put (@PathVariable long id, @RequestParam long typeId, @RequestParam String newFormat) {
+    public FieldFormat put(@PathVariable long id, @RequestParam long typeId, @RequestParam String newFormat) {
         return fieldFormatService.put(id, typeId, newFormat);
     }
 
     @ResponseBody
     @GetMapping("/type/{id}")
-    public List<FieldFormat> getByType (@PathVariable long id) {
+    public List<FieldFormat> getByType(@PathVariable long id) {
         return fieldFormatService.getAllByType(id);
     }
 }

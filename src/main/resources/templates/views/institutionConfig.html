@@ -107,7 +107,8 @@
                                     </select>
                                 </div>
                                 <div class="col-4">
-                                    <input class="form-control" id="reading_line" type="text" placeholder="--- Data Start Line ---">
+                                    <input class="form-control" id="reading_line" placeholder="--- Data Start Line ---"
+                                           type="text">
                                 </div>
                                 <div class="col-4">
                                     <select class="form-control form-small" id="inputFormatDropdown">
@@ -186,9 +187,9 @@
                                     </div>
                                     <div class="col-4">
                                         <h5>Data Start Line</h5>
-                                    <input class="form-control" th:attr="id=${'reading_line_update' + config.id}"
-                                           th:value="${config.reading_line}"
-                                           type="text">
+                                        <input class="form-control" th:attr="id=${'reading_line_update' + config.id}"
+                                               th:value="${config.reading_line}"
+                                               type="text">
                                     </div>
                                     <div class="col-4">
                                         <h5>Import Format Type</h5>
@@ -219,7 +220,8 @@
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Fail On Error</h5>
                                         <select class="form-control form-small" th:attr="id=${'failUpdate' +config.id}">
-                                            <option th:selected="${config.fail_on_error}" th:text="${config.fail_on_error}"
+                                            <option th:selected="${config.fail_on_error}"
+                                                    th:text="${config.fail_on_error}"
                                                     th:value="${config.fail_on_error}"></option>
                                             <option th:text="${!config.fail_on_error}"
                                                     th:value="${!config.fail_on_error}"></option>
@@ -313,10 +315,10 @@
         const words = queryString.split('/');
         var instId = words[words.length - 1];
         $.ajax({
-            url: "/autocops/configMappings/" + instId + "/" + id,
+            url: "/autocops/inst-configs-mappings/page/" + instId + "/" + id,
             type: 'GET',
             success: function (res) {
-                window.location.href = "/autocops/configMappings/" + instId + "/" + id;
+                window.location.href = "/autocops/inst-configs-mappings/page/" + instId + "/" + id;
             }
         });
     }

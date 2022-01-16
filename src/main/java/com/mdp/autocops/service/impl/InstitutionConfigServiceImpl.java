@@ -129,7 +129,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             institutionConfigUpdate = institutionsConfigDao.findById(id);
             if (!institutionConfigUpdate.isPresent()) log.info("Error retrieving institution configuration");
             else {
-                if(reading_line != null) institutionConfigUpdate.get().setReading_line(reading_line);
+                if (reading_line != null) institutionConfigUpdate.get().setReading_line(reading_line);
                 if (importFileFormat != null) institutionConfigUpdate.get().setImport_File_format(importFileFormat);
                 if (exportFileFormat != null) institutionConfigUpdate.get().setExport_File_format(exportFileFormat);
                 if (fail_on_error != null) institutionConfigUpdate.get().setFail_on_error(fail_on_error);
@@ -159,9 +159,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
         List<ServiceEntity> services = serviceService.getAll();
         List<InstitutionConfig> configs = getByInst(id);
         for (int i = 0; i < configs.size(); i++) {
-            if (services.contains(configs.get(i).getService())) {
-                services.remove(configs.get(i).getService());
-            }
+            services.remove(configs.get(i).getService());
         }
         return services;
     }

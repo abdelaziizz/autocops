@@ -14,7 +14,7 @@ public class FieldType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name= "field_type")
+    @Column(name = "field_type")
     private String field_type;
 
 }

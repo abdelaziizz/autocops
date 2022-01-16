@@ -4,8 +4,8 @@ import com.mdp.autocops.model.entity.ServiceEntity;
 import com.mdp.autocops.service.framework.ServiceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +16,7 @@ import java.util.List;
 @RequestMapping("/services")
 public class ServiceController {
 
-    @Autowired
-    ServiceService serviceService;
+    private final ServiceService serviceService;
 
     @ResponseBody
     @PostMapping
@@ -47,6 +46,13 @@ public class ServiceController {
     @PutMapping("/{id}")
     public ServiceEntity put(@PathVariable long id, @RequestBody ServiceEntity serviceEntity) {
         return serviceService.put(id, serviceEntity.getService_name(), serviceEntity.getDescription(), serviceEntity.isActive());
+    }
+
+    @GetMapping("/page")
+    public String servicesView(Model model) {
+        List<ServiceEntity> services = serviceService.getAll();
+        model.addAttribute("services", services);
+        return "views/services";
     }
 
 }

@@ -23,8 +23,7 @@ public class FieldTypeServiceImpl implements FieldTypeService {
         List<FieldType> types = new ArrayList<>();
         try {
             types = fieldTypeDao.findAll();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
         return types;
@@ -37,9 +36,8 @@ public class FieldTypeServiceImpl implements FieldTypeService {
 
         try {
             fieldTypeDao.save(fieldType);
-            return  fieldType;
-        }
-        catch (Exception e) {
+            return fieldType;
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
@@ -50,15 +48,13 @@ public class FieldTypeServiceImpl implements FieldTypeService {
         try {
             Optional<FieldType> fieldType = fieldTypeDao.findById(id);
             if (!fieldType.isPresent()) {
-                log.error("There is no field type with id {}",id);
+                log.error("There is no field type with id {}", id);
                 return null;
-            }
-            else {
+            } else {
                 fieldTypeDao.delete(fieldType.get());
                 return fieldType.get();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
@@ -69,14 +65,12 @@ public class FieldTypeServiceImpl implements FieldTypeService {
         try {
             Optional<FieldType> fieldType = fieldTypeDao.findById(id);
             if (!fieldType.isPresent()) {
-                log.error("There is no field type with id {}",id);
+                log.error("There is no field type with id {}", id);
                 return null;
-            }
-            else {
+            } else {
                 return fieldType.get();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
@@ -87,16 +81,14 @@ public class FieldTypeServiceImpl implements FieldTypeService {
         try {
             Optional<FieldType> fieldType = fieldTypeDao.findById(id);
             if (!fieldType.isPresent()) {
-                log.error("There is no field type with id {}",id);
+                log.error("There is no field type with id {}", id);
                 return null;
-            }
-            else {
+            } else {
                 fieldType.get().setField_type(newType);
                 fieldTypeDao.save(fieldType.get());
                 return fieldType.get();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }

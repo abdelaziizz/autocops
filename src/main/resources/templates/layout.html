@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" class="notranslate" translate="no"
-      xmlns="http://www.w3.org/1999/html">
+<html class="notranslate" lang="en" translate="no" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
 <body>
 
 
@@ -44,15 +44,17 @@
             </a>
 
             <div class="nav-logo align-self-center">
-                <a class="navbar-brand" href="index.html"><img alt="logo" th:src="@{/ui-assets/assets/img/90x90.jpg}"> <span
-                        class="navbar-brand-name">AutoCops</span></a>
+                <a class="navbar-brand" href="index.html"><img alt="logo" th:src="@{/ui-assets/assets/img/90x90.jpg}">
+                    <span
+                            class="navbar-brand-name">AutoCops</span></a>
             </div>
 
             <ul class="navbar-item flex-row mr-auto">
                 <li class="nav-item align-self-center search-animated">
                     <form class="form-inline search-full form-inline search" role="search">
                         <div class="search-bar">
-                            <input class="form-control search-form-control  ml-lg-auto" placeholder="Search..." type="text">
+                            <input class="form-control search-form-control  ml-lg-auto" placeholder="Search..."
+                                   type="text">
                         </div>
                     </form>
                     <svg class="feather feather-search toggle-search" fill="none" height="24" stroke="currentColor"
@@ -81,7 +83,8 @@
                             </svg>
                         </a>
 
-                        <div aria-labelledby="customDropdown" class="dropdown-menu dropdown-menu-right animated fadeInUp">
+                        <div aria-labelledby="customDropdown"
+                             class="dropdown-menu dropdown-menu-right animated fadeInUp">
                             <a class="dropdown-item" data-img-value="de" data-value="de" href="javascript:void(0);"><img
                                     alt="flag" class="flag-width" th:src="@{/ui-assets/assets/img/de.png}"> German</a>
                             <a class="dropdown-item" data-img-value="jp" data-value="jp" href="javascript:void(0);"><img
@@ -105,7 +108,8 @@
                         </svg>
                         <span class="badge badge-success"></span>
                     </a>
-                    <div aria-labelledby="messageDropdown" class="dropdown-menu p-0 position-absolute animated fadeInUp">
+                    <div aria-labelledby="messageDropdown"
+                         class="dropdown-menu p-0 position-absolute animated fadeInUp">
                         <div class="">
                             <a class="dropdown-item">
                                 <div class="">
@@ -178,13 +182,15 @@
                         </svg>
                         <span class="badge badge-success"></span>
                     </a>
-                    <div aria-labelledby="notificationDropdown" class="dropdown-menu position-absolute animated fadeInUp">
+                    <div aria-labelledby="notificationDropdown"
+                         class="dropdown-menu position-absolute animated fadeInUp">
                         <div class="notification-scroll">
 
                             <div class="dropdown-item">
                                 <div class="media server-log">
                                     <svg class="feather feather-server" fill="none" height="24" stroke="currentColor"
-                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                         viewBox="0 0 24 24"
                                          width="24" xmlns="http://www.w3.org/2000/svg">
                                         <rect height="8" rx="2" ry="2" width="20" x="2" y="2"></rect>
                                         <rect height="8" rx="2" ry="2" width="20" x="2" y="14"></rect>
@@ -213,7 +219,8 @@
                             <div class="dropdown-item">
                                 <div class="media ">
                                     <svg class="feather feather-heart" fill="none" height="24" stroke="currentColor"
-                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                         viewBox="0 0 24 24"
                                          width="24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                     </svg>
@@ -239,7 +246,8 @@
                             <div class="dropdown-item">
                                 <div class="media file-upload">
                                     <svg class="feather feather-file-text" fill="none" height="24" stroke="currentColor"
-                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                         viewBox="0 0 24 24"
                                          width="24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -285,12 +293,14 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-                    <div aria-labelledby="user-profile-dropdown" class="dropdown-menu position-absolute animated fadeInUp">
+                    <div aria-labelledby="user-profile-dropdown"
+                         class="dropdown-menu position-absolute animated fadeInUp">
                         <div class="">
                             <div class="dropdown-item">
                                 <a class="" href="user_profile.html">
                                     <svg class="feather feather-user" fill="none" height="24" stroke="currentColor"
-                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                         viewBox="0 0 24 24"
                                          width="24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
@@ -300,7 +310,8 @@
                             <div class="dropdown-item">
                                 <a class="" href="apps_mailbox.html">
                                     <svg class="feather feather-inbox" fill="none" height="24" stroke="currentColor"
-                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                         viewBox="0 0 24 24"
                                          width="24" xmlns="http://www.w3.org/2000/svg">
                                         <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
                                         <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
@@ -310,7 +321,8 @@
                             <div class="dropdown-item">
                                 <a class="" href="auth_lockscreen.html">
                                     <svg class="feather feather-lock" fill="none" height="24" stroke="currentColor"
-                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                         viewBox="0 0 24 24"
                                          width="24" xmlns="http://www.w3.org/2000/svg">
                                         <rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
                                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -320,7 +332,8 @@
                             <div class="dropdown-item">
                                 <a class="" href="auth_login.html">
                                     <svg class="feather feather-log-out" fill="none" height="24" stroke="currentColor"
-                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                         viewBox="0 0 24 24"
                                          width="24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                         <polyline points="16 17 21 12 16 7"></polyline>
@@ -377,18 +390,19 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-<!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="dashboard">-->
-<!--                        <li class="active">-->
-<!--                            <a href="index.html"> Analytics </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="index2.html"> Sales </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
+                    <!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="dashboard">-->
+                    <!--                        <li class="active">-->
+                    <!--                            <a href="index.html"> Analytics </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="index2.html"> Sales </a>-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </li>
 
                 <li class="menu single-menu" id="institutions">
-                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"  onclick="navInstitutions()" style="cursor: pointer;">
+                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" onclick="navInstitutions()"
+                       style="cursor: pointer;">
                         <div class="" href="#dashboard">
                             <span>Institutions</span>
                         </div>
@@ -402,7 +416,8 @@
                 </li>
 
                 <li class="menu single-menu" id="services">
-                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" onclick="navServices()" style="cursor: pointer;">
+                    <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" onclick="navServices()"
+                       style="cursor: pointer;">
                         <div class="">
                             <span>Services</span>
                         </div>
@@ -426,62 +441,62 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-<!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="uiKit">-->
-<!--                        <li>-->
-<!--                            <a href="ui_alerts.html"> Alerts </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_avatar.html"> Avatar </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_badges.html"> Badges </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_breadcrumbs.html"> Breadcrumbs </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_buttons.html"> Buttons </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_buttons_group.html"> Button Groups </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_color_library.html"> Color Library </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_dropdown.html"> Dropdown </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_infobox.html"> Infobox </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_jumbotron.html"> Jumbotron </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_loader.html"> Loader </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_pagination.html"> Pagination </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_popovers.html"> Popovers </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_progress_bar.html"> Progress Bar </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_search.html"> Search </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_tooltips.html"> Tooltips </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_treeview.html"> Treeview </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="ui_typography.html"> Typography </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
+                    <!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="uiKit">-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_alerts.html"> Alerts </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_avatar.html"> Avatar </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_badges.html"> Badges </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_breadcrumbs.html"> Breadcrumbs </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_buttons.html"> Buttons </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_buttons_group.html"> Button Groups </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_color_library.html"> Color Library </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_dropdown.html"> Dropdown </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_infobox.html"> Infobox </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_jumbotron.html"> Jumbotron </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_loader.html"> Loader </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_pagination.html"> Pagination </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_popovers.html"> Popovers </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_progress_bar.html"> Progress Bar </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_search.html"> Search </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_tooltips.html"> Tooltips </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_treeview.html"> Treeview </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="ui_typography.html"> Typography </a>-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </li>
 
                 <li class="menu single-menu">
@@ -503,56 +518,56 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-<!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="tables">-->
-<!--                        <li>-->
-<!--                            <a href="table_basic.html"> Basic </a>-->
-<!--                        </li>-->
-<!--                        <li class="sub-sub-submenu-list">-->
-<!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#datatable">-->
-<!--                                DataTables-->
-<!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
-<!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
-<!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
-<!--                                </svg>-->
-<!--                            </a>-->
-<!--&lt;!&ndash;                            <ul class="collapse list-unstyled sub-submenu" data-parent="#datatable" id="datatable">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_basic.html"> Basic </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_basic-dark.html"> Dark </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_ordering_sorting.html"> Order Sorting </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_multi-column_ordering.html"> Multi-Column </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_multiple_tables.html"> Multiple Tables</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_alternative_pagination.html"> Alt. Pagination</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_custom.html"> Custom </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_range_search.html"> Range Search </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_html5.html"> HTML5 Export </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_live_dom_ordering.html"> Live DOM ordering </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a href="table_dt_miscellaneous.html"> Miscellaneous </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </ul>&ndash;&gt;-->
-<!--                        </li>-->
-<!--                    </ul>-->
+                    <!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="tables">-->
+                    <!--                        <li>-->
+                    <!--                            <a href="table_basic.html"> Basic </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="sub-sub-submenu-list">-->
+                    <!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#datatable">-->
+                    <!--                                DataTables-->
+                    <!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
+                    <!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
+                    <!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
+                    <!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
+                    <!--                                </svg>-->
+                    <!--                            </a>-->
+                    <!--&lt;!&ndash;                            <ul class="collapse list-unstyled sub-submenu" data-parent="#datatable" id="datatable">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_basic.html"> Basic </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_basic-dark.html"> Dark </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_ordering_sorting.html"> Order Sorting </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_multi-column_ordering.html"> Multi-Column </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_multiple_tables.html"> Multiple Tables</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_alternative_pagination.html"> Alt. Pagination</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_custom.html"> Custom </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_range_search.html"> Range Search </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_html5.html"> HTML5 Export </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_live_dom_ordering.html"> Live DOM ordering </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <a href="table_dt_miscellaneous.html"> Miscellaneous </a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                            </ul>&ndash;&gt;-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </li>
 
                 <li class="menu single-menu">
@@ -573,62 +588,62 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-<!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="forms">-->
-<!--                        <li>-->
-<!--                            <a href="form_bootstrap_basic.html"> Basic </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_input_group_basic.html"> Input Group </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_layouts.html"> Layouts </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_validation.html"> Validation </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_input_mask.html"> Input Mask </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_bootstrap_select.html"> Bootstrap Select </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_select2.html"> Select2 </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_bootstrap_touchspin.html"> TouchSpin </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_maxlength.html"> Maxlength </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_checkbox_radio.html"> Checkbox &amp; Radio </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_switches.html"> Switches </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_wizard.html"> Wizards </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_fileupload.html"> File Upload </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_quill.html"> Quill Editor </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_markdown.html"> Markdown Editor </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_date_range_picker.html"> Date &amp; Range Picker </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_clipboard.html"> Clipboard </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="form_typeahead.html"> Typeahead </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
+                    <!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="forms">-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_bootstrap_basic.html"> Basic </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_input_group_basic.html"> Input Group </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_layouts.html"> Layouts </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_validation.html"> Validation </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_input_mask.html"> Input Mask </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_bootstrap_select.html"> Bootstrap Select </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_select2.html"> Select2 </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_bootstrap_touchspin.html"> TouchSpin </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_maxlength.html"> Maxlength </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_checkbox_radio.html"> Checkbox &amp; Radio </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_switches.html"> Switches </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_wizard.html"> Wizards </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_fileupload.html"> File Upload </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_quill.html"> Quill Editor </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_markdown.html"> Markdown Editor </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_date_range_picker.html"> Date &amp; Range Picker </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_clipboard.html"> Clipboard </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="form_typeahead.html"> Typeahead </a>-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </li>
 
                 <li class="menu single-menu">
@@ -649,130 +664,130 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-<!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="page">-->
-<!--                        <li>-->
-<!--                            <a href="pages_helpdesk.html"> Helpdesk </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="pages_contact_us.html"> Contact Form </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="pages_faq.html"> FAQ </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="pages_faq2.html"> FAQ 2 </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="pages_privacy.html"> Privacy Policy </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="pages_coming_soon.html"> Coming Soon </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="user_profile.html"> Profile </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="user_account_setting.html"> Account Settings </a>-->
-<!--                        </li>-->
-<!--                        <li class="sub-sub-submenu-list">-->
-<!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#pages-error">-->
-<!--                                Error-->
-<!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
-<!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
-<!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
-<!--                                </svg>-->
-<!--                            </a>-->
-<!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#more" id="pages-error">-->
-<!--                                <li>-->
-<!--                                    <a href="pages_error404.html"> 404 </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="pages_error500.html"> 500 </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="pages_error503.html"> 503 </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="pages_maintenence.html"> Maintanence </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                        <li class="sub-sub-submenu-list">-->
-<!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#user-login">-->
-<!--                                Login-->
-<!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
-<!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
-<!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
-<!--                                </svg>-->
-<!--                            </a>-->
-<!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-login">-->
-<!--                                <li>-->
-<!--                                    <a href="auth_login.html"> Login </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="auth_login_boxed.html"> Login Boxed </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                        <li class="sub-sub-submenu-list">-->
-<!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"-->
-<!--                               href="#user-register"> Register-->
-<!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
-<!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
-<!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
-<!--                                </svg>-->
-<!--                            </a>-->
-<!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-register">-->
-<!--                                <li>-->
-<!--                                    <a href="auth_register.html"> Register </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="auth_register_boxed.html"> Register Boxed </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                    <!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="page">-->
+                    <!--                        <li>-->
+                    <!--                            <a href="pages_helpdesk.html"> Helpdesk </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="pages_contact_us.html"> Contact Form </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="pages_faq.html"> FAQ </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="pages_faq2.html"> FAQ 2 </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="pages_privacy.html"> Privacy Policy </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="pages_coming_soon.html"> Coming Soon </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="user_profile.html"> Profile </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="user_account_setting.html"> Account Settings </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="sub-sub-submenu-list">-->
+                    <!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#pages-error">-->
+                    <!--                                Error-->
+                    <!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
+                    <!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
+                    <!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
+                    <!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
+                    <!--                                </svg>-->
+                    <!--                            </a>-->
+                    <!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#more" id="pages-error">-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="pages_error404.html"> 404 </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="pages_error500.html"> 500 </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="pages_error503.html"> 503 </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="pages_maintenence.html"> Maintanence </a>-->
+                    <!--                                </li>-->
+                    <!--                            </ul>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="sub-sub-submenu-list">-->
+                    <!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#user-login">-->
+                    <!--                                Login-->
+                    <!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
+                    <!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
+                    <!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
+                    <!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
+                    <!--                                </svg>-->
+                    <!--                            </a>-->
+                    <!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-login">-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_login.html"> Login </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_login_boxed.html"> Login Boxed </a>-->
+                    <!--                                </li>-->
+                    <!--                            </ul>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="sub-sub-submenu-list">-->
+                    <!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"-->
+                    <!--                               href="#user-register"> Register-->
+                    <!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
+                    <!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
+                    <!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
+                    <!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
+                    <!--                                </svg>-->
+                    <!--                            </a>-->
+                    <!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-register">-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_register.html"> Register </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_register_boxed.html"> Register Boxed </a>-->
+                    <!--                                </li>-->
+                    <!--                            </ul>-->
+                    <!--                        </li>-->
 
-<!--                        <li class="sub-sub-submenu-list">-->
-<!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"-->
-<!--                               href="#user-passRecovery"> Password Recovery-->
-<!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
-<!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
-<!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
-<!--                                </svg>-->
-<!--                            </a>-->
-<!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-passRecovery">-->
-<!--                                <li>-->
-<!--                                    <a href="auth_pass_recovery.html"> Recover ID </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="auth_pass_recovery_boxed.html"> Recover ID Boxed </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                    <!--                        <li class="sub-sub-submenu-list">-->
+                    <!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"-->
+                    <!--                               href="#user-passRecovery"> Password Recovery-->
+                    <!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
+                    <!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
+                    <!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
+                    <!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
+                    <!--                                </svg>-->
+                    <!--                            </a>-->
+                    <!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-passRecovery">-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_pass_recovery.html"> Recover ID </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_pass_recovery_boxed.html"> Recover ID Boxed </a>-->
+                    <!--                                </li>-->
+                    <!--                            </ul>-->
+                    <!--                        </li>-->
 
-<!--                        <li class="sub-sub-submenu-list">-->
-<!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"-->
-<!--                               href="#user-lockscreen"> Lockscreen-->
-<!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
-<!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
-<!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
-<!--                                </svg>-->
-<!--                            </a>-->
-<!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-lockscreen">-->
-<!--                                <li>-->
-<!--                                    <a href="auth_lockscreen.html"> Unlock </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="auth_lockscreen_boxed.html"> Unlock Boxed </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                    </ul>-->
+                    <!--                        <li class="sub-sub-submenu-list">-->
+                    <!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse"-->
+                    <!--                               href="#user-lockscreen"> Lockscreen-->
+                    <!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
+                    <!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
+                    <!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
+                    <!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
+                    <!--                                </svg>-->
+                    <!--                            </a>-->
+                    <!--                            <ul class="collapse list-unstyled sub-submenu" data-parent="#page" id="user-lockscreen">-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_lockscreen.html"> Unlock </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="auth_lockscreen_boxed.html"> Unlock Boxed </a>-->
+                    <!--                                </li>-->
+                    <!--                            </ul>-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </li>
 
                 <li class="menu single-menu">
@@ -794,45 +809,45 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </a>
-<!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="more">-->
-<!--                        <li>-->
-<!--                            <a href="dragndrop_dragula.html"> Drag and Drop</a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="widgets.html"> Widgets </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="map_jvector.html"> Vector Maps</a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="charts_apex.html"> Charts </a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="fonticons.html"> Font Icons </a>-->
-<!--                        </li>-->
-<!--                        <li class="sub-sub-submenu-list">-->
-<!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#starter-kit">-->
-<!--                                Starter Kit-->
-<!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
-<!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
-<!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
-<!--                                </svg>-->
-<!--                            </a>-->
-<!--                            <ul class="collapse list-unstyled sub-submenu eq-animated eq-fadeInUp" data-parent="#more"-->
-<!--                                id="starter-kit">-->
-<!--                                <li>-->
-<!--                                    <a href="starter_kit_blank_page.html"> Blank Page </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="starter_kit_breadcrumb.html"> Breadcrumb </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="../../documentation/index.html"> Documentation </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
+                    <!--                    <ul class="collapse submenu list-unstyled" data-parent="#topAccordion" id="more">-->
+                    <!--                        <li>-->
+                    <!--                            <a href="dragndrop_dragula.html"> Drag and Drop</a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="widgets.html"> Widgets </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="map_jvector.html"> Vector Maps</a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="charts_apex.html"> Charts </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="fonticons.html"> Font Icons </a>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="sub-sub-submenu-list">-->
+                    <!--                            <a aria-expanded="false" class="dropdown-toggle" data-toggle="collapse" href="#starter-kit">-->
+                    <!--                                Starter Kit-->
+                    <!--                                <svg class="feather feather-chevron-right" fill="none" height="24" stroke="currentColor"-->
+                    <!--                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"-->
+                    <!--                                     width="24" xmlns="http://www.w3.org/2000/svg">-->
+                    <!--                                    <polyline points="9 18 15 12 9 6"></polyline>-->
+                    <!--                                </svg>-->
+                    <!--                            </a>-->
+                    <!--                            <ul class="collapse list-unstyled sub-submenu eq-animated eq-fadeInUp" data-parent="#more"-->
+                    <!--                                id="starter-kit">-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="starter_kit_blank_page.html"> Blank Page </a>-->
+                    <!--                                </li>-->
+                    <!--                                <li>-->
+                    <!--                                    <a href="starter_kit_breadcrumb.html"> Breadcrumb </a>-->
+                    <!--                                </li>-->
+                    <!--                            </ul>-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            <a href="../../documentation/index.html"> Documentation </a>-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </li>
             </ul>
         </nav>
@@ -868,21 +883,22 @@
     <script>
         function navInstitutions() {
             $.ajax({
-                url: "/autocops/institutionsPage",
+                url: "/autocops/institutions/page",
                 type: 'GET',
                 success: function (res) {
-                    window.location.href = "/autocops/institutionsPage";
+                    window.location.href = "/autocops/institutions/page";
                     document.getElementById("institutions").classList.add('active');
                 }
             });
 
         }
+
         function navServices() {
             $.ajax({
-                url: "/autocops/servicesView",
+                url: "/autocops/services/page",
                 type: 'GET',
                 success: function (res) {
-                    window.location.href = "/autocops/servicesView";
+                    window.location.href = "/autocops/services/page";
                 }
             });
         }
@@ -891,13 +907,13 @@
             var url = window.location.href;
             const urlSplit = url.split('/');
             const length = urlSplit.length;
-            if(urlSplit[length-1] == "institutionsPage" || urlSplit[length-2] == "institutionsConfig" || urlSplit[length-3] == "configMappings") {
+            if (urlSplit[length - 2] == "institutions" || urlSplit[length - 3] == "inst-configs" || urlSplit[length - 4] == "inst-configs-mappings") {
                 if (document.getElementById("services").classList.contains('active')) {
                     document.getElementById("services").classList.remove('active');
                 }
                 document.getElementById("institutions").classList.add('active');
             }
-            if (urlSplit[length-1] == "servicesView") {
+            if (urlSplit[length - 2] == "services") {
                 if (document.getElementById("institutions").classList.contains('active')) {
                     document.getElementById("institutions").classList.remove('active');
                 }
@@ -906,8 +922,6 @@
         });
     </script>
 </div>
-
-
 
 
 </body>

@@ -1,17 +1,19 @@
 package com.mdp.autocops.controller;
 
+import com.mdp.autocops.model.entity.FileFormat;
+import com.mdp.autocops.model.entity.Institution;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.ServiceEntity;
+import com.mdp.autocops.service.framework.FileFormatService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
+import com.mdp.autocops.service.framework.InstitutionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,7 +22,8 @@ import java.util.Locale;
 public class InstitutionConfigController {
 
     private final InstitutionConfigService institutionConfigService;
-    private final MessageSource messageSource;
+    private final InstitutionService institutionService;
+    private final FileFormatService fileFormatService;
 
 
     @ResponseBody
@@ -43,7 +46,7 @@ public class InstitutionConfigController {
 
     @ResponseBody
     @PutMapping("/{id}")
-    public InstitutionConfig put(@PathVariable long id,@RequestParam Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
+    public InstitutionConfig put(@PathVariable long id, @RequestParam Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
                                  @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id) {
         return institutionConfigService.put(id, reading_line, import_format, export_format, fail_on_error, active, service_id);
     }
@@ -68,6 +71,19 @@ public class InstitutionConfigController {
     public List<ServiceEntity> getAvailableServices(@PathVariable long id) {
 //        System.out.println(messageSource.getMessage("CONFIG_ERROR", new Object[0],Locale.ENGLISH));
         return institutionConfigService.getAvailableServices(id);
+    }
+
+    @GetMapping("/page/{institutionId}")
+    public String institutionConfigPage(@PathVariable long institutionId, Model model) {
+        List<InstitutionConfig> institutionConfigs = institutionConfigService.getByInst(institutionId);
+        Institution institution = institutionService.getById(institutionId);
+        model.addAttribute("configs", institutionConfigs);
+        model.addAttribute("inst", institution);
+        List<ServiceEntity> availableServices = institutionConfigService.getAvailableServices(institution.getInst_id());
+        List<FileFormat> fileFormats = fileFormatService.getAll();
+        model.addAttribute("availableServices", availableServices);
+        model.addAttribute("formats", fileFormats);
+        return "views/institutionConfig";
     }
 
 }

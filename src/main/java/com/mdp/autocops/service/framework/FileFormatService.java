@@ -1,6 +1,5 @@
 package com.mdp.autocops.service.framework;
 
-import com.mdp.autocops.model.entity.FieldFormat;
 import com.mdp.autocops.model.entity.FileFormat;
 
 import java.util.List;

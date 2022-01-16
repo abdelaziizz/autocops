@@ -131,10 +131,10 @@
     function goToConfigs(instId) {
         console.log(instId);
         $.ajax({
-            url: "/autocops/institutionsConfig/" + instId,
+            url: "/autocops/inst-configs/page/" + instId,
             type: 'GET',
             success: function (res) {
-                window.location.href = "/autocops/institutionsConfig/" + instId;
+                window.location.href = "/autocops/inst-configs/page/" + instId;
             }
         });
     }
