@@ -32,7 +32,7 @@
 //                        ((HttpResponseException) cause).getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
 //                    throw new UnAuthorizedException("UNAUTHORIZED");
 //                } else {
-//                    e.printStackTrace();
+//                    e.getMessage();
 //                    throw e;
 //                }
 //            }
