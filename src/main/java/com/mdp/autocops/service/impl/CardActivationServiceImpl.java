@@ -39,10 +39,11 @@ public class CardActivationServiceImpl implements CardActivationService {
     @Override
     public String readAndExport() {
         try {
-            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(22);
-            InstitutionConfig config = configService.getById(22);
+            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(1);
+            InstitutionConfig config = configService.getById(1);
 
-            FileInputStream file = new FileInputStream("C:\\Users\\ab.ashraf\\Desktop\\file samples\\card activation\\ADIB\\in\\ActivationCard.xlsx");
+//            FileInputStream file = new FileInputStream("C:\\Users\\ab.ashraf\\Desktop\\file samples\\card activation\\ADIB\\in\\ActivationCard.xlsx");
+            FileInputStream file = new FileInputStream("/Users/abdelaziz/Documents/MDP/file samples/card activation/ADIB/in/Activation Card.xlsx");
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
             for ( int j = config.getReading_line() ; j <= sheet.getLastRowNum() ; j++ ) {
@@ -55,27 +56,39 @@ public class CardActivationServiceImpl implements CardActivationService {
                 application.addElement("application_status").addText("12");
                 application.addElement("operator_id").addText("20");
                 application.addElement("institution_id").addText("13");
-                application.addElement("agent_id").addText("6565");
+                Element agent_id = application.addElement("agent_id");
                 application.addElement("customer_type").addText("14");
                 application.addElement("appl_prioritized").addText("15");
                 Element customer = application.addElement("customer");
                 customer.addElement("command").addText("16");
-                customer.addElement("customer_number").addText("55555");
+                Element customer_number = customer.addElement("customer_number");
                 Element contract = customer.addElement("contract");
                 contract.addElement("command").addText("17");
-                contract.addElement("contract_number").addText("453453");
+                Element contract_number = contract.addElement("contract_number");
                 Element card = contract.addElement("card").addAttribute("id","card_1");
                 card.addElement("command").addText("21");
-                card.addElement("card_number").addText("777777");
+                Element card_number = card.addElement("card_number");
                 card.addElement("card_status").addText("18");
+                for ( int i = 0 ; i < mappings.size() ; i++ ) {
+                    InstitutionsConfigMapping mapping = mappings.get(i);
+                    String fieldName = mapping.getExport_field_head().getField_name();
+                    if (fieldName.equals("customer_number")) {
+                        customer_number.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                    }
+                    if (fieldName.equals("contract_number")) {
+                        contract_number.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                    }
+                    if (fieldName.equals("card_number")) {
+                        card_number.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                    }
+                    if (fieldName.equals("agent_id")) {
+                        agent_id.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                    }
+                }
                 OutputFormat format = OutputFormat.createPrettyPrint();
                 XMLWriter writer;
                 writer = new XMLWriter( System.out, format );
                 writer.write( document );
-//                for ( int i = 0 ; i < mappings.size() ; i++ ) {
-//                    InstitutionsConfigMapping mapping = mappings.get(i);
-//                    System.out.println(mapping.getExport_field_head().getField_name() + " : " + row.getCell(mapping.getImport_field_index()-1));
-//                }
             }
             return "success";
         }
