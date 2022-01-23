@@ -36,7 +36,9 @@
                                     <th>Fail On Error</th>
                                     <th>Active</th>
                                     <th>Service</th>
-                                    <th>Actions</th>
+                                    <th>Import Path</th>
+                                    <th>Export Path</th>
+                                    <th width="500">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -49,6 +51,8 @@
                                         <td th:text="${config.fail_on_error}"></td>
                                         <td th:text="${config.active}"></td>
                                         <td th:text="${config.service.service_name}"></td>
+                                        <td th:text="${config.import_path}"></td>
+                                        <td th:text="${config.export_path}"></td>
                                         <td>
                                             <button class="btn btn-danger"
                                                     onclick="deleteInst($(this).attr('data-config-id'))"
@@ -143,6 +147,14 @@
                                         <option value="false">False</option>
                                     </select>
                                 </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <input class="form-control" id="import_path" placeholder="--- Import Path ---"
+                                           type="text">
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <input class="form-control" id="export_path" placeholder="--- Export Path ---"
+                                           type="text">
+                                </div>
                             </div>
 
                         </form>
@@ -236,6 +248,18 @@
                                             <option th:text="${!config.active}" th:value="${!config.active}"></option>
                                         </select>
                                     </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Import Path</h5>
+                                        <input class="form-control" th:attr="id=${'import_path_update' + config.id}"
+                                               th:value="${config.import_path}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Export Path</h5>
+                                        <input class="form-control" th:attr="id=${'export_path_update' + config.id}"
+                                               th:value="${config.export_path}"
+                                               type="text">
+                                    </div>
                                 </div>
 
                             </form>
@@ -270,6 +294,8 @@
         institution.fail_on_error = $("#failDropdown").val();
         institution.active = $("#activeDropdown").val();
         institution.service_id = $("#serviceDropdown").val();
+        institution.import_path = $("#import_path").val();
+        institution.export_path = $("#export_path").val();
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs/' + instId,
@@ -289,6 +315,8 @@
         institution.fail_on_error = $("#failUpdate" + id).val();
         institution.active = $("#activeUpdate" + id).val();
         institution.service_id = $("#serTypeUpdate" + id).val();
+        institution.import_path = $("#import_path_update" + id).val();
+        institution.export_path = $("#export_path_update" + id).val();
         $.ajax({
             type: 'put',
             url: '/autocops/inst-configs/' + id,

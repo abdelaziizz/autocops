@@ -35,7 +35,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
 
     @Override
-    public InstitutionConfig create(long instId, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
+    public InstitutionConfig create(long instId, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
+                                    long service_id, String import_path, String export_path) {
         InstitutionConfig institutionConfigNew = new InstitutionConfig();
         Institution inst = new Institution();
         FileFormat importFileFormat = new FileFormat();
@@ -53,6 +54,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
         institutionConfigNew.setReading_line(reading_line);
         institutionConfigNew.setImport_File_format(importFileFormat);
         institutionConfigNew.setExport_File_format(exportFileFormat);
+        institutionConfigNew.setImport_path(import_path);
+        institutionConfigNew.setExport_path(export_path);
         institutionConfigNew.setFail_on_error(fail_on_error);
         institutionConfigNew.setService(service);
         institutionConfigNew.setActive(active);
@@ -119,7 +122,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
     }
 
     @Override
-    public InstitutionConfig put(long id, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active, long service_id) {
+    public InstitutionConfig put(long id, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
+                                 long service_id, String import_path, String export_path) {
         Optional<InstitutionConfig> institutionConfigUpdate = null;
         ServiceEntity service = serviceService.getById(service_id);
         FileFormat importFileFormat = fileFormatService.getById(import_format);
@@ -135,6 +139,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
                 if (fail_on_error != null) institutionConfigUpdate.get().setFail_on_error(fail_on_error);
                 if (active != null) institutionConfigUpdate.get().setActive(active);
                 if (service != null) institutionConfigUpdate.get().setService(service);
+                if (import_path != null) institutionConfigUpdate.get().setImport_path(import_path);
+                if (export_path != null) institutionConfigUpdate.get().setExport_path(export_path);
                 institutionsConfigDao.save(institutionConfigUpdate.get());
 
             }

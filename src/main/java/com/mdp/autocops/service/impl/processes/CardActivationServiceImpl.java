@@ -1,20 +1,17 @@
-package com.mdp.autocops.service.impl;
+package com.mdp.autocops.service.impl.processes;
 
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
-import com.mdp.autocops.service.framework.CardActivationService;
+import com.mdp.autocops.service.framework.processes.CardActivationService;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import lombok.extern.log4j.Log4j2;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -39,11 +36,11 @@ public class CardActivationServiceImpl implements CardActivationService {
     @Override
     public String readAndExport() {
         try {
-            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(1);
-            InstitutionConfig config = configService.getById(1);
+            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(22);
+            InstitutionConfig config = configService.getById(22);
 
-//            FileInputStream file = new FileInputStream("C:\\Users\\ab.ashraf\\Desktop\\file samples\\card activation\\ADIB\\in\\ActivationCard.xlsx");
-            FileInputStream file = new FileInputStream("/Users/abdelaziz/Documents/MDP/file samples/card activation/ADIB/in/Activation Card.xlsx");
+            FileInputStream file = new FileInputStream("C:\\Users\\ab.ashraf\\Desktop\\file samples\\card activation\\ADIB\\in\\ActivationCard.xlsx");
+//            FileInputStream file = new FileInputStream("/Users/abdelaziz/Documents/MDP/file samples/card activation/ADIB/in/Activation Card.xlsx");
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
             for ( int j = config.getReading_line() ; j <= sheet.getLastRowNum() ; j++ ) {
@@ -73,16 +70,16 @@ public class CardActivationServiceImpl implements CardActivationService {
                     InstitutionsConfigMapping mapping = mappings.get(i);
                     String fieldName = mapping.getExport_field_head().getField_name();
                     if (fieldName.equals("customer_number")) {
-                        customer_number.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                        customer_number.addText(Integer.toString((int)row.getCell(Integer.valueOf(mapping.getImport_field_index())).getNumericCellValue()));
                     }
                     if (fieldName.equals("contract_number")) {
-                        contract_number.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                        contract_number.addText(Integer.toString((int)row.getCell(Integer.valueOf(mapping.getImport_field_index())).getNumericCellValue()));
                     }
                     if (fieldName.equals("card_number")) {
-                        card_number.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                        card_number.addText(Integer.toString((int)row.getCell(Integer.valueOf(mapping.getImport_field_index())).getNumericCellValue()));
                     }
                     if (fieldName.equals("agent_id")) {
-                        agent_id.addText(Integer.toString((int)row.getCell(mapping.getImport_field_index()).getNumericCellValue()));
+                        agent_id.addText(Integer.toString((int)row.getCell(Integer.valueOf(mapping.getImport_field_index())).getNumericCellValue()));
                     }
                 }
                 OutputFormat format = OutputFormat.createPrettyPrint();

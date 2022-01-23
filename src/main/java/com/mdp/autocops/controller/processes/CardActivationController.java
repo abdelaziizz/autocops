@@ -1,6 +1,6 @@
-package com.mdp.autocops.controller;
+package com.mdp.autocops.controller.processes;
 
-import com.mdp.autocops.service.framework.CardActivationService;
+import com.mdp.autocops.service.framework.processes.CardActivationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;

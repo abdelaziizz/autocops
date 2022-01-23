@@ -38,4 +38,10 @@ public class InstitutionConfig {
     @OneToOne
     @JoinColumn(name = "service")
     private ServiceEntity service;
+
+    @Column(name = "import_path")
+    private String import_path;
+
+    @Column(name = "export_path")
+    private String export_path;
 }
