@@ -36,11 +36,10 @@ public class CardActivationServiceImpl implements CardActivationService {
     @Override
     public String readAndExport() {
         try {
-            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(22);
-            InstitutionConfig config = configService.getById(22);
+            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(1);
+            InstitutionConfig config = configService.getById(1);
 
-            FileInputStream file = new FileInputStream("C:\\Users\\ab.ashraf\\Desktop\\file samples\\card activation\\ADIB\\in\\ActivationCard.xlsx");
-//            FileInputStream file = new FileInputStream("/Users/abdelaziz/Documents/MDP/file samples/card activation/ADIB/in/Activation Card.xlsx");
+            FileInputStream file = new FileInputStream(config.getImport_path());
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
             for ( int j = config.getReading_line() ; j <= sheet.getLastRowNum() ; j++ ) {
