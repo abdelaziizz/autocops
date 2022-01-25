@@ -44,10 +44,9 @@ public class CardIssuanceServiceImpl implements CardIssuanceService {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(new File(fileName));
             doc.getDocumentElement().normalize();
-            System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
-            System.out.println("------");
+//            System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
+//            System.out.println("------");
             NodeList list = doc.getElementsByTagName("Record");
-            System.out.println(list.getLength());
             for (int temp = 0; temp < list.getLength(); temp++) {
                 Node node = list.item(temp);
                 String uid = null; String customer_category = null; String card_prefix = null; String fio = null;
@@ -59,11 +58,8 @@ public class CardIssuanceServiceImpl implements CardIssuanceService {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
                     // String id = element.getAttribute("id");
-                    if (element.getElementsByTagName("UID").getLength() != 0 ){
-                        System.out.println(element.getElementsByTagName("CUSTOMER.CATEGORY").getLength());
-                        //uid = element.get;
-                    }
-                    if (element.getElementsByTagName("CUSTOMER.CATEGORY").getLength() != 0 ) customer_category = element.getElementsByTagName("CUSTOMER.CATEGORY").item(0).getTextContent();
+                    if (element.getElementsByTagName("UID").getLength() != 0) uid = element.getElementsByTagName("UID").item(0).getTextContent();
+                    if (element.getElementsByTagName("CUSTOMER.CATEGORY").getLength() != 0) customer_category = element.getElementsByTagName("CUSTOMER.CATEGORY").item(0).getTextContent();
                     if (element.getElementsByTagName("CARDPREFIX").getLength() != 0 ) card_prefix = element.getElementsByTagName("CARDPREFIX").item(0).getTextContent();
                     if (element.getElementsByTagName("FIO").getLength() != 0 ) fio = element.getElementsByTagName("FIO").item(0).getTextContent();
                     if (element.getElementsByTagName("SEX").getLength() != 0 ) sex = element.getElementsByTagName("SEX").item(0).getTextContent();
@@ -89,32 +85,32 @@ public class CardIssuanceServiceImpl implements CardIssuanceService {
                     if (element.getElementsByTagName("RECEIVE.SMS").getLength() != 0 ) receive_sms = element.getElementsByTagName("RECEIVE.SMS").item(0).getTextContent();
                     if (element.getElementsByTagName("CMSACCOUNT").getLength() != 0 ) cms_account = element.getElementsByTagName("CMSACCOUNT").item(0).getTextContent();
 
-                    System.out.println(uid);
-                    System.out.println(customer_category);
-                    System.out.println(card_prefix);
-                    System.out.println(fio);
-                    System.out.println(sex);
-                    System.out.println(id_number);
-                    System.out.println(id_type);
-                    System.out.println(id_series);
-                    System.out.println(country);
-                    System.out.println(address_type);
-                    System.out.println(region);
-                    System.out.println(city);
-                    System.out.println(street);
-                    //System.out.println(house);
-                    //System.out.println(apartment);
-                    System.out.println(cellphone);
-                    System.out.println(brpart);
-                    System.out.println(name_on_card);
-                    System.out.println(nationality);
-                    System.out.println(martial_status);
-                    System.out.println(education);
-                    //System.out.println(business_nature);
-                    System.out.println(birthday);
-                    System.out.println(place_of_birth);
-                    System.out.println(receive_sms);
-                    System.out.println(cms_account);
+                    System.out.println("uid : "+uid);
+                    System.out.println("customer category : "+customer_category);
+                    System.out.println("card prefix : "+card_prefix);
+                    System.out.println("fio : "+fio);
+                    System.out.println("sex : "+sex);
+                    System.out.println("id number : "+id_number);
+                    System.out.println("id type : "+id_type);
+                    System.out.println("id series : "+id_series);
+                    System.out.println("country : "+country);
+                    System.out.println("address type : "+address_type);
+                    System.out.println("region : "+region);
+                    System.out.println("city : "+city);
+                    System.out.println("street : "+street);
+                    System.out.println("house : "+house);
+                    System.out.println("apartment : "+apartment);
+                    System.out.println("cellphone : "+cellphone);
+                    System.out.println("brpart : "+brpart);
+                    System.out.println("name on card : "+name_on_card);
+                    System.out.println("nationality : "+nationality);
+                    System.out.println("martial status : "+martial_status);
+                    System.out.println("education : "+education);
+                    System.out.println("business nature : "+business_nature);
+                    System.out.println("birthday : "+birthday);
+                    System.out.println("place of birth : "+place_of_birth);
+                    System.out.println("receive sms : "+receive_sms);
+                    System.out.println("cms account : "+cms_account);
                 }
 
                 System.out.println("------------");
