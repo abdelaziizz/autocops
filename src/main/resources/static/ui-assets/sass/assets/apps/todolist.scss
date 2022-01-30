@@ -2,13 +2,14 @@
 //      Imports
 //  =================
 
-@import '../../base/base';    // Base Variables
+@import '../../base/base'; // Base Variables
 
 .main-container {
-    min-height: auto;
+  min-height: auto;
 }
+
 .layout-px-spacing {
-    min-height: auto!important;
+  min-height: auto !important;
 }
 
 /*----------Theme checkbox---------*/
@@ -182,7 +183,8 @@
       transition: all 0.35s ease;
     }
 
-    .nav-item:not(:last-child) a.nav-link {}
+    .nav-item:not(:last-child) a.nav-link {
+    }
 
     .nav-link {
       .badge {
@@ -299,7 +301,8 @@
   cursor: pointer;
   position: relative;
 
-  &:hover {}
+  &:hover {
+  }
 
   &:not(:last-child) {
     border-bottom: 1px solid $m-color_3;
@@ -534,7 +537,8 @@
   background-color: $white;
   border-radius: 6px;
 
-  .compose-content {}
+  .compose-content {
+  }
 }
 
 #todoShowListItem {

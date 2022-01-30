@@ -2,13 +2,14 @@
 //      Imports
 //  =================
 
-@import '../../base/base';    // Base Variables
+@import '../../base/base'; // Base Variables
 
 .main-container {
-    min-height: auto;
+  min-height: auto;
 }
+
 .layout-px-spacing {
-    min-height: auto!important;
+  min-height: auto !important;
 }
 
 @keyframes fadeInUp {
@@ -536,8 +537,9 @@
     }
   }
 }
+
 @media (max-width: 991px) {
-    .layout-top-spacing {
-        margin-top: 37px;
-    }
+  .layout-top-spacing {
+    margin-top: 37px;
+  }
 }

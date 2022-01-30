@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../../../base/base';    // Base Variables
+@import '../../../base/base'; // Base Variables
 
 
 .widget-content-area {
@@ -127,7 +127,8 @@ table.dataTable {
     -webkit-transform: translateY(-1px) scale(1.01);
     transform: translateY(-1px) scale(1.01);
 
-    td:first-child {}
+    td:first-child {
+    }
   }
 
   &.non-hover:not(.table-dark) tbody tr:hover {

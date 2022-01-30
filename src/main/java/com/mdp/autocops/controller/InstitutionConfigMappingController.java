@@ -69,7 +69,7 @@ public class InstitutionConfigMappingController {
         List<FieldType> fieldTypes = fieldTypeService.getAll();
         List<FieldFormat> fieldFormats = fieldFormatService.getAll();
         List<ExportField> exportFields = mappingService.getAvailableExport(configId);
-                //exportFieldService.getAllByService(config.getService().getService_id());
+        //exportFieldService.getAllByService(config.getService().getService_id());
         model.addAttribute("exportFields", exportFields);
         model.addAttribute("fieldTypes", fieldTypes);
         model.addAttribute("fieldFormats", fieldFormats);

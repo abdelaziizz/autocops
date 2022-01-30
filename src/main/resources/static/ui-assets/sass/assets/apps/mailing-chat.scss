@@ -2,14 +2,16 @@
 //      Imports
 //  =================
 
-@import '../../base/base';    // Base Variables
+@import '../../base/base'; // Base Variables
 
 .main-container {
-    min-height: auto;
+  min-height: auto;
 }
+
 .layout-px-spacing {
-    min-height: auto!important;
+  min-height: auto !important;
 }
+
 .wrapper {
   position: relative;
   left: 50%;
@@ -424,7 +426,8 @@
               margin-right: 7px;
             }
 
-            &.switch-to-phone-call {}
+            &.switch-to-phone-call {
+            }
 
             &.switch-to-microphone {
               position: relative;
@@ -441,12 +444,14 @@
               }
             }
 
-            &.add-more-caller {}
+            &.add-more-caller {
+            }
 
             &.cancel-call {
               background-color: $danger;
 
-              &:hover {}
+              &:hover {
+              }
             }
           }
         }
@@ -558,7 +563,8 @@
         height: calc(100% - 79px);
         overflow: auto;
 
-        .chat-conversation-box-scroll {}
+        .chat-conversation-box-scroll {
+        }
 
         .chat {
           position: relative;

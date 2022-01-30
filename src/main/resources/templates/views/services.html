@@ -185,8 +185,6 @@
         institution.service_name = name;
         institution.description = description;
         institution.active = active;
-        console.log(institution);
-
         $.ajax({
             type: 'post',
             url: '/autocops/services',
@@ -204,8 +202,6 @@
         ser.service_name = $('#serNameUpdate' + id).val();
         ser.description = $('#desUpdate' + id).val();
         ser.active = $("#activeUpdate" + id).val();
-        console.log(ser);
-
         $.ajax({
             type: 'put',
             url: '/autocops/services/' + id,

@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../../../base/base';    // Base Variables
+@import '../../../base/base'; // Base Variables
 
 pre {
   white-space: pre-wrap;
@@ -26,7 +26,8 @@ ul {
   padding: 0;
 }
 
-.parent {}
+.parent {
+}
 
 .header-search > form > .input-box > .search-box {
   background-color: #77EDB0;
@@ -497,7 +498,8 @@ body.gu-unselectable .handle {
 
   .parent.ex-5 {
     .dragula {
-      .media-body, .gu-transit .media-body {}
+      .media-body, .gu-transit .media-body {
+      }
     }
 
     .media ul {

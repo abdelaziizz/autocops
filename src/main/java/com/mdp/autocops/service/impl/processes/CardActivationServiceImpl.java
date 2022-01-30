@@ -2,27 +2,23 @@ package com.mdp.autocops.service.impl.processes;
 
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
-import com.mdp.autocops.service.framework.processes.CardActivationService;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
+import com.mdp.autocops.service.framework.processes.CardActivationService;
 import lombok.extern.log4j.Log4j2;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,8 +42,7 @@ public class CardActivationServiceImpl implements CardActivationService {
             InstitutionConfig config = configService.getById(1);
             if (!config.getImport_File_format().getFormat_type().equals("Excel")) {
                 return "Incompatible input file";
-            }
-            else {
+            } else {
                 List<Map> maps = readExcel(config.getReading_line(), config.getImport_path(), mappings);
                 Document document = DocumentHelper.createDocument();
                 Element applications = document.addElement("APPLICATIONS");
@@ -93,15 +88,14 @@ public class CardActivationServiceImpl implements CardActivationService {
                 writer.write(document);
                 return "success";
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return "fail";
         }
     }
 
 
-    public List<Map> readExcel (int reading_line, String path, List<InstitutionsConfigMapping> mappings) throws IOException {
+    public List<Map> readExcel(int reading_line, String path, List<InstitutionsConfigMapping> mappings) throws IOException {
         List<Map> records = new ArrayList<>();
         try {
             FileInputStream file = new FileInputStream(path);
@@ -110,7 +104,7 @@ public class CardActivationServiceImpl implements CardActivationService {
             for (int j = reading_line; j <= sheet.getLastRowNum(); j++) {
                 Map<String, String> current_record = new HashMap<>();
                 Row row = sheet.getRow(j);
-                for ( int i = 0 ; i < mappings.size() ; i++ ) {
+                for (int i = 0; i < mappings.size(); i++) {
                     String type = mappings.get(i).getImport_field_type().getField_type();
                     if (type.equals("Number")) {
                         current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf((long) row.getCell(mappings.get(i).getImport_field_index()).getNumericCellValue()));

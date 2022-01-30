@@ -124,13 +124,13 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
         return mappingList;
     }
 
-    public List<ExportField> getAvailableExport (long config_id) {
+    public List<ExportField> getAvailableExport(long config_id) {
         InstitutionConfig config = institutionConfigService.getById(config_id);
         List<InstitutionsConfigMapping> mappings = findByInstConfig(config_id);
         List<ExportField> fields = exportFieldService.getAllByService(config.getService().getService_id());
 
-        for (int j = 0 ; j < mappings.size() ; j++) {
-            for (int i = 0 ; i < fields.size() ; i++) {
+        for (int j = 0; j < mappings.size(); j++) {
+            for (int i = 0; i < fields.size(); i++) {
                 if (mappings.get(j).getExport_field_head().getField_name().equals(fields.get(i).getField_name())) {
                     fields.remove(i);
                 }

@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../../base/base';    // Base Variables
+@import '../../base/base'; // Base Variables
 
 body {
   &.swal2-shown {
@@ -159,7 +159,8 @@ body {
 }
 
 .swal2-modal {
-  .swal2-confirm.swal2-styled, .swal2-cancel.swal2-styled {}
+  .swal2-confirm.swal2-styled, .swal2-cancel.swal2-styled {
+  }
 
   .swal2-image {
     margin: 20px auto;

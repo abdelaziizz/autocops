@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../base/base';    // Base Variables
+@import '../base/base'; // Base Variables
 
 html {
   min-height: 100%;
@@ -1706,7 +1706,8 @@ code {
     }
   }
 
-  #sidebar ul.menu-categories ul.submenu > li.active a {}
+  #sidebar ul.menu-categories ul.submenu > li.active a {
+  }
 
   .topbar-nav.header nav#topbar ul.menu-categories li.menu {
     .submenu li.active a {

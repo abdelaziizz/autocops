@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../../base/base';    // Base Variables
+@import '../../base/base'; // Base Variables
 
 /*!
  * FullCalendar v3.4.0 Stylesheet
@@ -40,7 +40,8 @@ a {
 .form-control {
   border-radius: 4px;
 
-  &:focus {}
+  &:focus {
+  }
 }
 
 .fc-icon, body .fc {
@@ -712,7 +713,8 @@ a.fc-more {
 }
 
 .fc-toolbar {
-  &.fc-header-toolbar {}
+  &.fc-header-toolbar {
+  }
 
   &.fc-footer-toolbar {
     margin-top: 1em;
@@ -818,7 +820,8 @@ a.fc-more {
   right: 0;
 }
 
-.fc-day-top.fc-other-month {}
+.fc-day-top.fc-other-month {
+}
 
 .fc-basic-view {
   .fc-day-number, .fc-week-number {

@@ -2,13 +2,14 @@
 //      Imports
 //  =================
 
-@import '../../base/base';    // Base Variables
+@import '../../base/base'; // Base Variables
 
 .main-container {
-    min-height: auto;
+  min-height: auto;
 }
+
 .layout-px-spacing {
-    min-height: auto!important;
+  min-height: auto !important;
 }
 
 [class*="g-dot-"] {

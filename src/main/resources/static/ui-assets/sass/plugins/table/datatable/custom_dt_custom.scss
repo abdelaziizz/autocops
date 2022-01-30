@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../../../base/base';    // Base Variables
+@import '../../../base/base'; // Base Variables
 
 
 .widget-content-area {
@@ -59,7 +59,8 @@ table.dataTable {
     color: $warning;
   }
 
-  .profile-img {}
+  .profile-img {
+  }
 
   img.profile-img {
     width: 50px;
@@ -102,7 +103,8 @@ table.dataTable {
     color: $warning;
   }
 
-  .profile-img {}
+  .profile-img {
+  }
 
   img.profile-img {
     width: 50px;

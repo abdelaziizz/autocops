@@ -18,7 +18,7 @@ public class CardActivationController {
 
     @ResponseBody
     @PostMapping("/adib")
-    public String processAdib(){
+    public String processAdib() {
         return cardActivationService.readAndExport();
     }
 

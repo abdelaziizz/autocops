@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../../base/base';    // Base Variables
+@import '../../base/base'; // Base Variables
 
 .main-container, #content {
   min-height: auto;
@@ -455,7 +455,8 @@
 =====================
 */
 
-.new-control.new-radio .new-control-indicator {}
+.new-control.new-radio .new-control-indicator {
+}
 
 .modal-content {
   border: none;
@@ -518,13 +519,15 @@
     padding-top: 20px;
   }
 
-  input {}
+  input {
+  }
 
   .note-description {
     padding-top: 40px;
   }
 
-  textarea {}
+  textarea {
+  }
 }
 
 /*

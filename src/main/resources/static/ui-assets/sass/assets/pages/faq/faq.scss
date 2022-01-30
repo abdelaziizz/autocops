@@ -2,7 +2,7 @@
 //      Imports
 //  =================
 
-@import '../../../base/base';    // Base Variables
+@import '../../../base/base'; // Base Variables
 
 
 body {
@@ -219,7 +219,8 @@ nav .navbar-brand {
         fill: rgba(27, 85, 226, 0.2392156863);
       }
 
-      .collapse {}
+      .collapse {
+      }
 
       .card-body p {
         font-size: 14px;
