@@ -56,9 +56,9 @@ public class InstitutionConfigMappingController {
     }
 
     @ResponseBody
-    @GetMapping("/export-fields/{config_id}")
+    @GetMapping("/export-fields/getAvailable/{config_id}")
     public List<ExportField> getAvailableFields(@PathVariable long config_id) {
-        return mappingService.getAvailableFields(config_id);
+        return mappingService.getAvailableExport(config_id);
     }
 
     @GetMapping("/page/{institutionId}/{configId}")
@@ -68,7 +68,8 @@ public class InstitutionConfigMappingController {
         InstitutionConfig config = institutionConfigService.getById(configId);
         List<FieldType> fieldTypes = fieldTypeService.getAll();
         List<FieldFormat> fieldFormats = fieldFormatService.getAll();
-        List<ExportField> exportFields = exportFieldService.getAllByService(config.getService().getService_id());
+        List<ExportField> exportFields = mappingService.getAvailableExport(configId);
+                //exportFieldService.getAllByService(config.getService().getService_id());
         model.addAttribute("exportFields", exportFields);
         model.addAttribute("fieldTypes", fieldTypes);
         model.addAttribute("fieldFormats", fieldFormats);

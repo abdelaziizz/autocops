@@ -19,7 +19,7 @@ public interface InstitutionConfigMappingService {
 
     List<InstitutionsConfigMapping> findByInstConfig(long id);
 
-    List<ExportField> getAvailableFields(long config_id);
+    List<ExportField> getAvailableExport (long config_id);
 
 
 }
