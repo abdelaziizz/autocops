@@ -40,6 +40,7 @@
                                     <th>Import Field Index</th>
                                     <th>Import Field Type</th>
                                     <th>Import Field Format</th>
+                                    <th>Import Field</th>
                                     <th>Export Field</th>
                                     <th>Actions</th>
                                 </tr>
@@ -51,6 +52,7 @@
                                         <td th:text="${mapping.import_field_index}"></td>
                                         <td th:text="${mapping.import_field_type.field_type}"></td>
                                         <td th:text="${mapping.import_field_format.format}"></td>
+                                        <td th:text="${mapping.import_field.field_name}"></td>
                                         <td th:text="${mapping.export_field_head.field_name}"></td>
 
                                         <td>
@@ -96,13 +98,13 @@
                          th:text="#{CONFIG_ERROR}"></div>
                     <div class="container">
                         <form>
-                            <div class="form-row mb-3">
+                            <div class="form-row mb-4">
 
-                                <div class="col-3">
+                                <div class="col-4" style="margin-top:10px;">
                                     <input class="form-control" id="import_index" placeholder="Import Field Index"
                                            type="text">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4" style="margin-top:10px;">
                                     <select class="form-control form-small" id="type" onchange="populateDropdown()">
                                         <option selected="selected">--- Import Field Type ---</option>
                                         <th:block th:each="fileFormat : ${fieldTypes}">
@@ -111,21 +113,29 @@
                                         </th:block>
                                     </select>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4" style="margin-top:10px;">
                                     <select class="form-control form-small" id="format">
                                         <option selected="selected">--- Import Field Format ---</option>
                                     </select>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4" style="margin-top:10px;">
+                                    <select class="form-control form-small" id="import">
+                                        <option selected="selected">--- Import Field ---</option>
+                                        <th:block th:each="field : ${importFields}">
+                                            <option th:text="${field.field_name}"
+                                                    th:value="${field.id}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
                                     <select class="form-control form-small" id="export">
-                                        <option selected="selected">--- Import Field Type ---</option>
+                                        <option selected="selected">--- Export Field ---</option>
                                         <th:block th:each="field : ${exportFields}">
                                             <option th:text="${field.field_name}"
                                                     th:value="${field.id}"></option>
                                         </th:block>
                                     </select>
                                 </div>
-
                             </div>
 
                         </form>
@@ -152,15 +162,15 @@
                         <div th:text="${mapping.id}"/>
                         <div class="container">
                             <form>
-                                <div class="form-row mb-3">
+                                <div class="form-row mb-4">
 
-                                    <div class="col-3">
+                                    <div class="col-4" style="margin-top:10px;">
                                         <h5>Import Field Index</h5>
                                         <input class="form-control" th:attr="id=${'import_index_update' + mapping.id}"
                                                th:value="${mapping.import_field_index}"
                                                type="text">
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4" style="margin-top:10px;">
                                         <h5>Import Field Type</h5>
                                         <select class="form-control form-small"
                                                 onchange="populateUpdateDropdown($(this).attr('data-mapping-id'))"
@@ -176,7 +186,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-4" style="margin-top:10px;">
                                         <h5>Import Field Format</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'format_update' +mapping.id}">
@@ -186,7 +196,20 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Export Field</h5>
+                                        <select class="form-control form-small"
+                                                th:attr="id=${'import_update' +mapping.id}">
+                                            <option th:selected="${mapping.import_field.field_name}"
+                                                    th:text="${mapping.import_field.field_name}"th:value="${mapping.import_field.id}"></option>
+                                            <th:block th:each="field : ${importFields}">
+                                                <option th:text="${field.field_name}"
+                                                        th:value="${field.id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4" style="margin-top:10px;">
                                         <h5>Export Field</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'export_update' +mapping.id}">
@@ -227,9 +250,10 @@
         const words = queryString.split('/');
         var institution = {};
         institution.configId = words[words.length - 1];
-        institution.imp_field = $("#import_index").val();
+        institution.imp_field_index = $("#import_index").val();
         institution.typeId = $("#type").val();
         institution.formatId = $("#format").val();
+        institution.imp_field = $("#import").val();
         institution.exp_field = $("#export").val();
         $.ajax({
             type: 'post',
@@ -247,9 +271,10 @@
         const words = queryString.split('/');
         var institution = {};
         institution.configId = words[words.length - 1];
-        institution.imp_field = $("#import_index_update" + id).val();
+        institution.imp_field_index = $("#import_index_update" + id).val();
         institution.typeId = $("#type_update" + id).val();
         institution.formatId = $("#format_update" + id).val();
+        institution.imp_field = $("#import_update" + id).val();
         institution.exp_field = $("#export_update" + id).val();
         $.ajax({
             type: 'put',

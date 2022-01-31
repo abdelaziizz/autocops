@@ -44,15 +44,16 @@ public class InstitutionConfigMappingController {
 
     @ResponseBody
     @PostMapping
-    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam int imp_field, @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field) {
-        return mappingService.create(configId, imp_field, typeId, formatId, exp_field);
+    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam int imp_field_index, @RequestParam long typeId,
+                                            @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field) {
+        return mappingService.create(configId, imp_field_index, typeId, formatId, exp_field, imp_field);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
-    public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field,
-                                         @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field) {
-        return mappingService.put(id, configId, imp_field, typeId, formatId, exp_field);
+    public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field_index,
+                    @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field) {
+        return mappingService.put(id, configId, imp_field_index, typeId, formatId, exp_field, imp_field);
     }
 
     @ResponseBody
@@ -69,8 +70,9 @@ public class InstitutionConfigMappingController {
         List<FieldType> fieldTypes = fieldTypeService.getAll();
         List<FieldFormat> fieldFormats = fieldFormatService.getAll();
         List<ExportField> exportFields = mappingService.getAvailableExport(configId);
-        //exportFieldService.getAllByService(config.getService().getService_id());
+        List<ImportField> importFields = mappingService.getAvailableImport(configId);
         model.addAttribute("exportFields", exportFields);
+        model.addAttribute("importFields", importFields);
         model.addAttribute("fieldTypes", fieldTypes);
         model.addAttribute("fieldFormats", fieldFormats);
         model.addAttribute("mappings", mappings);

@@ -33,4 +33,8 @@ public class InstitutionsConfigMapping {
     @JoinColumn(name = "export_field_head")
     private ExportField export_field_head;
 
+    @OneToOne
+    @JoinColumn(name = "import_field")
+    private ImportField import_field;
+
 }
