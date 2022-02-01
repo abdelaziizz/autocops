@@ -22,4 +22,10 @@ public class CardIssuanceController {
         return cardIssuanceService.issueCardADCB();
     }
 
+    @ResponseBody
+    @PostMapping("/adib")
+    public  String issueInstanceAdib() {
+        return cardIssuanceService.issueInstanceADIB();
+    }
+
 }
