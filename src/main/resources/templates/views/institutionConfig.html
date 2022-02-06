@@ -36,8 +36,11 @@
                                     <th>Fail On Error</th>
                                     <th>Active</th>
                                     <th>Service</th>
-                                    <th>Import Path</th>
-                                    <th>Export Path</th>
+                                    <th width="200">Import Path</th>
+                                    <th width="200">Export Path</th>
+                                    <th width="200">Template Path</th>
+                                    <th width="200">Reading Root</th>
+                                    <th width="200">Writing Root</th>
                                     <th width="500">Actions</th>
                                 </tr>
                                 </thead>
@@ -53,6 +56,9 @@
                                         <td th:text="${config.service.service_name}"></td>
                                         <td th:text="${config.import_path}"></td>
                                         <td th:text="${config.export_path}"></td>
+                                        <td th:text="${config.template_path}"></td>
+                                        <td th:text="${config.reading_root}"></td>
+                                        <td th:text="${config.writing_root}"></td>
                                         <td>
                                             <button class="btn btn-danger"
                                                     onclick="deleteInst($(this).attr('data-config-id'))"
@@ -153,6 +159,18 @@
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
                                     <input class="form-control" id="export_path" placeholder="--- Export Path ---"
+                                           type="text">
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <input class="form-control" id="template_path" placeholder="--- Template Path ---"
+                                           type="text">
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <input class="form-control" id="reading_root" placeholder="--- Reading Root ---"
+                                           type="text">
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <input class="form-control" id="writing_root" placeholder="--- Writing Root ---"
                                            type="text">
                                 </div>
                             </div>
@@ -260,6 +278,24 @@
                                                th:value="${config.export_path}"
                                                type="text">
                                     </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Template Path</h5>
+                                        <input class="form-control" th:attr="id=${'template_path_update' + config.id}"
+                                               th:value="${config.template_path}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Reading Root</h5>
+                                        <input class="form-control" th:attr="id=${'reading_root_update' + config.id}"
+                                               th:value="${config.reading_root}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Writing Root</h5>
+                                        <input class="form-control" th:attr="id=${'writing_root_update' + config.id}"
+                                               th:value="${config.writing_root}"
+                                               type="text">
+                                    </div>
                                 </div>
 
                             </form>
@@ -296,6 +332,9 @@
         institution.service_id = $("#serviceDropdown").val();
         institution.import_path = $("#import_path").val();
         institution.export_path = $("#export_path").val();
+        institution.template_path = $("#template_path").val();
+        institution.reading_root = $("#reading_root").val();
+        institution.writing_root = $("#writing_root").val();
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs/' + instId,
@@ -317,6 +356,9 @@
         institution.service_id = $("#serTypeUpdate" + id).val();
         institution.import_path = $("#import_path_update" + id).val();
         institution.export_path = $("#export_path_update" + id).val();
+        institution.template_path = $("#template_path_update" + id).val();
+        institution.reading_root = $("#reading_root_update" + id).val();
+        institution.writing_root = $("#writing_root_update" + id).val();
         $.ajax({
             type: 'put',
             url: '/autocops/inst-configs/' + id,

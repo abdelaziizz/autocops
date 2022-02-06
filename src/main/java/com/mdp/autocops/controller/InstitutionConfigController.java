@@ -48,8 +48,10 @@ public class InstitutionConfigController {
     @PutMapping("/{id}")
     public InstitutionConfig put(@PathVariable long id, @RequestParam Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
                                  @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id,
-                                 @RequestParam String import_path, @RequestParam String export_path) {
-        return institutionConfigService.put(id, reading_line, import_format, export_format, fail_on_error, active, service_id, import_path, export_path);
+                                 @RequestParam String import_path, @RequestParam String export_path, @RequestParam String template_path,
+                                 @RequestParam String reading_root, @RequestParam String writing_root) {
+        return institutionConfigService.put(id, reading_line, import_format, export_format, fail_on_error, active, service_id, import_path,
+                export_path, template_path, reading_root, writing_root);
     }
 
 
@@ -57,8 +59,10 @@ public class InstitutionConfigController {
     @PostMapping("/{instId}")
     public InstitutionConfig create(@PathVariable long instId, @RequestParam Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
                                     @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id,
-                                    @RequestParam String import_path, @RequestParam String export_path) {
-        return institutionConfigService.create(instId, reading_line, import_format, export_format, fail_on_error, active, service_id, import_path, export_path);
+                                    @RequestParam String import_path, @RequestParam String export_path, @RequestParam String template_path,
+                                    @RequestParam String reading_root, @RequestParam String writing_root) {
+        return institutionConfigService.create(instId, reading_line, import_format, export_format, fail_on_error, active, service_id, import_path,
+                export_path, template_path, reading_root, writing_root);
     }
 
     @ResponseBody

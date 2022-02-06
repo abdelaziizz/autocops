@@ -56,7 +56,7 @@ public class Read {
         }
     }
 
-    public List<Map> readXML(String fileName, List<InstitutionsConfigMapping> mappings) throws ParserConfigurationException {
+    public List<Map> readXML(String reading_root, String fileName, List<InstitutionsConfigMapping> mappings) throws ParserConfigurationException {
         try {
             List<Map> maps = new ArrayList<>();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -64,7 +64,7 @@ public class Read {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(new File(fileName));
             doc.getDocumentElement().normalize();
-            NodeList list = doc.getElementsByTagName("Record");
+            NodeList list = doc.getElementsByTagName(reading_root);
 
             for (int temp = 0; temp < list.getLength(); temp++) {
                 Map<String, String> map = new HashMap<>();

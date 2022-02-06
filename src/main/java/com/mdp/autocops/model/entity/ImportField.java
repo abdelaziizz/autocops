@@ -21,7 +21,4 @@ public class ImportField {
     @Column(name = "field_name")
     private String field_name;
 
-    @Column(name = "parent_name")
-    private String parent_name;
-
 }

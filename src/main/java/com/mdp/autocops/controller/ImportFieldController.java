@@ -37,14 +37,14 @@ public class ImportFieldController {
 
     @ResponseBody
     @PostMapping
-    public ImportField create(@RequestParam long service_id, @RequestParam String field_name, @RequestParam String parent_name) {
-        return importFieldService.create(service_id, field_name,parent_name);
+    public ImportField create(@RequestParam long service_id, @RequestParam String field_name) {
+        return importFieldService.create(service_id, field_name);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
-    public ImportField put(@PathVariable long id, @RequestParam long service_id, @RequestParam String field_name, @RequestParam String parent_name) {
-        return importFieldService.put(id, service_id, field_name, parent_name);
+    public ImportField put(@PathVariable long id, @RequestParam long service_id, @RequestParam String field_name) {
+        return importFieldService.put(id, service_id, field_name);
     }
 
     @ResponseBody

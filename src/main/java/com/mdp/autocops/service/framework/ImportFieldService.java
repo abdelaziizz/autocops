@@ -12,9 +12,9 @@ public interface ImportFieldService {
 
     List<ImportField> getAllByService(long service_id);
 
-    ImportField create(long service_id, String field_name, String parent_name);
+    ImportField create(long service_id, String field_name);
 
-    ImportField put(long id, long service_id, String field_name, String parent_name);
+    ImportField put(long id, long service_id, String field_name);
 
     ImportField delete(long id);
 

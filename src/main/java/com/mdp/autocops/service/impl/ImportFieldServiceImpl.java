@@ -66,13 +66,12 @@ public class ImportFieldServiceImpl implements ImportFieldService {
     }
 
     @Override
-    public ImportField create(long service_id, String field_name, String parent_name) {
+    public ImportField create(long service_id, String field_name) {
         ImportField importField = new ImportField();
         try {
             ServiceEntity service = serviceService.getById(service_id);
             importField.setService(service);
             importField.setField_name(field_name);
-            importField.setParent_name(parent_name);
             importFieldDao.save(importField);
             return importField;
         } catch (Exception e) {
@@ -82,7 +81,7 @@ public class ImportFieldServiceImpl implements ImportFieldService {
     }
 
     @Override
-    public ImportField put(long id, long service_id, String field_name, String parent_name) {
+    public ImportField put(long id, long service_id, String field_name) {
         try {
             ImportField field = getById(id);
             ServiceEntity service = serviceService.getById(service_id);

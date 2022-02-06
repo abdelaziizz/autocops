@@ -22,7 +22,7 @@ public class InstitutionConfigMappingController {
     private final InstitutionConfigMappingService mappingService;
     private final FieldTypeService fieldTypeService;
     private final FieldFormatService fieldFormatService;
-    private final ExportFieldService exportFieldService;
+    private final ImportFieldService importFieldService;
 
     @ResponseBody
     @GetMapping
@@ -70,7 +70,7 @@ public class InstitutionConfigMappingController {
         List<FieldType> fieldTypes = fieldTypeService.getAll();
         List<FieldFormat> fieldFormats = fieldFormatService.getAll();
         List<ExportField> exportFields = mappingService.getAvailableExport(configId);
-        List<ImportField> importFields = mappingService.getAvailableImport(configId);
+        List<ImportField> importFields = importFieldService.getAllByService(config.getService().getService_id());
         model.addAttribute("exportFields", exportFields);
         model.addAttribute("importFields", importFields);
         model.addAttribute("fieldTypes", fieldTypes);

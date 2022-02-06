@@ -44,4 +44,13 @@ public class InstitutionConfig {
 
     @Column(name = "export_path")
     private String export_path;
+
+    @Column(name = "template_path")
+    private String template_path;
+
+    @Column(name = "reading_root")
+    private String reading_root;
+
+    @Column(name = "writing_root")
+    private String writing_root;
 }

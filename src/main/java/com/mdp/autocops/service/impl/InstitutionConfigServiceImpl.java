@@ -36,7 +36,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
     @Override
     public InstitutionConfig create(long instId, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
-                                    long service_id, String import_path, String export_path) {
+                                    long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root) {
         InstitutionConfig institutionConfigNew = new InstitutionConfig();
         Institution inst = new Institution();
         FileFormat importFileFormat = new FileFormat();
@@ -59,6 +59,9 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
         institutionConfigNew.setFail_on_error(fail_on_error);
         institutionConfigNew.setService(service);
         institutionConfigNew.setActive(active);
+        institutionConfigNew.setTemplate_path(template_path);
+        institutionConfigNew.setReading_root(reading_root);
+        institutionConfigNew.setWriting_root(writing_root);
         try {
             if (getAvailableServices(institutionConfigNew.getInstitution().getInst_id()).contains(institutionConfigNew.getService())) {
                 institutionsConfigDao.save(institutionConfigNew);
@@ -123,7 +126,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
     @Override
     public InstitutionConfig put(long id, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
-                                 long service_id, String import_path, String export_path) {
+                                 long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root) {
         Optional<InstitutionConfig> institutionConfigUpdate = null;
         ServiceEntity service = serviceService.getById(service_id);
         FileFormat importFileFormat = fileFormatService.getById(import_format);
@@ -141,6 +144,9 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
                 if (service != null) institutionConfigUpdate.get().setService(service);
                 if (import_path != null) institutionConfigUpdate.get().setImport_path(import_path);
                 if (export_path != null) institutionConfigUpdate.get().setExport_path(export_path);
+                if (template_path != null) institutionConfigUpdate.get().setTemplate_path(template_path);
+                if (reading_root != null) institutionConfigUpdate.get().setReading_root(reading_root);
+                if (writing_root != null) institutionConfigUpdate.get().setWriting_root(writing_root);
                 institutionsConfigDao.save(institutionConfigUpdate.get());
 
             }
