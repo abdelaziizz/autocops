@@ -42,7 +42,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
         try {
             institutionsConfigMappings = institutionsConfigMappingDao.findAll();
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return institutionsConfigMappings;
     }
@@ -53,7 +53,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
         try {
             institutionsConfigMapping = institutionsConfigMappingDao.findById(id);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return institutionsConfigMapping.get();
     }
@@ -75,7 +75,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             institutionsConfigMappingDao.save(instConfigMapping);
             return instConfigMapping;
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
             return null;
         }
     }
@@ -89,7 +89,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
                 institutionsConfigMappingDao.delete(institutionsConfigMapping.get());
             else log.info("Error retrieving Institution Configuration Mapping");
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return institutionsConfigMapping.get();
     }
@@ -116,7 +116,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
                 institutionsConfigMappingDao.save(instConfigMapping.get());
             } else log.info("Error retrieving Institution Configuration Mapping");
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return instConfigMapping.get();
     }

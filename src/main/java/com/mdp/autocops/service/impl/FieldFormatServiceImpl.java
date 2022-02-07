@@ -30,7 +30,7 @@ public class FieldFormatServiceImpl implements FieldFormatService {
             formats = fieldFormatDao.findAll();
             return formats;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -50,7 +50,7 @@ public class FieldFormatServiceImpl implements FieldFormatService {
                 return null;
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -66,7 +66,7 @@ public class FieldFormatServiceImpl implements FieldFormatService {
                 return fieldFormat.get();
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -78,7 +78,7 @@ public class FieldFormatServiceImpl implements FieldFormatService {
             fieldFormatDao.delete(format);
             return format;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -93,7 +93,7 @@ public class FieldFormatServiceImpl implements FieldFormatService {
             fieldFormatDao.save(format);
             return format;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }

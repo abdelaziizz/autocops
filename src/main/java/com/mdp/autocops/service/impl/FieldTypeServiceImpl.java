@@ -24,7 +24,7 @@ public class FieldTypeServiceImpl implements FieldTypeService {
         try {
             types = fieldTypeDao.findAll();
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
         }
         return types;
     }
@@ -38,7 +38,7 @@ public class FieldTypeServiceImpl implements FieldTypeService {
             fieldTypeDao.save(fieldType);
             return fieldType;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -55,7 +55,7 @@ public class FieldTypeServiceImpl implements FieldTypeService {
                 return fieldType.get();
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -71,7 +71,7 @@ public class FieldTypeServiceImpl implements FieldTypeService {
                 return fieldType.get();
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -89,7 +89,7 @@ public class FieldTypeServiceImpl implements FieldTypeService {
                 return fieldType.get();
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }

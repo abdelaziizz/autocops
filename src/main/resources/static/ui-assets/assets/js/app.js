@@ -1,4 +1,4 @@
-var App = function() {
+var App = function () {
     var MediaSize = {
         xl: 1200,
         lg: 992,
@@ -34,7 +34,7 @@ var App = function() {
     // Default Enabled
 
     var toggleFunction = {
-        sidebar: function() {
+        sidebar: function () {
             $('.sidebarCollapse').on('click', function (sidebar) {
                 sidebar.preventDefault();
                 $(Selector.mainContainer).toggleClass("topbar-closed");
@@ -43,7 +43,7 @@ var App = function() {
                 $('html,body').toggleClass('sidebar-noneoverflow');
             });
         },
-        overlay: function() {
+        overlay: function () {
             $('#dismiss, .overlay').on('click', function () {
                 // hide sidebar
                 $(Selector.mainContainer).removeClass('topbar-closed');
@@ -52,47 +52,47 @@ var App = function() {
                 $('html,body').removeClass('sidebar-noneoverflow');
             });
         },
-        deactivateScroll: function() {
+        deactivateScroll: function () {
             const ps = new PerfectScrollbar('#topbar');
             ps.destroy();
         },
-        search: function() {
-            $(Selector.searchFull).click(function(event) {
-               $(this).parents('.search-animated').find('.search-full').addClass(ToggleClasses.inputFocused);
-               $(this).parents('.search-animated').addClass('show-search');
-               $(Selector.overlay.search).addClass('show');
-               $(Selector.overlay.search).addClass('show');
+        search: function () {
+            $(Selector.searchFull).click(function (event) {
+                $(this).parents('.search-animated').find('.search-full').addClass(ToggleClasses.inputFocused);
+                $(this).parents('.search-animated').addClass('show-search');
+                $(Selector.overlay.search).addClass('show');
+                $(Selector.overlay.search).addClass('show');
             });
 
-            $(Selector.overlay.search).click(function(event) {
-               $(this).removeClass('show');
-               $(Selector.searchFull).parents('.search-animated').find('.search-full').removeClass(ToggleClasses.inputFocused);
-               $(Selector.searchFull).parents('.search-animated').removeClass('show-search');
+            $(Selector.overlay.search).click(function (event) {
+                $(this).removeClass('show');
+                $(Selector.searchFull).parents('.search-animated').find('.search-full').removeClass(ToggleClasses.inputFocused);
+                $(Selector.searchFull).parents('.search-animated').removeClass('show-search');
             });
         }
     }
 
     var mobileFunctions = {
-        activateScroll: function() {
+        activateScroll: function () {
             const ps = new PerfectScrollbar('#topbar', {
-                wheelSpeed:.5,
-                swipeEasing:!0,
-                minScrollbarLength:40,
-                maxScrollbarLength:300
+                wheelSpeed: .5,
+                swipeEasing: !0,
+                minScrollbarLength: 40,
+                maxScrollbarLength: 300
             });
         },
     }
     var desktopFunctions = {
-        activateScroll: function() {
+        activateScroll: function () {
             const desktopFncScroll = new PerfectScrollbar('.menu-categories li.menu .submenu', {
-                wheelSpeed:.5,
-                swipeEasing:!0,
-                minScrollbarLength:40,
-                maxScrollbarLength:300
+                wheelSpeed: .5,
+                swipeEasing: !0,
+                minScrollbarLength: 40,
+                maxScrollbarLength: 300
             });
         },
-        preventAccordionOnClick: function() {
-            $('.menu > a[data-toggle="collapse"], .menu.single-menu  a[data-toggle="collapse"]').click(function(e){
+        preventAccordionOnClick: function () {
+            $('.menu > a[data-toggle="collapse"], .menu.single-menu  a[data-toggle="collapse"]').click(function (e) {
                 getWindowWidth = window.innerWidth;
                 if (getWindowWidth > 991) {
                     e.preventDefault(); // to stop the page jump to the anchor target.
@@ -103,14 +103,13 @@ var App = function() {
     }
 
     var inBuiltfunctionality = {
-        preventScrollBody: function() {
-            $('#topbar').bind('mousewheel DOMMouseScroll', function(e) {
+        preventScrollBody: function () {
+            $('#topbar').bind('mousewheel DOMMouseScroll', function (e) {
                 var scrollTo = null;
 
                 if (e.type == 'mousewheel') {
                     scrollTo = (e.originalEvent.wheelDelta * -1);
-                }
-                else if (e.type == 'DOMMouseScroll') {
+                } else if (e.type == 'DOMMouseScroll') {
                     scrollTo = 40 * e.originalEvent.detail;
                 }
 
@@ -120,15 +119,15 @@ var App = function() {
                 }
             });
         },
-        default: function() {
-            $(document).scroll(function(event) {
+        default: function () {
+            $(document).scroll(function (event) {
 
-              var elementMainContent = $('.main-content');
-              var elementNavbar = $( '.topbar-nav');
-              var sideNav = $('.sidenav');
-              var elementOffset = elementMainContent.offset().top;
-              var windowScroll = $(window).scrollTop();
-              // Check if window scroll > or == element offset?
+                var elementMainContent = $('.main-content');
+                var elementNavbar = $('.topbar-nav');
+                var sideNav = $('.sidenav');
+                var elementOffset = elementMainContent.offset().top;
+                var windowScroll = $(window).scrollTop();
+                // Check if window scroll > or == element offset?
                 if (windowScroll >= elementOffset) {
                     sideNav.css('top', '42px');
                 } else if (windowScroll < elementOffset) {
@@ -137,30 +136,30 @@ var App = function() {
 
             });
         },
-        languageDropdown: function() {
+        languageDropdown: function () {
             var getDropdownElement = document.querySelectorAll('.more-dropdown .dropdown-item');
             for (var i = 0; i < getDropdownElement.length; i++) {
-                getDropdownElement[i].addEventListener('click', function() {
-                    document.querySelectorAll('.more-dropdown .dropdown-toggle > img')[0].setAttribute('src', 'assets/img/' + this.getAttribute('data-img-value') + '.png' );
+                getDropdownElement[i].addEventListener('click', function () {
+                    document.querySelectorAll('.more-dropdown .dropdown-toggle > img')[0].setAttribute('src', 'assets/img/' + this.getAttribute('data-img-value') + '.png');
                 })
             }
         },
     }
 
     var _mobileResolution = {
-        onRefresh: function() {
+        onRefresh: function () {
             var windowWidth = window.innerWidth;
-            if ( windowWidth <= MediaSize.md ) {
+            if (windowWidth <= MediaSize.md) {
                 console.log('On Mobile Refresh');
                 toggleFunction.search();
                 mobileFunctions.activateScroll();
             }
         },
-        onResize: function() {
-            $(window).on('resize', function(event) {
+        onResize: function () {
+            $(window).on('resize', function (event) {
                 event.preventDefault();
                 var windowWidth = window.innerWidth;
-                if ( windowWidth <= MediaSize.md ) {
+                if (windowWidth <= MediaSize.md) {
                     toggleFunction.search();
                     console.log('On Mobile Resize');
                 }
@@ -169,19 +168,19 @@ var App = function() {
     }
 
     var _desktopResolution = {
-        onRefresh: function() {
+        onRefresh: function () {
             var windowWidth = window.innerWidth;
-            if ( windowWidth > MediaSize.md ) {
+            if (windowWidth > MediaSize.md) {
                 toggleFunction.search();
                 console.log('On Desktop Refresh');
                 desktopFunctions.preventAccordionOnClick();
             }
         },
-        onResize: function() {
-            $(window).on('resize', function(event) {
+        onResize: function () {
+            $(window).on('resize', function (event) {
                 event.preventDefault();
                 var windowWidth = window.innerWidth;
-                if ( windowWidth > MediaSize.md ) {
+                if (windowWidth > MediaSize.md) {
                     toggleFunction.search();
                     toggleFunction.deactivateScroll();
                     console.log('On Desktop Resize');
@@ -191,8 +190,8 @@ var App = function() {
     }
 
     return {
-        init: function() {
-            
+        init: function () {
+
             // Sidebar fn
             toggleFunction.sidebar();
             // Overlay fn

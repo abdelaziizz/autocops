@@ -29,7 +29,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
         try {
             exportFields = exportFieldDao.findAll();
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
         }
         return exportFields;
     }
@@ -44,7 +44,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
                 return null;
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -60,7 +60,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
             }
             return serviceFields;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -75,7 +75,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
             exportFieldDao.save(exportField);
             return exportField;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -95,7 +95,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
                 return null;
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }
@@ -112,7 +112,7 @@ public class ExportFieldServiceImpl implements ExportFieldService {
                 return null;
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e);
             return null;
         }
     }

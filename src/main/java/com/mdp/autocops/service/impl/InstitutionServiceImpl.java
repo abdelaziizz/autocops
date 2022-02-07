@@ -24,7 +24,7 @@ public class InstitutionServiceImpl implements InstitutionService {
         try {
             institutions = institutionsDao.findAll();
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return institutions;
     }
@@ -36,7 +36,7 @@ public class InstitutionServiceImpl implements InstitutionService {
             institution = institutionsDao.findById(id);
 
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return institution.get();
     }
@@ -50,7 +50,7 @@ public class InstitutionServiceImpl implements InstitutionService {
                 institutionsDao.delete(institution.get());
             } else log.info("Error retreiving this institution");
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return institution.get();
     }
@@ -65,7 +65,7 @@ public class InstitutionServiceImpl implements InstitutionService {
                 institutionsDao.save(institution.get());
             } else log.info("Error retreiving this institution");
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
         }
         return institution.get();
     }
@@ -78,7 +78,7 @@ public class InstitutionServiceImpl implements InstitutionService {
             institution.setInst_name(name);
             return institutionsDao.save(institution);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.info(e);
             return null;
         }
     }

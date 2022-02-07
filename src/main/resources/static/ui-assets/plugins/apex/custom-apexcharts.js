@@ -1,45 +1,45 @@
 // Simple Line
 
 var sline = {
-  chart: {
-    height: 350,
-    type: 'line',
-    zoom: {
-      enabled: false
+    chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+            enabled: false
+        },
+        toolbar: {
+            show: false,
+        }
     },
-    toolbar: {
-      show: false,
+    // colors: ['#1b55e2'],
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'straight'
+    },
+    series: [{
+        name: "Desktops",
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+    }],
+    title: {
+        text: 'Product Trends by Month',
+        align: 'left'
+    },
+    grid: {
+        row: {
+            colors: ['#f1f2f3', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5
+        },
+    },
+    xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
     }
-  },
-  // colors: ['#1b55e2'],
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    curve: 'straight'
-  },
-  series: [{
-    name: "Desktops",
-    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-  }],
-  title: {
-    text: 'Product Trends by Month',
-    align: 'left'
-  },
-  grid: {
-    row: {
-      colors: ['#f1f2f3', 'transparent'], // takes an array which will be repeated on columns
-      opacity: 0.5
-    },
-  },
-  xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-  }
 }
 
 var chart = new ApexCharts(
-  document.querySelector("#s-line"),
-  sline
+    document.querySelector("#s-line"),
+    sline
 );
 
 chart.render();
@@ -52,7 +52,7 @@ var sLineArea = {
         height: 350,
         type: 'area',
         toolbar: {
-          show: false,
+            show: false,
         }
     },
     // colors: ['#1b55e2', '#888ea8'],
@@ -72,7 +72,7 @@ var sLineArea = {
 
     xaxis: {
         type: 'datetime',
-        categories: ["2018-09-19T00:00:00", "2018-09-19T01:30:00", "2018-09-19T02:30:00", "2018-09-19T03:30:00", "2018-09-19T04:30:00", "2018-09-19T05:30:00", "2018-09-19T06:30:00"],                
+        categories: ["2018-09-19T00:00:00", "2018-09-19T01:30:00", "2018-09-19T02:30:00", "2018-09-19T03:30:00", "2018-09-19T04:30:00", "2018-09-19T05:30:00", "2018-09-19T06:30:00"],
     },
     tooltip: {
         x: {
@@ -95,14 +95,14 @@ var sCol = {
         height: 350,
         type: 'bar',
         toolbar: {
-          show: false,
+            show: false,
         }
     },
     plotOptions: {
         bar: {
             horizontal: false,
             columnWidth: '55%',
-            endingShape: 'rounded'  
+            endingShape: 'rounded'
         },
     },
     // colors: ['#888ea8', '#1b55e2'],
@@ -158,7 +158,7 @@ var sColStacked = {
         type: 'bar',
         stacked: true,
         toolbar: {
-          show: false,
+            show: false,
         }
     },
     // colors: ['#1b55e2', '#888ea8', '#acb0c3', '#d3d3d3'],
@@ -180,13 +180,13 @@ var sColStacked = {
     series: [{
         name: 'PRODUCT A',
         data: [44, 55, 41, 67, 22, 43]
-    },{
+    }, {
         name: 'PRODUCT B',
         data: [13, 23, 20, 8, 13, 27]
-    },{
+    }, {
         name: 'PRODUCT C',
         data: [11, 17, 15, 15, 21, 14]
-    },{
+    }, {
         name: 'PRODUCT D',
         data: [21, 7, 25, 13, 22, 8]
     }],
@@ -217,7 +217,7 @@ var sBar = {
         height: 350,
         type: 'bar',
         toolbar: {
-          show: false,
+            show: false,
         }
     },
     // colors: ['#1b55e2'],
@@ -248,50 +248,50 @@ chart.render();
 // Mixed Chart
 
 var options = {
-  chart: {
-    height: 350,
-    type: 'line',
-    toolbar: {
-      show: false,
-    }
-  },
-  // colors: ['#1b55e2', '#888ea8'],
-  series: [{
-    name: 'Website Blog',
-    type: 'column',
-    data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
-  }, {
-    name: 'Social Media',
-    type: 'line',
-    data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
-  }],
-  stroke: {
-    width: [0, 4]
-  },
-  title: {
-    text: 'Traffic Sources'
-  },
-  labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
-  xaxis: {
-    type: 'datetime'
-  },
-  yaxis: [{
-    title: {
-      text: 'Website Blog',
+    chart: {
+        height: 350,
+        type: 'line',
+        toolbar: {
+            show: false,
+        }
     },
-
-  }, {
-    opposite: true,
+    // colors: ['#1b55e2', '#888ea8'],
+    series: [{
+        name: 'Website Blog',
+        type: 'column',
+        data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+    }, {
+        name: 'Social Media',
+        type: 'line',
+        data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+    }],
+    stroke: {
+        width: [0, 4]
+    },
     title: {
-      text: 'Social Media'
-    }
-  }]
+        text: 'Traffic Sources'
+    },
+    labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+    xaxis: {
+        type: 'datetime'
+    },
+    yaxis: [{
+        title: {
+            text: 'Website Blog',
+        },
+
+    }, {
+        opposite: true,
+        title: {
+            text: 'Social Media'
+        }
+    }]
 
 }
 
 var chart = new ApexCharts(
-  document.querySelector("#mixed-chart"),
-  options
+    document.querySelector("#mixed-chart"),
+    options
 );
 
 chart.render();
@@ -305,7 +305,7 @@ var donutChart = {
         height: 350,
         type: 'donut',
         toolbar: {
-          show: false,
+            show: false,
         }
     },
     // colors: ['#1b55e2', '#888ea8', '#acb0c3', '#d3d3d3'],
@@ -338,7 +338,7 @@ var radialChart = {
         height: 350,
         type: 'radialBar',
         toolbar: {
-          show: false,
+            show: false,
         }
     },
     // colors: ['#1b55e2', '#888ea8', '#acb0c3', '#d3d3d3'],
@@ -363,7 +363,7 @@ var radialChart = {
         }
     },
     series: [44, 55, 67, 83],
-    labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],    
+    labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
 }
 
 var chart = new ApexCharts(
