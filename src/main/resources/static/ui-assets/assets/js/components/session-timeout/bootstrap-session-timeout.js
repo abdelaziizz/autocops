@@ -1,24 +1,24 @@
-!function (a) {
+! function(a) {
     "use strict";
-    a.sessionTimeout = function (b) {
+    a.sessionTimeout = function(b) {
         function c() {
             n || (a.ajax({
                 type: i.ajaxType,
                 url: i.keepAliveUrl,
                 data: i.ajaxData
-            }), n = !0, setTimeout(function () {
+            }), n = !0, setTimeout(function() {
                 n = !1
             }, i.keepAliveInterval))
         }
 
         function d() {
-            clearTimeout(g), (i.countdownMessage || i.countdownBar) && f("session", !0), "function" == typeof i.onStart && i.onStart(i), i.keepAlive && c(), g = setTimeout(function () {
+            clearTimeout(g), (i.countdownMessage || i.countdownBar) && f("session", !0), "function" == typeof i.onStart && i.onStart(i), i.keepAlive && c(), g = setTimeout(function() {
                 "function" != typeof i.onWarn ? a("#session-timeout-dialog").modal("show") : i.onWarn(i), e()
             }, i.warnAfter)
         }
 
         function e() {
-            clearTimeout(g), a("#session-timeout-dialog").hasClass("in") || !i.countdownMessage && !i.countdownBar || f("dialog", !0), g = setTimeout(function () {
+            clearTimeout(g), a("#session-timeout-dialog").hasClass("in") || !i.countdownMessage && !i.countdownBar || f("dialog", !0), g = setTimeout(function() {
                 "function" != typeof i.onRedir ? window.location = i.redirUrl : i.onRedir(i)
             }, i.redirAfter - i.warnAfter)
         }
@@ -33,11 +33,10 @@
                     k = g > 0 ? g + "m" : "";
                 k.length > 0 && (k += " "), k += h + "s", d.text(k)
             } else d.text(e + "s");
-            i.countdownBar && a(".countdown-bar").css("width", j.percentLeft + "%"), j.timeLeft = j.timeLeft - 1, j.timer = setTimeout(function () {
+            i.countdownBar && a(".countdown-bar").css("width", j.percentLeft + "%"), j.timeLeft = j.timeLeft - 1, j.timer = setTimeout(function() {
                 f(b)
             }, 1e3)
         }
-
         var g, h = {
                 title: "Your Session is About to Expire!",
                 message: "Your session is about to expire.",
@@ -66,15 +65,15 @@
         if ("function" != typeof i.onWarn) {
             var k = i.countdownMessage ? "<p>" + i.countdownMessage.replace(/{timer}/g, '<span class="countdown-holder"></span>') + "</p>" : "",
                 l = i.countdownBar ? '<div class="progress mb-3 mt-4">                   <div class="progress-bar bg-secondary countdown-bar active  progress-bar-striped progress-bar-animated" role="progressbar" style="min-width: 15px; width: 100%;">                                        </div>                 </div>' : "";
-            a("body").append('<div class="modal fade" id="session-timeout-dialog">               <div class="modal-dialog  modal-dialog-centered">                 <div class="modal-content">                                   <div class="modal-body">                     <p>' + i.message + "</p>                     " + k + "                     " + l + '                   </div>                   <div class="modal-footer justify-content-center">                     <button id="session-timeout-dialog-logout" type="button" class="btn btn-dark mb-0 mt-0">' + i.logoutButton + '</button>                     <button id="session-timeout-dialog-keepalive" type="button" class="btn btn-primary mb-0 mt-0" data-dismiss="modal">' + i.keepAliveButton + "</button>                   </div>                 </div>               </div>              </div>"), a("#session-timeout-dialog-logout").on("click", function () {
+            a("body").append('<div class="modal fade" id="session-timeout-dialog">               <div class="modal-dialog  modal-dialog-centered">                 <div class="modal-content">                                   <div class="modal-body">                     <p>' + i.message + "</p>                     " + k + "                     " + l + '                   </div>                   <div class="modal-footer justify-content-center">                     <button id="session-timeout-dialog-logout" type="button" class="btn btn-dark mb-0 mt-0">' + i.logoutButton + '</button>                     <button id="session-timeout-dialog-keepalive" type="button" class="btn btn-primary mb-0 mt-0" data-dismiss="modal">' + i.keepAliveButton + "</button>                   </div>                 </div>               </div>              </div>"), a("#session-timeout-dialog-logout").on("click", function() {
                 window.location = i.logoutUrl
-            }), a("#session-timeout-dialog").on("hide.bs.modal", function () {
+            }), a("#session-timeout-dialog").on("hide.bs.modal", function() {
                 d()
             })
         }
         if (!i.ignoreUserActivity) {
             var m = [-1, -1];
-            a(document).on("keyup mouseup mousemove touchend touchmove", function (b) {
+            a(document).on("keyup mouseup mousemove touchend touchmove", function(b) {
                 if ("mousemove" === b.type) {
                     if (b.clientX === m[0] && b.clientY === m[1]) return;
                     m[0] = b.clientX, m[1] = b.clientY

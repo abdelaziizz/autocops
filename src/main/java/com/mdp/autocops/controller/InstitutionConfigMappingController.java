@@ -52,7 +52,7 @@ public class InstitutionConfigMappingController {
     @ResponseBody
     @PutMapping("/{id}")
     public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field_index,
-                                         @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field) {
+                    @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field) {
         return mappingService.put(id, configId, imp_field_index, typeId, formatId, exp_field, imp_field);
     }
 

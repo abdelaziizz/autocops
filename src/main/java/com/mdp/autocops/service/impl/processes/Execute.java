@@ -28,23 +28,25 @@ public class Execute {
     @Autowired
     Write write;
 
-    public String execute(long config_id) {
-        try {
-            InstitutionConfig config = configService.getById(config_id);
-            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
-            List<Map> maps = new ArrayList<>();
-            if (config.getImport_File_format().getFormat_type().equals("Excel")) {
-                maps = read.readExcel(config.getReading_line(), config.getImport_path(), mappings);
-            } else if (config.getImport_File_format().getFormat_type().equals("XML")) {
-                maps = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
-            }
-            write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
-            return "success";
-        } catch (Exception e) {
-            log.error(e);
-            return "fail";
-        }
+    public String execute (long config_id) {
+         try {
+             InstitutionConfig config = configService.getById(config_id);
+             List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
+             List<Map> maps = new ArrayList<>();
+             if (config.getImport_File_format().getFormat_type().equals("Excel")) {
+                 maps = read.readExcel(config.getReading_line(), config.getImport_path(), mappings);
+             }
+             else if ( config.getImport_File_format().getFormat_type().equals("XML")) {
+                 maps = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
+             }
+             write.writeXML(config.getWriting_root(), config.getTemplate_path(), maps);
+             return "success";
+         } catch (Exception e) {
+             log.error(e.getStackTrace());
+             return "fail";
+         }
     }
+
 
 
 }

@@ -48,7 +48,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             exportFileFormat = fileFormatService.getById(export_format);
             service = serviceService.getById(service_id);
         } catch (Exception e) {
-            log.error(e);
+            System.out.println(e.getMessage());
         }
         institutionConfigNew.setInstitution(inst);
         institutionConfigNew.setReading_line(reading_line);
@@ -72,7 +72,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             }
 
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
         try {
             institutionConfigs = institutionsConfigDao.findAll();
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return institutionConfigs;
     }
@@ -95,7 +95,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             institutionConfig = institutionsConfigDao.findById(id);
             if (!institutionConfig.isPresent()) log.info("Error retrieving institution configuration");
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return institutionConfig.get();
     }
@@ -119,7 +119,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
             }
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
             return null;
         }
     }
@@ -151,7 +151,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
             }
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return institutionConfigUpdate.get();
     }

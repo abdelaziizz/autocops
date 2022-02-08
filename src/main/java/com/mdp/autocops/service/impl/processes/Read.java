@@ -48,9 +48,10 @@ public class Read {
                 }
                 records.add(current_record);
             }
+            System.out.println(records.toString());
             return records;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -64,6 +65,7 @@ public class Read {
             Document doc = db.parse(new File(fileName));
             doc.getDocumentElement().normalize();
             NodeList list = doc.getElementsByTagName(reading_root);
+
             for (int temp = 0; temp < list.getLength(); temp++) {
                 Map<String, String> map = new HashMap<>();
                 Node node = list.item(temp);
@@ -71,15 +73,16 @@ public class Read {
                     Element element = (Element) node;
                     for (int i = 0; i < mappings.size(); i++) {
                         InstitutionsConfigMapping mapping = mappings.get(i);
-                        if (element.getElementsByTagName(mapping.getImport_field().getField_name()).getLength() != 0)
+                        if (element.getElementsByTagName(mapping.getImport_field().getField_name()).getLength() != 0) {
                             map.put(mapping.getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
+                        }
                     }
                 }
                 maps.add(map);
             }
             return maps;
         } catch (Exception e) {
-            log.error(e);
+            System.out.println(e.getMessage());
             return null;
         }
     }

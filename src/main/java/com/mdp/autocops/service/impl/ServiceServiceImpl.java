@@ -24,7 +24,7 @@ public class ServiceServiceImpl implements ServiceService {
         try {
             services = servicesDao.findAll();
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return services;
     }
@@ -38,7 +38,7 @@ public class ServiceServiceImpl implements ServiceService {
             serviceEntity.setActive(active);
             servicesDao.save(serviceEntity);
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return serviceEntity;
     }
@@ -57,7 +57,7 @@ public class ServiceServiceImpl implements ServiceService {
                 log.info("Error retrieving service");
             }
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return serviceEntity.get();
     }
@@ -73,7 +73,7 @@ public class ServiceServiceImpl implements ServiceService {
                 log.info("Error retrieving service");
             }
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return serviceEntity.get();
     }
@@ -84,7 +84,7 @@ public class ServiceServiceImpl implements ServiceService {
         try {
             serviceEntity = servicesDao.findById(id);
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return serviceEntity.get();
     }

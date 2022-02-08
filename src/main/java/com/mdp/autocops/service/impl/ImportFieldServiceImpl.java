@@ -29,7 +29,7 @@ public class ImportFieldServiceImpl implements ImportFieldService {
         try {
             importFields = importFieldDao.findAll();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
         return importFields;
     }
@@ -44,7 +44,7 @@ public class ImportFieldServiceImpl implements ImportFieldService {
                 return null;
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -60,7 +60,7 @@ public class ImportFieldServiceImpl implements ImportFieldService {
             }
             return serviceFields;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -75,7 +75,7 @@ public class ImportFieldServiceImpl implements ImportFieldService {
             importFieldDao.save(importField);
             return importField;
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -95,7 +95,7 @@ public class ImportFieldServiceImpl implements ImportFieldService {
                 return null;
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -112,7 +112,7 @@ public class ImportFieldServiceImpl implements ImportFieldService {
                 return null;
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }

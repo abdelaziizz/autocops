@@ -75,6 +75,7 @@ public class InstitutionConfigController {
     @ResponseBody
     @GetMapping("/availableServices/{id}")
     public List<ServiceEntity> getAvailableServices(@PathVariable long id) {
+//        System.out.println(messageSource.getMessage("CONFIG_ERROR", new Object[0],Locale.ENGLISH));
         return institutionConfigService.getAvailableServices(id);
     }
 

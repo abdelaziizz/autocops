@@ -27,7 +27,7 @@ public class FileFormatServiceImpl implements FileFormatService {
             fileFormatsDao.save(fileFormat);
             return fileFormatsDao.save(fileFormat);
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
             return null;
         }
     }
@@ -43,7 +43,7 @@ public class FileFormatServiceImpl implements FileFormatService {
                 log.info("Error retreiving this format");
             }
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return format.get();
     }
@@ -54,7 +54,7 @@ public class FileFormatServiceImpl implements FileFormatService {
         try {
             fileFormats = fileFormatsDao.findAll();
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return fileFormats;
     }
@@ -71,7 +71,7 @@ public class FileFormatServiceImpl implements FileFormatService {
                 log.info("Error retreiving this format");
             }
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return format.get();
     }
@@ -82,7 +82,7 @@ public class FileFormatServiceImpl implements FileFormatService {
         try {
             format = fileFormatsDao.findById(id);
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
         return format.get();
     }

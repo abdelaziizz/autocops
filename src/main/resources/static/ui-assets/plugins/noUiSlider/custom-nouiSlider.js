@@ -1,9 +1,9 @@
 // NO UI SLIDER
-
+    
 var html5Slider = document.getElementById('html5');
 
 noUiSlider.create(html5Slider, {
-    start: [10, 30],
+    start: [ 10, 30 ],
     connect: true,
     tooltips: true,
     range: {
@@ -18,11 +18,11 @@ var select = document.getElementById('input-select');
 
 // Append the option elements
 
-for (var i = -20; i <= 40; i++) {
+for ( var i = -20; i <= 40; i++ ){
 
     var option = document.createElement("option");
-    option.text = i;
-    option.value = i;
+        option.text = i;
+        option.value = i;
 
     select.appendChild(option);
 }
@@ -31,22 +31,22 @@ for (var i = -20; i <= 40; i++) {
 
 var inputNumber = document.getElementById('input-number');
 
-html5Slider.noUiSlider.on('update', function (values, handle) {
+html5Slider.noUiSlider.on('update', function( values, handle ) {
 
     var value = values[handle];
 
-    if (handle) {
+    if ( handle ) {
         inputNumber.value = value;
     } else {
         select.value = Math.round(value);
     }
 });
 
-select.addEventListener('change', function () {
+select.addEventListener('change', function(){
     html5Slider.noUiSlider.set([this.value, null]);
 });
 
-inputNumber.addEventListener('change', function () {
+inputNumber.addEventListener('change', function(){
     html5Slider.noUiSlider.set([null, this.value]);
 });
 
@@ -58,14 +58,14 @@ noUiSlider.create(nonLinearSlider, {
     connect: true,
     behaviour: 'tap',
     tooltips: true,
-    start: [500, 4000],
+    start: [ 500, 4000 ],
     range: {
         // Starting at 500, step the value by 500,
         // until 4000 is reached. From there, step by 1000.
-        'min': [0],
-        '10%': [500, 500],
-        '50%': [4000, 1000],
-        'max': [10000]
+        'min': [ 0 ],
+        '10%': [ 500, 500 ],
+        '50%': [ 4000, 1000 ],
+        'max': [ 10000 ]
     }
 });
 
@@ -76,7 +76,7 @@ var nodes = [
 
 // Display the slider value and how far the handle moved
 // from the left edge of the slider.
-nonLinearSlider.noUiSlider.on('update', function (values, handle, unencoded, isTap, positions) {
+nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
     nodes[handle].innerHTML = values[handle] + ' <span class="precentage-val">' + positions[handle].toFixed(2) + '% </span>';
 });
 
@@ -99,7 +99,7 @@ var lockedState = false,
 // When the button is clicked, the locked
 // state is inverted.
 
-lockButton.addEventListener('click', function () {
+lockButton.addEventListener('click', function(){
     lockedState = !lockedState;
     this.textContent = lockedState ? 'unlock' : 'lock';
 });
@@ -107,11 +107,11 @@ lockButton.addEventListener('click', function () {
 
 // cross updating
 
-function crossUpdate(value, slider) {
+function crossUpdate ( value, slider ) {
 
     // If the sliders aren't interlocked, don't
     // cross-update.
-    if (!lockedState) return;
+    if ( !lockedState ) return;
 
     // Select whether to increase or decrease
     // the other slider value.
@@ -148,17 +148,17 @@ noUiSlider.create(slider2, {
     }
 });
 
-slider1.noUiSlider.on('update', function (values, handle) {
+slider1.noUiSlider.on('update', function( values, handle ){
     slider1Value.innerHTML = values[handle];
 });
 
-slider2.noUiSlider.on('update', function (values, handle) {
+slider2.noUiSlider.on('update', function( values, handle ){
     slider2Value.innerHTML = values[handle];
 });
 
 // linking sliders together
 
-function setLockedValues() {
+function setLockedValues ( ) {
     lockedValues = [
         Number(slider1.noUiSlider.get()),
         Number(slider2.noUiSlider.get())
@@ -173,6 +173,6 @@ slider2.noUiSlider.on('change', setLockedValues);
 // method. The function uses the global 'lockedState'
 // variable to decide whether the other slider is updated.
 
-slider1.noUiSlider.on('slide', function (values, handle) {
+slider1.noUiSlider.on('slide', function( values, handle ){
     crossUpdate(values[handle], slider2);
 });

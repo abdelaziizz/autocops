@@ -1,21 +1,23 @@
 var DTcustomsetting = {
     languagePagination: {
         "paginate": {
-            "previous": "<i class='flaticon-left-arrow-1'></i>",
-            "next": "<i class='flaticon-right-arrow-1'></i>"
+          "previous": "<i class='flaticon-left-arrow-1'></i>",
+          "next": "<i class='flaticon-right-arrow-1'></i>"
         },
         "info": "Showing page _PAGE_ of _PAGES_"
     },
 
 
+
 };
+
 
 
 var DTcustomsetting = {
     languagePagination: {
         "paginate": {
-            "previous": "<i class='flaticon-left-arrow-1'></i>",
-            "next": "<i class='flaticon-right-arrow-1'></i>"
+          "previous": "<i class='flaticon-left-arrow-1'></i>",
+          "next": "<i class='flaticon-right-arrow-1'></i>"
         },
         "info": "Showing page _PAGE_ of _PAGES_"
     },
@@ -26,8 +28,9 @@ var DTcustomsetting = {
     },
 
     languageInfo: {
-        "Showing page _PAGE_ of _PAGES_": "100"
+    	"Showing page _PAGE_ of _PAGES_":"100"
     }
 
-
+    
+    
 };

@@ -55,7 +55,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             workbook.write(outputStream);
             workbook.close();
         } catch (Exception e) {
-            log.info(e);
+            log.info(e.getMessage());
         }
 
         return null;
