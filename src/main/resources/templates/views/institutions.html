@@ -52,6 +52,10 @@
                                                     onclick="goToConfigs($(this).attr('data-inst-id'))"
                                                     th:data-inst-id="${institution.inst_id}">Configurations
                                             </button>
+                                            <button class="btn btn-primary" data-row="${institution}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#editModal'+institution.inst_id}">Update
+                                            </button>
                                         </td>
                                     </tr>
                                 </th:block>
@@ -63,48 +67,91 @@
             </div>
             <br>
             <h6>Add New Institution</h6>
-            <div>
-                <form>
-                    <div class="form-row mb-4">
-                        <div class="col">
-                            <input class="form-control" id="instId" placeholder="Institution ID" type="text">
-                        </div>
-                        <div class="col">
-                            <input class="form-control" id="instName" placeholder="Institution Name" type="text">
-                        </div>
-                    </div>
-                    <input class="mb-4 btn btn-primary" name="addInstitution" onclick="createInstitution()"
-                           type="submit"
-                           value="Add">
-                </form>
-            </div>
-            <br>
-            <h6>Update Institution</h6>
-            <div>
-                <form>
-                    <div class="form-row mb-4">
-                        <div class="col">
-                            <select class="form-control form-small" id="InstDropdown">
-                                <option selected="selected">Choose Option</option>
-                                <th:block th:each="institute : ${institutions}">
-                                    <option th:text="${institute.inst_name}"
-                                            th:value="${institute.inst_id}"></option>
-                                </th:block>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <input class="form-control" id="instNameNew" placeholder="New Institution Name" type="text">
-                        </div>
-                    </div>
-                    <input class="mb-4 btn btn-primary" name="addInstitution" onclick="update()" type="submit"
-                           value="Update">
-                </form>
-            </div>
-            <br>
+            <input class="mb-4 btn btn-primary" data-target="#myModal" data-toggle="modal" name="newConfiguration"
+                   type="submit" value="New Institution">
+            <br><br><br>
             <div th:insert="layout :: footer"></div>
         </div>
     </div>
     <!--  END CONTENT PART  -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Choose Institution Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div hidden id="configError" style="color: red;margin: 10px 10px 20px 10px;"
+                         th:text="#{CONFIG_ERROR}"></div>
+                    <div class="container">
+                        <form>
+                            <div class="form-row mb-6">
+
+                                <div class="col-6" style="margin-top:10px;">
+                                    <h5>Institution ID</h5>
+                                    <input class="form-control" id="instId" placeholder="Institution ID"
+                                           type="text">
+                                </div>
+                                <div class="col-6" style="margin-top:10px;">
+                                    <h5> Institution Name</h5>
+                                    <input class="form-control" id="instName" placeholder="Institution Name"
+                                           type="text">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" onclick="createInstitution()"
+                            type="submit">Save
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1" th:attr="id=${'editModal' + institution.inst_id}"
+         th:each="institution : ${institutions}">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-body"> You are about to edit institution :
+                        <div th:text="${institution.inst_name}"/>
+                        <div class="container">
+                            <form>
+                                <div class="form-row mb-12">
+
+                                    <div class="col-12" style="margin-top:10px;">
+                                        <h5>Institution Name</h5>
+                                        <input class="form-control"
+                                               th:attr="id=${'institution_name_update' + institution.inst_id}"
+                                               th:value="${institution.inst_name}"
+                                               type="text">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                        <button class="btn btn-primary" onclick="update($(this).attr('data-institution-id'))"
+                                th:data-institution-id="${institution.inst_id}" type="button">Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <!-- END MAIN CONTAINER -->
 <div th:insert="layout :: scripts"></div>
@@ -138,9 +185,10 @@
         });
     }
 
-    function update() {
-        var instId = $("#InstDropdown").val();
-        var instName = $("#instNameNew").val();
+    function update(id) {
+
+        var instId = id;
+        var instName = $("#institution_name_update" + id).val();
         var institution = {};
         institution.inst_name = instName;
         $.ajax({
@@ -148,7 +196,10 @@
             url: '/autocops/institutions/' + instId,
             data: JSON.stringify(institution),
             contentType: "application/json; charset=utf-8",
-            traditional: true
+            traditional: true,
+            success: function (res) {
+                window.location.reload();
+            }
         });
     }
 
