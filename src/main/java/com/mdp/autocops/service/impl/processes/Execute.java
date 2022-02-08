@@ -18,13 +18,10 @@ public class Execute {
 
     @Autowired
     InstitutionConfigMappingService mappingService;
-
     @Autowired
     InstitutionConfigService configService;
-
     @Autowired
     Read read;
-
     @Autowired
     Write write;
 
@@ -39,14 +36,12 @@ public class Execute {
              else if ( config.getImport_File_format().getFormat_type().equals("XML")) {
                  maps = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
              }
-             write.writeXML(config.getWriting_root(), config.getTemplate_path(), maps);
+             write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
              return "success";
          } catch (Exception e) {
              log.error(e.getStackTrace());
              return "fail";
          }
     }
-
-
 
 }

@@ -45,11 +45,8 @@ public class Read {
                     if (type.equals("String")) {
                         current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
                     }
-                }
-                records.add(current_record);
-            }
-            System.out.println(records.toString());
-            return records;
+                } records.add(current_record);
+            } return records;
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
@@ -77,10 +74,8 @@ public class Read {
                             map.put(mapping.getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
                         }
                     }
-                }
-                maps.add(map);
-            }
-            return maps;
+                } maps.add(map);
+            } return maps;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
