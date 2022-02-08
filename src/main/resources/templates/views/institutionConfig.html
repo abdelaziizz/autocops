@@ -20,7 +20,8 @@
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                 <br>
-                                <h4> Institution Configurations</h4>
+                                <h4> Institution : <small th:text="${inst.inst_name}"></small> →
+                                    Configurations</h4>
                             </div>
                         </div>
                     </div>
@@ -108,6 +109,7 @@
                         <form>
                             <div class="form-row mb-4">
                                 <div class="col-4">
+                                    <h5>Service</h5>
                                     <select class="form-control form-small" id="serviceDropdown">
                                         <option selected="selected">--- Service ---</option>
                                         <th:block th:each="service : ${availableServices}">
@@ -117,10 +119,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4">
+                                    <h5>Start Line</h5>
                                     <input class="form-control" id="reading_line" placeholder="--- Data Start Line ---"
                                            type="text">
                                 </div>
                                 <div class="col-4">
+                                    <h5>Import Format</h5>
                                     <select class="form-control form-small" id="inputFormatDropdown">
                                         <option selected="selected">--- Import Format ---</option>
                                         <th:block th:each="fileFormat : ${formats}">
@@ -130,6 +134,7 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Export Format</h5>
                                     <select class="form-control form-small" id="outputFormatDropdown">
                                         <option selected="selected">--- Export Format ---</option>
                                         <th:block th:each="fileFormat : ${formats}">
@@ -140,6 +145,7 @@
                                 </div>
                                 <br><br>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Fail On Error</h5>
                                     <select class="form-control form-small" id="failDropdown">
                                         <option selected="selected">--- Fail On Error ---</option>
                                         <option value="true">True</option>
@@ -147,6 +153,7 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Active</h5>
                                     <select class="form-control form-small" id="activeDropdown">
                                         <option selected="selected">--- Active ---</option>
                                         <option value="true">True</option>
@@ -154,22 +161,27 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Import Path</h5>
                                     <input class="form-control" id="import_path" placeholder="--- Import Path ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Export Path</h5>
                                     <input class="form-control" id="export_path" placeholder="--- Export Path ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Template Path</h5>
                                     <input class="form-control" id="template_path" placeholder="--- Template Path ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Reading Root</h5>
                                     <input class="form-control" id="reading_root" placeholder="--- Reading Root ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                    <h5>Writing Root</h5>
                                     <input class="form-control" id="writing_root" placeholder="--- Writing Root ---"
                                            type="text">
                                 </div>
