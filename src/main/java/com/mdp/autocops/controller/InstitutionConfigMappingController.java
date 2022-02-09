@@ -44,8 +44,8 @@ public class InstitutionConfigMappingController {
 
     @ResponseBody
     @PostMapping
-    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam int imp_field_index, @RequestParam long typeId,
-                                            @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field) {
+    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam(required = false) int imp_field_index, @RequestParam long typeId,
+                                            @RequestParam long formatId, @RequestParam long exp_field, @RequestParam(required = false) long imp_field) {
         return mappingService.create(configId, imp_field_index, typeId, formatId, exp_field, imp_field);
     }
 

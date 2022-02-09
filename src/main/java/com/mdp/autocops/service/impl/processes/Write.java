@@ -29,7 +29,7 @@ public class Write {
             for ( int j = app_length ; j < map_length ; j++ ) {
                 Node extra_app = applications.item(0);
                 Node extra_app_ext = extra_app.cloneNode(true);
-                doc.getDocumentElement().appendChild(extra_app_ext);
+                doc.getDocumentElement().appendChild(extra_app_ext);;
             }
             applications = doc.getElementsByTagName(writing_root);
             for ( int i = 0 ; i < maps.size() ; i++ ) {
