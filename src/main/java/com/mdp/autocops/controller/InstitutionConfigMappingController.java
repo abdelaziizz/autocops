@@ -44,9 +44,17 @@ public class InstitutionConfigMappingController {
 
     @ResponseBody
     @PostMapping
-    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam(required = false) int imp_field_index, @RequestParam long typeId,
-                                            @RequestParam long formatId, @RequestParam long exp_field, @RequestParam(required = false) long imp_field) {
-        return mappingService.create(configId, imp_field_index, typeId, formatId, exp_field, imp_field);
+    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam String imp_field_index, @RequestParam long typeId,
+                                            @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field) {
+        int index;
+        long imp;
+        if (imp_field_index.equals("")) index = -1;
+        else index = Integer.valueOf(imp_field_index);
+
+        if (imp_field.equals("")) imp = -1;
+        else imp = Long.valueOf(imp_field);
+
+        return mappingService.create(configId, index, typeId, formatId, exp_field, imp);
     }
 
     @ResponseBody

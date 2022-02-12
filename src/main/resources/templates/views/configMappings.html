@@ -257,13 +257,7 @@
         const words = queryString.split('/');
         var institution = {};
         institution.configId = words[words.length - 1];
-
-        if ($("#import_index").val().localeCompare("")) {
-            institution.imp_field_index = 0;
-        }
-        else {
-            institution.imp_field_index = $("#import_index").val();
-        }
+        institution.imp_field_index = $("#import_index").val();
         institution.typeId = $("#type").val();
         institution.formatId = $("#format").val();
         institution.imp_field = $("#import").val();
