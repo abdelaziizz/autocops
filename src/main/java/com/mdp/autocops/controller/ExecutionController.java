@@ -1,6 +1,7 @@
 package com.mdp.autocops.controller;
 
 import com.mdp.autocops.service.impl.processes.Execute;
+import com.mdp.autocops.service.impl.processes.Read;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequiredArgsConstructor
 @Log4j2
@@ -16,10 +20,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ExecutionController {
 
     private final Execute execute;
+    private final Read read;
 
     @ResponseBody
     @PostMapping("/{config_id}")
     public String execute(@PathVariable long config_id) {
         return execute.execute(config_id);
     }
+
+    @ResponseBody
+    @PostMapping("/read/{config_id}")
+    public List<Map> read(@PathVariable long config_id) {
+        return read.readXMLNested(config_id);
+    }
+
 }

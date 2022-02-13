@@ -1,11 +1,15 @@
 package com.mdp.autocops.service.impl.processes;
 
+import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
+import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
+import com.mdp.autocops.service.framework.InstitutionConfigService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,6 +31,10 @@ import java.util.Map;
 @Log4j2
 @Service
 public class Read {
+    @Autowired
+    InstitutionConfigMappingService mappingService;
+    @Autowired
+    InstitutionConfigService configService;
 
     public List<Map> readExcel(int reading_line, String path, List<InstitutionsConfigMapping> mappings) throws IOException {
         List<Map> records = new ArrayList<>();
@@ -82,4 +90,60 @@ public class Read {
         }
     }
 
+    public List<Map> readXMLNested(long config_id) {
+        try {
+            InstitutionConfig config = configService.getById(config_id);
+            List<Map> maps = new ArrayList<>();
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(new File(config.getImport_path()));
+            doc.getDocumentElement().normalize();
+            NodeList list = doc.getElementsByTagName(config.getReading_root());
+            for ( int i = 0 ; i < list.getLength() ; i++ ) {
+                Map<String,String> map = new HashMap<>();
+                Node node = list.item(i);
+                String path = "";
+                readChildren(node, map, path);
+                maps.add(map);
+            }
+            //displayListOfMaps(maps);
+            return maps;
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
+    }
+    public void readChildren (Node node, Map<String, String> map, String path) {
+        if (node.hasChildNodes()) {
+            NodeList nodes = node.getChildNodes();
+            path+= "/"+node.getNodeName();
+            for ( int i = 0 ; i < nodes.getLength() ; i++ )  readChildren(nodes.item(i), map, path);
+        } else {
+            if (node.getNodeType() == Node.ELEMENT_NODE ) {
+                if (node.getTextContent().trim().length()>0) {
+                    path += "/" + node.getNodeName();
+                    Element current_node = (Element) node;
+                    String value = current_node.getTextContent();
+                    map.put(path, value);
+                }
+            }
+            else {
+                if (node.getTextContent().trim().length()>0) {
+                    System.out.println(node.getParentNode().getNodeName() + " ----> " + node.getTextContent());
+                    path+="/"+node.getParentNode().getNodeName();
+                    map.put(path, node.getTextContent());
+                }
+            }
+        } }
+
+    public void displayListOfMaps (List<Map> maps) {
+        for (Map map : maps) {
+            Map<String, String> current = map;
+            for (Map.Entry<String,String> entry : current.entrySet()) {
+                System.out.println("Key = " + entry.getKey() +", Value = " + entry.getValue());
+            }
+            System.out.println("----------------------------------------------------------------------------------------");
+        }
+    }
 }
