@@ -37,7 +37,7 @@
                                     <th>Fail On Error</th>
                                     <th>Active</th>
                                     <th>Service</th>
-                                    <th width="200">Import Path</th>
+                                    <th style="max-width:100px">Import Path</th>
                                     <th width="200">Export Path</th>
                                     <th width="200">Template Path</th>
                                     <th width="200">Reading Root</th>
@@ -48,7 +48,9 @@
                                 <tbody>
                                 <th:block th:each="config : ${configs}">
                                     <tr>
-                                        <td th:text="${config.id}"></td>
+                                        <td> <a  style="cursor: pointer" data-row="${config}"
+                                                                       data-toggle="modal"
+                                                                       th:attr="data-target=${'#editModal'+config.id}"><small th:text="${config.id}"></small></a></td>
                                         <td th:text="${config.reading_line}"></td>
                                         <td th:text="${config.getImport_File_format.format_type}"></td>
                                         <td th:text="${config.getExport_File_format.format_type}"></td>
@@ -65,10 +67,10 @@
                                                     onclick="deleteInst($(this).attr('data-config-id'))"
                                                     th:data-config-id="${config.id}">Delete
                                             </button>
-                                            <button class="btn btn-primary" data-row="${config}"
-                                                    data-toggle="modal"
-                                                    th:attr="data-target=${'#editModal'+config.id}">Update
-                                            </button>
+<!--                                            <button class="btn btn-primary" data-row="${config}"-->
+<!--                                                    data-toggle="modal"-->
+<!--                                                    th:attr="data-target=${'#editModal'+config.id}">Update-->
+<!--                                            </button>-->
                                             <button class="btn btn-primary"
                                                     onclick="redirectMappings($(this).attr('data-config-id'))"
                                                     th:data-config-id="${config.id}">Mappings

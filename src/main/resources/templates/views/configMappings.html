@@ -54,7 +54,7 @@
                                         <td th:text="${mapping.import_field_index}"></td>
                                         <td th:text="${mapping.import_field_type.field_type}"></td>
                                         <td th:text="${mapping.import_field_format.format}"></td>
-                                        <td th:text="${mapping.import_field.field_name}"></td>
+                                        <td th:text="${mapping?.import_field?.field_name}"></td>
                                         <td th:text="${mapping.export_field_head.field_name}"></td>
 
                                         <td>
@@ -207,8 +207,8 @@
                                         <h5>Import Field</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'import_update' +mapping.id}">
-                                            <option th:selected="${mapping.import_field.field_name}"
-                                                    th:text="${mapping.import_field.field_name}"th:value="${mapping.import_field.id}"></option>
+                                            <option th:selected="${mapping?.import_field?.field_name}"
+                                                    th:text="${mapping?.import_field?.field_name}"th:value="${mapping?.import_field?.id}"></option>
                                             <th:block th:each="field : ${importFields}">
                                                 <option th:text="${field.field_name}"
                                                         th:value="${field.id}"></option>
