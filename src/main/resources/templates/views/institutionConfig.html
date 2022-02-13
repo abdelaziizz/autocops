@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                 <br>
-                                <h4> Institution : <small th:text="${inst.inst_name}"></small> →
+                                <h4>  <a onclick="navInstitutions()" style="cursor: pointer;">Institution : </a><small th:text="${inst.inst_name}"></small> →
                                     Configurations</h4>
                             </div>
                         </div>
@@ -107,25 +107,11 @@
                     <!--                         th:text="#{CONFIG_ERROR}"></div>-->
                     <div class="container">
                         <form>
+
                             <div class="form-row mb-4">
-                                <div class="col-4">
-                                    <h5>Service</h5>
-                                    <select class="form-control form-small" id="serviceDropdown">
-                                        <option selected="selected">--- Service ---</option>
-                                        <th:block th:each="service : ${availableServices}">
-                                            <option th:text="${service.service_name}"
-                                                    th:value="${service.service_id}"></option>
-                                        </th:block>
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <h5>Start Line</h5>
-                                    <input class="form-control" id="reading_line" placeholder="--- Data Start Line ---"
-                                           type="text">
-                                </div>
-                                <div class="col-4">
+                                <div class="col-4" style="margin-top:10px;">
                                     <h5>Import Format</h5>
-                                    <select class="form-control form-small" id="inputFormatDropdown">
+                                    <select class="form-control form-small" id="inputFormatDropdown" onchange="disable('inputFormatDropdown', 'reading_line','reading_root')">
                                         <option selected="selected">--- Import Format ---</option>
                                         <th:block th:each="fileFormat : ${formats}">
                                             <option th:text="${fileFormat.format_type}"
@@ -143,7 +129,21 @@
                                         </th:block>
                                     </select>
                                 </div>
-                                <br><br>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <h5>Service</h5>
+                                    <select class="form-control form-small" id="serviceDropdown">
+                                        <option selected="selected">--- Service ---</option>
+                                        <th:block th:each="service : ${availableServices}">
+                                            <option th:text="${service.service_name}"
+                                                    th:value="${service.service_id}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <h5>Start Line</h5>
+                                    <input class="form-control" id="reading_line" placeholder="--- Data Start Line ---"
+                                           type="text">
+                                </div>
                                 <div class="col-4" style="margin-top:10px;">
                                     <h5>Fail On Error</h5>
                                     <select class="form-control form-small" id="failDropdown">
@@ -403,6 +403,33 @@
                 window.location.href = "/autocops/inst-configs-mappings/page/" + instId + "/" + id;
             }
         });
+    }
+
+    function navInstitutions() {
+        $.ajax({
+            url: "/autocops/institutions/page",
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/institutions/page";
+                document.getElementById("institutions").classList.add('active');
+            }
+        });
+    }
+
+
+    function disable(select_val,input_id, input_id2) {
+        var e = document.getElementById(select_val);
+        var strUser = e.options[e.selectedIndex].text;
+        if(strUser === "Excel"){
+            document.getElementById(input_id).disabled = false;
+            document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
+            document.getElementById(input_id2).disabled = true;
+        }
+        else{
+            document.getElementById(input_id2).disabled = false;
+            document.getElementById(input_id).value = document.getElementById(input_id).defaultValue;
+            document.getElementById(input_id).disabled = true;
+        }
     }
 
 </script>

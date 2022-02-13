@@ -26,8 +26,8 @@
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                 <br>
-                                <h4> Institution : <small th:text="${inst.inst_name}"></small> →
-                                    Configuration : <small th:text="${config.service.service_name}"></small> →
+                                <h4> <a onclick="navInstitutions()" style="cursor: pointer;">Institution : </a> <small th:text="${inst.inst_name}"></small> →
+                                    <a onclick="navConfigurations()" style="cursor: pointer;">Configuration : </a> <small th:text="${config.service.service_name}"></small> →
                                     Mappings
                                 </h4>
                             </div>
@@ -343,6 +343,30 @@
             }
         });
     }
+    function navInstitutions() {
+        $.ajax({
+            url: "/autocops/institutions/page",
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/institutions/page";
+                document.getElementById("institutions").classList.add('active');
+            }
+        });
+    }
+    function navConfigurations() {
+        var queryString = window.location.href;
+        const words = queryString.split('/');
+        var configId = words[words.length - 2];
+        $.ajax({
+            url: "/autocops/inst-configs/page/" + configId,
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/inst-configs/page/" + configId;
+                document.getElementById("institutions").classList.add('active');
+            }
+        });
+    }
+
 
     /*]]>*/
 
