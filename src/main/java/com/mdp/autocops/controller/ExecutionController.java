@@ -1,5 +1,9 @@
 package com.mdp.autocops.controller;
 
+import com.mdp.autocops.model.entity.InstitutionConfig;
+import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
+import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
+import com.mdp.autocops.service.framework.InstitutionConfigService;
 import com.mdp.autocops.service.impl.processes.Execute;
 import com.mdp.autocops.service.impl.processes.Read;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,8 @@ public class ExecutionController {
 
     private final Execute execute;
     private final Read read;
+    private final InstitutionConfigMappingService mappingService;
+    private final InstitutionConfigService configService;
 
     @ResponseBody
     @PostMapping("/{config_id}")
@@ -31,7 +37,14 @@ public class ExecutionController {
     @ResponseBody
     @PostMapping("/read/{config_id}")
     public List<Map> read(@PathVariable long config_id) {
-        return read.readXMLNested(config_id);
+        try {
+            InstitutionConfig config = configService.getById(config_id);
+            return read.readXMLNested(config.getReading_root(), config.getImport_path());
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
+
     }
 
 }

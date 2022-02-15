@@ -17,6 +17,7 @@ import java.util.Map;
 @Service
 public class Write {
 
+    // Writes data in maps to XML format provided by the template
     public String writeXML (String writing_root, String template_path, String output_path , List<Map> maps){
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try(InputStream is = new FileInputStream(template_path)) {
@@ -25,16 +26,13 @@ public class Write {
             NodeList applications = doc.getElementsByTagName(writing_root);
             int app_length = applications.getLength();
             int map_length = maps.size();
-
             for ( int j = app_length ; j < map_length ; j++ ) {
                 Node extra_app = applications.item(0);
                 Node extra_app_ext = extra_app.cloneNode(true);
                 doc.getDocumentElement().appendChild(extra_app_ext);;
             }
             applications = doc.getElementsByTagName(writing_root);
-            for ( int i = 0 ; i < maps.size() ; i++ ) {
-                assignChildren(applications.item(i), maps.get(i));
-            }
+            for ( int i = 0 ; i < maps.size() ; i++ ) assignChildren(applications.item(i), maps.get(i));
             NodeList test = doc.getElementsByTagName(writing_root);
             System.out.println(test.getLength());
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -49,19 +47,15 @@ public class Write {
             return "fail";
         }
     }
+
+    // Helper for writeXML
     public void assignChildren (Node node, Map<String, String> map) {
         if (node.hasChildNodes()) {
             NodeList nodes = node.getChildNodes();
-            for ( int i = 0 ; i < nodes.getLength() ; i++ ) {
-                assignChildren(nodes.item(i), map);
-            }
-        }
-        else {
+            for ( int i = 0 ; i < nodes.getLength() ; i++ ) assignChildren(nodes.item(i), map);
+        } else {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-               if (map.get(node.getNodeName()) != null) {
-                   node.setTextContent(map.get(node.getNodeName()));
-               }
-            }
-        }
+               if (map.get(node.getNodeName()) != null) node.setTextContent(map.get(node.getNodeName()));
+            } }
     }
 }

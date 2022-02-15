@@ -36,6 +36,7 @@ public class Read {
     @Autowired
     InstitutionConfigService configService;
 
+    // For reading Excel files produced by banks.
     public List<Map> readExcel(int reading_line, String path, List<InstitutionsConfigMapping> mappings) throws IOException {
         List<Map> records = new ArrayList<>();
         try {
@@ -61,6 +62,7 @@ public class Read {
         }
     }
 
+    // For reading XMLs produced by banks (Only ADCB in our case)
     public List<Map> readXML(String reading_root, String fileName, List<InstitutionsConfigMapping> mappings) throws ParserConfigurationException {
         try {
             List<Map> maps = new ArrayList<>();
@@ -90,30 +92,30 @@ public class Read {
         }
     }
 
-    public List<Map> readXMLNested(long config_id) {
+    // For reading XMLs produced by Smart Vista
+    public List<Map> readXMLNested(String reading_root, String fileName) {
         try {
-            InstitutionConfig config = configService.getById(config_id);
             List<Map> maps = new ArrayList<>();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new File(config.getImport_path()));
+            Document doc = db.parse(new File(fileName));
             doc.getDocumentElement().normalize();
-            NodeList list = doc.getElementsByTagName(config.getReading_root());
+            NodeList list = doc.getElementsByTagName(reading_root);
             for ( int i = 0 ; i < list.getLength() ; i++ ) {
                 Map<String,String> map = new HashMap<>();
                 Node node = list.item(i);
                 String path = "";
                 readChildren(node, map, path);
                 maps.add(map);
-            }
-            //displayListOfMaps(maps);
-            return maps;
+            } return maps;
         } catch (Exception e) {
             log.error(e);
             return null;
         }
     }
+
+    // Helper for readXMLNested
     public void readChildren (Node node, Map<String, String> map, String path) {
         if (node.hasChildNodes()) {
             NodeList nodes = node.getChildNodes();
@@ -130,13 +132,13 @@ public class Read {
             }
             else {
                 if (node.getTextContent().trim().length()>0) {
-                    System.out.println(node.getParentNode().getNodeName() + " ----> " + node.getTextContent());
                     path+="/"+node.getParentNode().getNodeName();
                     map.put(path, node.getTextContent());
                 }
             }
         } }
 
+    // Displays output maps for testing purposes
     public void displayListOfMaps (List<Map> maps) {
         for (Map map : maps) {
             Map<String, String> current = map;

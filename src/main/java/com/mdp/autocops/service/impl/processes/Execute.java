@@ -24,7 +24,7 @@ public class Execute {
     Read read;
     @Autowired
     Write write;
-
+    // Performs the read and write in from the bank to smart vista
     public String execute (long config_id) {
          try {
              InstitutionConfig config = configService.getById(config_id);
