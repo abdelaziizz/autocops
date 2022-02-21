@@ -23,10 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -146,6 +143,33 @@ public class Read {
                 System.out.println("Key = " + entry.getKey() +", Value = " + entry.getValue());
             }
             System.out.println("----------------------------------------------------------------------------------------");
+        }
+    }
+
+    // Read CSV Files
+    public List<Map> readCSV (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+        List<Map> maps = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(new File(path));
+//            sc.useDelimiter(",");
+            for (int i = 0 ; i < reading_line ; i++) {
+                sc.next();
+            }
+            while (sc.hasNext()) {
+                String [] parsed = sc.next().split(",");
+                System.out.println(parsed.length);
+                Map<String, String> map = new HashMap<>();
+                for ( int j = 0 ; j < mappings.size() ; j++ ) {
+                    System.out.println((mappings.get(j).getExport_field_head().getField_name()));
+                    System.out.println(parsed[mappings.get(j).getImport_field_index()]);
+
+                    map.put(mappings.get(j).getExport_field_head().getField_name(),parsed[mappings.get(j).getImport_field_index()]);
+                }
+                maps.add(map);
+            } return maps;
+            } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
         }
     }
 }

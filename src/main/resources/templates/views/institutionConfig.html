@@ -422,7 +422,7 @@
     function disable(select_val,input_id, input_id2) {
         var e = document.getElementById(select_val);
         var strUser = e.options[e.selectedIndex].text;
-        if(strUser === "Excel"){
+        if(strUser === "Excel" || strUser === "CSV"){
             document.getElementById(input_id).disabled = false;
             document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
             document.getElementById(input_id2).disabled = true;
