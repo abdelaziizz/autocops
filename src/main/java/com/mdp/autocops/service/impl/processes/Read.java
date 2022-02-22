@@ -20,9 +20,7 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 @Log4j2
@@ -149,25 +147,19 @@ public class Read {
     // Read CSV Files
     public List<Map> readCSV (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
         List<Map> maps = new ArrayList<>();
-        try {
-            Scanner sc = new Scanner(new File(path));
-//            sc.useDelimiter(",");
-            for (int i = 0 ; i < reading_line ; i++) {
-                sc.next();
-            }
-            while (sc.hasNext()) {
-                String [] parsed = sc.next().split(",");
-                System.out.println(parsed.length);
-                Map<String, String> map = new HashMap<>();
-                for ( int j = 0 ; j < mappings.size() ; j++ ) {
-                    System.out.println((mappings.get(j).getExport_field_head().getField_name()));
-                    System.out.println(parsed[mappings.get(j).getImport_field_index()]);
-
-                    map.put(mappings.get(j).getExport_field_head().getField_name(),parsed[mappings.get(j).getImport_field_index()]);
-                }
-                maps.add(map);
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            int counter = 0;
+            while ((line = br.readLine()) != null) {
+                if (counter >= reading_line) {
+                    Map<String, String> map = new HashMap<>();
+                    String[] values = line.split(",");
+                    for ( int j = 0 ; j < mappings.size() ; j++ ) {
+                        map.put(mappings.get(j).getExport_field_head().getField_name(),values[mappings.get(j).getImport_field_index()-1]);
+                    } maps.add(map);
+                } else counter++;
             } return maps;
-            } catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
