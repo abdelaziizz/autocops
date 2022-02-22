@@ -36,6 +36,9 @@ public class Execute {
              else if ( config.getImport_File_format().getFormat_type().equals("XML")) {
                  maps = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
              }
+             else if ( config.getImport_File_format().getFormat_type().equals("CSV")) {
+                 maps = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
+             }
              write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
              return "success";
          } catch (Exception e) {
