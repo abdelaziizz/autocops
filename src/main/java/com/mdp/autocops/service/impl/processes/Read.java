@@ -164,4 +164,26 @@ public class Read {
             return null;
         }
     }
+
+    //Read Text Files
+    public List<Map> readText (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+        List<Map> maps = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            int counter = 0;
+            while ((line = br.readLine()) != null) {
+                if (counter >= reading_line) {
+                    Map<String, String> map = new HashMap<>();
+                    for ( int j = 0 ; j < mappings.size() ; j++ ) {
+
+                        // needs to be modified after editing
+                        map.put(mappings.get(j).getExport_field_head().getField_name(),line.substring(1,5));
+                    } maps.add(map);
+                } else counter++;
+            } return maps;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
+    }
 }

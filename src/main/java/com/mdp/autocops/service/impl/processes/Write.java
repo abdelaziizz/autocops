@@ -55,7 +55,9 @@ public class Write {
             for ( int i = 0 ; i < nodes.getLength() ; i++ ) assignChildren(nodes.item(i), map);
         } else {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-               if (map.get(node.getNodeName()) != null) node.setTextContent(map.get(node.getNodeName()));
+               if (map.get(node.getNodeName()) != null) {
+                   node.setTextContent(map.get(node.getNodeName()));
+               }
             } }
     }
 }
