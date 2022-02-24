@@ -24,6 +24,8 @@ public class Execute {
     Read read;
     @Autowired
     Write write;
+    @Autowired
+    FileAccess fileAccess;
     // Performs the read and write in from the bank to smart vista
     public String execute (long config_id) {
          try {
@@ -39,8 +41,12 @@ public class Execute {
              else if ( config.getImport_File_format().getFormat_type().equals("CSV")) {
                  maps = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
              }
-             write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
-             return "success";
+             if(maps == null) return "Could not read input file";
+             else {
+                 String response = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
+                 String text = fileAccess.downloadLocal(config.getExport_path());
+                 return text;
+             }
          } catch (Exception e) {
              log.error(e.getStackTrace());
              return "fail";

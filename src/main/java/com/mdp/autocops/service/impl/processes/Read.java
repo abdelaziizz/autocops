@@ -82,7 +82,7 @@ public class Read {
                 } maps.add(map);
             } return maps;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return null;
         }
     }

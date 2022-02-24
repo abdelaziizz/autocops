@@ -44,7 +44,7 @@ public class Write {
             return "success";
         } catch (Exception e) {
             log.error(e);
-            return "fail";
+            return "Could Not Write Document";
         }
     }
 
