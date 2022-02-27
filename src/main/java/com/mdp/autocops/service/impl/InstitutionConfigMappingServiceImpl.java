@@ -59,7 +59,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, long exp_field, long imp_field) {
+    public InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, long exp_field, long imp_field, int start_index, int last_index) {
 
         InstitutionConfig config = institutionConfigService.getById(configId);
         InstitutionsConfigMapping instConfigMapping = new InstitutionsConfigMapping();
@@ -78,6 +78,8 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             instConfigMapping.setImport_field_type(fieldTypeService.getById(typeId));
             instConfigMapping.setImport_field_format(fieldFormatService.getById(format_id));
             instConfigMapping.setImport_field(importField);
+            instConfigMapping.setStart_index(start_index);
+            instConfigMapping.setLast_index(last_index);
             institutionsConfigMappingDao.save(instConfigMapping);
             return instConfigMapping;
         } catch (Exception e) {
@@ -101,7 +103,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long formatId, long exp_field, long imp_field) {
+    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long formatId, long exp_field, long imp_field, int start_index, int last_index) {
 
         Optional<InstitutionsConfigMapping> instConfigMapping = null;
         try {
@@ -119,6 +121,8 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
                 if (exportField != null) instConfigMapping.get().setExport_field_head(exportField);
                 ImportField importField = importFieldService.getById(imp_field);
                 if (importField != null) instConfigMapping.get().setImport_field(importField);
+                instConfigMapping.get().setStart_index(start_index);
+                instConfigMapping.get().setLast_index(last_index);
                 institutionsConfigMappingDao.save(instConfigMapping.get());
             } else log.info("Error retrieving Institution Configuration Mapping");
         } catch (Exception e) {

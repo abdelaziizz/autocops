@@ -177,7 +177,7 @@ public class Read {
                     for ( int j = 0 ; j < mappings.size() ; j++ ) {
 
                         // needs to be modified after editing
-                        map.put(mappings.get(j).getExport_field_head().getField_name(),line.substring(1,5));
+                        map.put(mappings.get(j).getExport_field_head().getField_name(),line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
                     } maps.add(map);
                 } else counter++;
             } return maps;

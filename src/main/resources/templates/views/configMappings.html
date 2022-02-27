@@ -44,6 +44,8 @@
                                     <th>Import Field Format</th>
                                     <th>Import Field</th>
                                     <th>Export Field</th>
+                                    <th>Start Index</th>
+                                    <th>Last Index</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -56,6 +58,8 @@
                                         <td th:text="${mapping.import_field_format.format}"></td>
                                         <td th:text="${mapping?.import_field?.field_name}"></td>
                                         <td th:text="${mapping.export_field_head.field_name}"></td>
+                                        <td th:text="${mapping.start_index}"></td>
+                                        <td th:text="${mapping.last_index}"></td>
 
                                         <td>
                                             <button class="btn btn-danger"
@@ -143,6 +147,16 @@
                                         </th:block>
                                     </select>
                                 </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <h5>Start Index</h5>
+                                    <input class="form-control" id="start_index" placeholder="Start Index"
+                                           type="text">
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <h5>Last Index</h5>
+                                    <input class="form-control" id="last_index" placeholder="Last Index"
+                                           type="text">
+                                </div>
                             </div>
 
                         </form>
@@ -228,6 +242,18 @@
                                             </th:block>
                                         </select>
                                     </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Start Index</h5>
+                                        <input class="form-control" th:attr="id=${'start_index_update' + mapping.id}"
+                                               th:value="${mapping.start_index}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Last Index</h5>
+                                        <input class="form-control" th:attr="id=${'last_index_update' + mapping.id}"
+                                               th:value="${mapping.last_index}"
+                                               type="text">
+                                    </div>
                                 </div>
 
                             </form>
@@ -262,6 +288,8 @@
         institution.formatId = $("#format").val();
         institution.imp_field = $("#import").val();
         institution.exp_field = $("#export").val();
+        institution.start_index = $("#start_index").val();
+        institution.last_index = $("#last_index").val();
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs-mappings',
@@ -283,6 +311,8 @@
         institution.formatId = $("#format_update" + id).val();
         institution.imp_field = $("#import_update" + id).val();
         institution.exp_field = $("#export_update" + id).val();
+        institution.start_index = $("#start_index_update" + id).val();
+        institution.last_index = $("#last_index_update" + id).val();
         $.ajax({
             type: 'put',
             url: '/autocops/inst-configs-mappings/' + id,

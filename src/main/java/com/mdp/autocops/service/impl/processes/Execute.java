@@ -41,6 +41,9 @@ public class Execute {
              else if ( config.getImport_File_format().getFormat_type().equals("CSV")) {
                  maps = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
              }
+             else if ( config.getImport_File_format().getFormat_type().equals("Text")) {
+                 maps = read.readText(config.getReading_line(), config.getImport_path(), mappings);
+             }
              if(maps == null) return "Could not read input file";
              else {
                  String response = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);

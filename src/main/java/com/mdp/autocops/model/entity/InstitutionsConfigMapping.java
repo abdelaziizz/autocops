@@ -37,4 +37,10 @@ public class InstitutionsConfigMapping {
     @JoinColumn(name = "import_field")
     private ImportField import_field;
 
+    @Column(name = "start_index")
+    private int start_index;
+
+    @Column(name = "last_index")
+    private int last_index;
+
 }

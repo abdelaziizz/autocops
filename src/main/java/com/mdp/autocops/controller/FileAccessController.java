@@ -2,22 +2,17 @@ package com.mdp.autocops.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 @Controller
 @RequiredArgsConstructor
 @Log4j2
+@RequestMapping("/files")
 public class FileAccessController {
 
     private static String UPLOADED_FOLDER = "/root/AutoCopsTesting/";
@@ -38,5 +33,4 @@ public class FileAccessController {
             return "fail";
         }
     }
-
 }

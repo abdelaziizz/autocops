@@ -45,7 +45,8 @@ public class InstitutionConfigMappingController {
     @ResponseBody
     @PostMapping
     public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam String imp_field_index, @RequestParam long typeId,
-                                            @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field) {
+                                            @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field,
+                                            @RequestParam int start_index, @RequestParam int last_index) {
         int index;
         long imp;
         if (imp_field_index.equals("")) index = -1;
@@ -54,14 +55,15 @@ public class InstitutionConfigMappingController {
         if (imp_field.equals("")) imp = -1;
         else imp = Long.valueOf(imp_field);
 
-        return mappingService.create(configId, index, typeId, formatId, exp_field, imp);
+        return mappingService.create(configId, index, typeId, formatId, exp_field, imp, start_index, last_index);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
     public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field_index,
-                    @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field) {
-        return mappingService.put(id, configId, imp_field_index, typeId, formatId, exp_field, imp_field);
+                    @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field,
+                                         @RequestParam int start_index, @RequestParam int last_index) {
+        return mappingService.put(id, configId, imp_field_index, typeId, formatId, exp_field, imp_field, start_index, last_index);
     }
 
     @ResponseBody
