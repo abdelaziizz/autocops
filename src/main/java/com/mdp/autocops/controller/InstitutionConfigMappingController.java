@@ -46,7 +46,7 @@ public class InstitutionConfigMappingController {
     @PostMapping
     public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam String imp_field_index, @RequestParam long typeId,
                                             @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field,
-                                            @RequestParam int start_index, @RequestParam int last_index) {
+                                            @RequestParam Integer start_index, @RequestParam Integer last_index) {
         int index;
         long imp;
         if (imp_field_index.equals("")) index = -1;

@@ -62,9 +62,9 @@
                                         <td th:text="${mapping.last_index}"></td>
 
                                         <td>
-                                            <button class="btn btn-danger"
-                                                    onclick="deleteInst($(this).attr('data-mapping-id'))"
-                                                    th:data-mapping-id="${mapping.id}">Delete
+                                            <button class="btn btn-danger"  data-row="${mapping}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#deleteModal'+mapping.id}">Delete
                                             </button>
                                             <button class="btn btn-primary" data-row="${mapping}"
                                                     data-toggle="modal"
@@ -271,6 +271,25 @@
         </div>
     </div>
 
+    <div aria-hidden="true" class="modal fade" role="alert" tabindex="-1" th:attr="id=${'deleteModal' + mapping.id}"
+         th:each="mapping : ${mappings}">
+        <div class="modal-dialog" role="alert">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <h5>Please confirm deleting this configuration mapping.</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" onclick="deleteInst($(this).attr('data-mapping-id'))"
+                            th:data-mapping-id="${mapping.id}" type="button">Delete
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 <!-- END MAIN CONTAINER -->
@@ -290,6 +309,7 @@
         institution.exp_field = $("#export").val();
         institution.start_index = $("#start_index").val();
         institution.last_index = $("#last_index").val();
+        console.log(institution)
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs-mappings',

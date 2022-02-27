@@ -12,7 +12,7 @@ public interface InstitutionConfigMappingService {
 
     InstitutionsConfigMapping getById(long id);
 
-    InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, long exp_field, long imp_field, int start_index, int last_index);
+    InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, long exp_field, long imp_field, Integer start_index, Integer last_index);
 
     InstitutionsConfigMapping delete(long id);
 

@@ -52,9 +52,9 @@
                                         <td th:text="${service.description}"></td>
                                         <td th:text="${service.active}"></td>
                                         <td>
-                                            <button class="btn btn-danger"
-                                                    onclick="deleteInst($(this).attr('data-service-id'))"
-                                                    th:data-service-id="${service.service_id}">Delete
+                                            <button class="btn btn-danger"  data-row="${service}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#deleteModal'+service.service_id}">Delete
                                             </button>
                                             <button class="btn btn-primary" data-row="${service}"
                                                     data-toggle="modal"
@@ -172,6 +172,28 @@
             </div>
         </div>
     </div>
+
+
+    <div aria-hidden="true" class="modal fade" role="alert" tabindex="-1" th:attr="id=${'deleteModal' + service.service_id}"
+         th:each="service : ${services}">
+        <div class="modal-dialog" role="alert">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <h5>Please confirm deleting this service.</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" onclick="deleteInst($(this).attr('data-mapping-id'))"
+                            th:data-mapping-id="${service.service_id}" type="button">Delete
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <!-- END MAIN CONTAINER -->
 
