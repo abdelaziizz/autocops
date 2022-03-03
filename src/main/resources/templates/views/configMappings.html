@@ -128,7 +128,7 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Import Field</h5>
+                                    <h5>Import Field Name</h5>
                                     <select class="form-control form-small" id="import">
                                         <option selected="selected" value="">--- Import Field ---</option>
                                         <th:block th:each="field : ${importFields}">
@@ -138,7 +138,7 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Export Field</h5>
+                                    <h5>Export Field Name</h5>
                                     <select class="form-control form-small" id="export">
                                         <option selected="selected">--- Export Field ---</option>
                                         <th:block th:each="field : ${exportFields}">
@@ -218,7 +218,7 @@
                                     </div>
 
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Import Field</h5>
+                                        <h5>Import Field Name</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'import_update' +mapping.id}">
                                             <option th:selected="${mapping?.import_field?.field_name}"
@@ -231,7 +231,7 @@
                                     </div>
 
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Export Field</h5>
+                                        <h5>Export Field Name</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'export_update' +mapping.id}">
                                             <option th:selected="${mapping.export_field_head.field_name}"

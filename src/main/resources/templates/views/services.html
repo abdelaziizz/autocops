@@ -40,7 +40,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th width="700">Description</th>
-                                    <th>Active</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -50,7 +50,8 @@
                                         <td th:text="${service.service_id}"></td>
                                         <td th:text="${service.service_name}"></td>
                                         <td th:text="${service.description}"></td>
-                                        <td th:text="${service.active}"></td>
+                                        <td><span th:if="${service.active == true}">Active</span>
+                                            <span th:unless="${service.active == true}">Inactive</span></td>
                                         <td>
                                             <button class="btn btn-danger"  data-row="${service}"
                                                     data-toggle="modal"
@@ -106,11 +107,11 @@
                                     <input class="form-control" id="serviceDes" placeholder="Description" type="text">
                                 </div>
                                 <div class="col-4">
-                                    <h5>Active</h5>
+                                    <h5>Status</h5>
                                     <select class="form-control form-small" id="serviceDropdown">
-                                        <option selected="selected">--- Service ---</option>
-                                        <option value="true">True</option>
-                                        <option value="false">False</option>
+                                        <option selected="selected">--- Status ---</option>
+                                        <option value="true">Active</option>
+                                        <option value="false">Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -149,11 +150,17 @@
                                                th:value="${service.description}" type="text">
                                     </div>
                                     <div class="col-4">
-                                        <h5> Active </h5>
+                                        <h5> Status </h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'activeUpdate' + service.service_id}">
-                                            <option th:text="${service.active}" th:value="${service.active}"></option>
-                                            <option th:text="${!service.active}" th:value="${!service.active}"></option>
+                                            <option th:value="${service.active}">
+                                                <span th:if="${service.active == true}">Active</span>
+                                                <span th:unless="${service.active == true}">Inactive</span>
+                                            </option>
+                                            <option th:value="${!service.active}">
+                                                <span th:if="${service.active == true}">Inactive</span>
+                                                <span th:unless="${service.active == true}">Active</span>
+                                            </option>
                                         </select>
                                     </div>
                                 </div>

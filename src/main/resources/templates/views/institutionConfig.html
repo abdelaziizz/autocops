@@ -35,7 +35,7 @@
                                     <th>Import Format</th>
                                     <th>export Format</th>
                                     <th>Fail On Error</th>
-                                    <th>Active</th>
+                                    <th>Status</th>
                                     <th>Service</th>
                                     <th style="max-width:100px">Import Path</th>
                                     <th width="200">Export Path</th>
@@ -53,7 +53,8 @@
                                         <td th:text="${config.getImport_File_format.format_type}"></td>
                                         <td th:text="${config.getExport_File_format.format_type}"></td>
                                         <td th:text="${config.fail_on_error}"></td>
-                                        <td th:text="${config.active}"></td>
+                                        <td><span th:if="${config.active == true}">Active</span>
+                                            <span th:unless="${config.active == true}">Inactive</span></td>
                                         <td th:text="${config.service.service_name}"></td>
                                         <td th:text="${config.import_path}"></td>
                                         <td th:text="${config.export_path}"></td>
@@ -153,11 +154,11 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Active</h5>
+                                    <h5>Status</h5>
                                     <select class="form-control form-small" id="activeDropdown">
-                                        <option selected="selected">--- Active ---</option>
-                                        <option value="true">True</option>
-                                        <option value="false">False</option>
+                                        <option selected="selected">--- Status ---</option>
+                                        <option value="true">Active</option>
+                                        <option value="false">Inactive</option>
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
@@ -270,12 +271,17 @@
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Active</h5>
+                                        <h5>Status</h5>
                                         <select class="form-control form-small"
                                                 th:attr="id=${'activeUpdate' +config.id}">
-                                            <option th:selected="${config.active}" th:text="${config.active}"
-                                                    th:value="${config.active}"></option>
-                                            <option th:text="${!config.active}" th:value="${!config.active}"></option>
+                                            <option th:selected="${config.active}" th:value="${config.active}" >
+                                                <span th:if="${config.active == true}">Active</span>
+                                                <span th:unless="${config.active == true}">Inactive</span>
+                                            </option>
+                                            <option th:value="${!config.active}">
+                                                <span th:if="${config.active == true}">Inactive</span>
+                                                <span th:unless="${config.active == true}">Active</span>
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
