@@ -46,24 +46,48 @@ public class InstitutionConfigMappingController {
     @PostMapping
     public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam String imp_field_index, @RequestParam long typeId,
                                             @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field,
-                                            @RequestParam Integer start_index, @RequestParam Integer last_index) {
+                                            @RequestParam String start_index, @RequestParam String last_index) {
         int index;
         long imp;
+        int last;
+        int start;
         if (imp_field_index.equals("")) index = -1;
         else index = Integer.valueOf(imp_field_index);
+
+        if (start_index.equals("")) start = -1;
+        else start = Integer.valueOf(start_index);
+
+        if (last_index.equals("")) last = -1;
+        else last = Integer.valueOf(last_index);
 
         if (imp_field.equals("")) imp = -1;
         else imp = Long.valueOf(imp_field);
 
-        return mappingService.create(configId, index, typeId, formatId, exp_field, imp, start_index, last_index);
+        return mappingService.create(configId, index, typeId, formatId, exp_field, imp, start, last);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
-    public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam int imp_field_index,
-                    @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam long imp_field,
-                                         @RequestParam int start_index, @RequestParam int last_index) {
-        return mappingService.put(id, configId, imp_field_index, typeId, formatId, exp_field, imp_field, start_index, last_index);
+    public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam String imp_field_index,
+                    @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field,
+                                         @RequestParam String start_index, @RequestParam String last_index) {
+        int index;
+        long imp;
+        int last;
+        int start;
+        if (imp_field_index.equals("")) index = -1;
+        else index = Integer.valueOf(imp_field_index);
+
+        if (start_index.equals("")) start = -1;
+        else start = Integer.valueOf(start_index);
+
+        if (last_index.equals("")) last = -1;
+        else last = Integer.valueOf(last_index);
+
+        if (imp_field.equals("")) imp = -1;
+        else imp = Long.valueOf(imp_field);
+
+        return mappingService.put(id, configId, index, typeId, formatId, exp_field, imp, start, last);
     }
 
     @ResponseBody

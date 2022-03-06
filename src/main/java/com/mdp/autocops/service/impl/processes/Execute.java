@@ -2,6 +2,7 @@ package com.mdp.autocops.service.impl.processes;
 
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
+import com.mdp.autocops.model.entity.ReadingResponse;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import lombok.extern.log4j.Log4j2;
@@ -32,23 +33,24 @@ public class Execute {
              InstitutionConfig config = configService.getById(config_id);
              List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
              List<Map> maps = new ArrayList<>();
+             ReadingResponse response = new ReadingResponse();
              if (config.getImport_File_format().getFormat_type().equals("Excel")) {
-                 maps = read.readExcel(config.getReading_line(), config.getImport_path(), mappings);
+                 response = read.readExcel(config.getReading_line(), config.getImport_path(), mappings);
              }
              else if ( config.getImport_File_format().getFormat_type().equals("XML")) {
-                 maps = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
+                 response = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
              }
              else if ( config.getImport_File_format().getFormat_type().equals("CSV")) {
-                 maps = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
+                 response = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
              }
              else if ( config.getImport_File_format().getFormat_type().equals("Text")) {
-                 maps = read.readText(config.getReading_line(), config.getImport_path(), mappings);
+                 response = read.readText(config.getReading_line(), config.getImport_path(), mappings);
              }
-             if(maps == null) return "Could not read input file";
+             if(maps == null || maps.size() ==0) return response.getMessage();
              else {
-                 String response = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
-                 String text = fileAccess.downloadLocal(config.getExport_path());
-                 return text;
+                 maps = response.getMaps();
+                 String response2 = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
+                 return response2;
              }
          } catch (Exception e) {
              log.error(e.getStackTrace());

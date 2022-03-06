@@ -40,7 +40,7 @@ public class ExecutionController {
         try {
             List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
             InstitutionConfig config = configService.getById(config_id);
-            return read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
+            return read.readCSV(config.getReading_line(), config.getImport_path(), mappings).getMaps();
         } catch (Exception e) {
             log.error(e);
             return null;

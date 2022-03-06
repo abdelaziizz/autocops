@@ -34,7 +34,7 @@ public class Write {
             applications = doc.getElementsByTagName(writing_root);
             for ( int i = 0 ; i < maps.size() ; i++ ) assignChildren(applications.item(i), maps.get(i));
             NodeList test = doc.getElementsByTagName(writing_root);
-            System.out.println(test.getLength());
+            //System.out.println(test.getLength());
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer= transformerFactory.newTransformer();
             doc.normalize();

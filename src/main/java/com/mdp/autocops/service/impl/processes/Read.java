@@ -1,7 +1,7 @@
 package com.mdp.autocops.service.impl.processes;
 
-import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
+import com.mdp.autocops.model.entity.ReadingResponse;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +15,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,25 +31,46 @@ public class Read {
     InstitutionConfigService configService;
 
     // For reading Excel files produced by banks.
-    public List<Map> readExcel(int reading_line, String path, List<InstitutionsConfigMapping> mappings) throws IOException {
+    public ReadingResponse readExcel(int reading_line, String path, List<InstitutionsConfigMapping> mappings) throws IOException {
+        String message = "";
+        ReadingResponse response = new ReadingResponse();
         List<Map> records = new ArrayList<>();
         try {
             FileInputStream file = new FileInputStream(path);
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
-            for (int j = reading_line; j <= sheet.getLastRowNum(); j++) {
-                Map<String, String> current_record = new HashMap<>();
-                Row row = sheet.getRow(j);
-                for (int i = 0; i < mappings.size(); i++) {
-                    String type = mappings.get(i).getImport_field_type().getField_type();
-                    if (type.equals("Number")) {
-                        current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf((long) row.getCell(mappings.get(i).getImport_field_index()).getNumericCellValue()));
+            System.out.println(sheet.getLastRowNum());
+            if (sheet.getLastRowNum()  == 0) {
+                message = "Input file is empty";
+                response.setMessage(message);
+            }
+            else {
+                for (int j = reading_line; j <= sheet.getLastRowNum(); j++) {
+                    Map<String, String> current_record = new HashMap<>();
+                    Row row = sheet.getRow(j);
+                    for (int i = 0; i < mappings.size(); i++) {
+                        System.out.println(row.getCell(mappings.get(i).getImport_field_index()));
+                        if (row.getCell(mappings.get(i).getImport_field_index()) == null) {
+                            message = "Missing field in row : " + row.getRowNum() + " in index : " + mappings.get(i).getImport_field_index();
+                            response.setMessage(message);
+                            return response;
+                        }
+                        else {
+                            String type = mappings.get(i).getImport_field_type().getField_type();
+                            if (type.equals("Number")) {
+                                current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf((long) row.getCell(mappings.get(i).getImport_field_index()).getNumericCellValue()));
+                            }
+                            if (type.equals("String")) {
+                                current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
+                            }
+                        }
                     }
-                    if (type.equals("String")) {
-                        current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
-                    }
-                } records.add(current_record);
-            } return records;
+                    records.add(current_record);
+                }
+                message = "Success";
+                response.setMaps(records);
+                response.setMessage(message);
+            } return response;
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
@@ -58,7 +78,9 @@ public class Read {
     }
 
     // For reading XMLs produced by banks (Only ADCB in our case)
-    public List<Map> readXML(String reading_root, String fileName, List<InstitutionsConfigMapping> mappings) throws ParserConfigurationException {
+    public ReadingResponse readXML(String reading_root, String fileName, List<InstitutionsConfigMapping> mappings) throws ParserConfigurationException {
+        String message;
+        ReadingResponse response = new ReadingResponse();
         try {
             List<Map> maps = new ArrayList<>();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -67,20 +89,29 @@ public class Read {
             Document doc = db.parse(new File(fileName));
             doc.getDocumentElement().normalize();
             NodeList list = doc.getElementsByTagName(reading_root);
-
-            for (int temp = 0; temp < list.getLength(); temp++) {
-                Map<String, String> map = new HashMap<>();
-                Node node = list.item(temp);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) node;
-                    for (int i = 0; i < mappings.size(); i++) {
-                        InstitutionsConfigMapping mapping = mappings.get(i);
-                        if (element.getElementsByTagName(mapping.getImport_field().getField_name()).getLength() != 0) {
-                            map.put(mapping.getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
+            if (list.getLength() == 0) {
+                message = "Input file is empty";
+                response.setMessage(message);
+            }
+            else {
+                for (int temp = 0; temp < list.getLength(); temp++) {
+                    Map<String, String> map = new HashMap<>();
+                    Node node = list.item(temp);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) node;
+                        for (int i = 0; i < mappings.size(); i++) {
+                            InstitutionsConfigMapping mapping = mappings.get(i);
+                            if (element.getElementsByTagName(mapping.getImport_field().getField_name()).getLength() != 0) {
+                                map.put(mapping.getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
+                            }
                         }
                     }
-                } maps.add(map);
-            } return maps;
+                    maps.add(map);
+                }
+                message = "Success";
+                response.setMessage(message);
+                response.setMaps(maps);
+            } return response;
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
@@ -88,7 +119,9 @@ public class Read {
     }
 
     // For reading XMLs produced by Smart Vista
-    public List<Map> readXMLNested(String reading_root, String fileName) {
+    public ReadingResponse readXMLNested(String reading_root, String fileName) {
+        String message;
+        ReadingResponse response = new ReadingResponse();
         try {
             List<Map> maps = new ArrayList<>();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -97,13 +130,23 @@ public class Read {
             Document doc = db.parse(new File(fileName));
             doc.getDocumentElement().normalize();
             NodeList list = doc.getElementsByTagName(reading_root);
-            for ( int i = 0 ; i < list.getLength() ; i++ ) {
-                Map<String,String> map = new HashMap<>();
-                Node node = list.item(i);
-                String path = "";
-                readChildren(node, map, path);
-                maps.add(map);
-            } return maps;
+            if (list.getLength() == 0) {
+                message = "Input file is empty";
+                response.setMessage(message);
+            }
+            else {
+                for (int i = 0; i < list.getLength(); i++) {
+                    Map<String, String> map = new HashMap<>();
+                    Node node = list.item(i);
+                    String path = "";
+                    readChildren(node, map, path);
+                    maps.add(map);
+                }
+                message = "Success";
+                response.setMessage(message);
+                response.setMaps(maps);
+
+            } return response;
         } catch (Exception e) {
             log.error(e);
             return null;
@@ -145,20 +188,33 @@ public class Read {
     }
 
     // Read CSV Files
-    public List<Map> readCSV (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+    public ReadingResponse readCSV (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
         List<Map> maps = new ArrayList<>();
+        ReadingResponse response = new ReadingResponse();
+        String message;
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            int counter = 0;
-            while ((line = br.readLine()) != null) {
-                if (counter >= reading_line) {
-                    Map<String, String> map = new HashMap<>();
-                    String[] values = line.split(",");
-                    for ( int j = 0 ; j < mappings.size() ; j++ ) {
-                        map.put(mappings.get(j).getExport_field_head().getField_name(),values[mappings.get(j).getImport_field_index()-1]);
-                    } maps.add(map);
-                } else counter++;
-            } return maps;
+            if (br.readLine() == null) {
+                message = "Input file is empty";
+                response.setMessage(message);
+            }
+            else {
+                String line;
+                int counter = 0;
+                while ((line = br.readLine()) != null) {
+                    if (counter >= reading_line) {
+                        Map<String, String> map = new HashMap<>();
+                        String[] values = line.split(",");
+                        for (int j = 0; j < mappings.size(); j++) {
+                            map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index() - 1]);
+                        }
+                        maps.add(map);
+                    } else counter++;
+                }
+                message="Success";
+                response.setMessage(message);
+                response.setMaps(maps);
+            }
+            return response;
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
@@ -166,21 +222,34 @@ public class Read {
     }
 
     //Read Text Files
-    public List<Map> readText (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+    public ReadingResponse readText (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
         List<Map> maps = new ArrayList<>();
+        ReadingResponse response = new ReadingResponse();
+        String message;
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            int counter = 0;
-            while ((line = br.readLine()) != null) {
-                if (counter >= reading_line) {
-                    Map<String, String> map = new HashMap<>();
-                    for ( int j = 0 ; j < mappings.size() ; j++ ) {
+            if (br.readLine() == null) {
+                message = "Input file is empty";
+                response.setMessage(message);
+            }
+            else {
+                String line;
+                int counter = 0;
+                while ((line = br.readLine()) != null) {
+                    if (counter >= reading_line) {
+                        Map<String, String> map = new HashMap<>();
+                        for (int j = 0; j < mappings.size(); j++) {
 
-                        // needs to be modified after editing
-                        map.put(mappings.get(j).getExport_field_head().getField_name(),line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
-                    } maps.add(map);
-                } else counter++;
-            } return maps;
+                            // needs to be modified after editing
+                            map.put(mappings.get(j).getExport_field_head().getField_name(), line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
+                        }
+                        maps.add(map);
+                    } else counter++;
+                }
+                message = "Success";
+                response.setMaps(maps);
+                response.setMessage(message);
+            }
+            return response;
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
