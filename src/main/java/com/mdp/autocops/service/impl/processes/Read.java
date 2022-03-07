@@ -39,7 +39,7 @@ public class Read {
             FileInputStream file = new FileInputStream(path);
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
-            System.out.println(sheet.getLastRowNum());
+            //System.out.println(sheet.getLastRowNum());
             if (sheet.getLastRowNum()  == 0) {
                 message = "Input file is empty";
                 response.setMessage(message);
@@ -49,16 +49,21 @@ public class Read {
                     Map<String, String> current_record = new HashMap<>();
                     Row row = sheet.getRow(j);
                     for (int i = 0; i < mappings.size(); i++) {
-                        System.out.println(row.getCell(mappings.get(i).getImport_field_index()));
                         if (row.getCell(mappings.get(i).getImport_field_index()) == null) {
-                            message = "Missing field in row : " + row.getRowNum() + " in index : " + mappings.get(i).getImport_field_index();
+                            message = "Missing field in row : " + row.getRowNum() + " at index : " + mappings.get(i).getImport_field_index();
                             response.setMessage(message);
                             return response;
                         }
                         else {
                             String type = mappings.get(i).getImport_field_type().getField_type();
                             if (type.equals("Number")) {
-                                current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf((long) row.getCell(mappings.get(i).getImport_field_index()).getNumericCellValue()));
+                                try {
+                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf((long) row.getCell(mappings.get(i).getImport_field_index()).getNumericCellValue()));
+                                } catch (Exception e) {
+                                    message = "Cannot get a NUMERIC value from a STRING cell in row : " + row.getRowNum() + " at index : " + mappings.get(i).getImport_field_index();
+                                    response.setMessage(message);
+                                    return response;
+                                }
                             }
                             if (type.equals("String")) {
                                 current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());

@@ -48,7 +48,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             exportFileFormat = fileFormatService.getById(export_format);
             service = serviceService.getById(service_id);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         institutionConfigNew.setInstitution(inst);
         institutionConfigNew.setReading_line(reading_line);

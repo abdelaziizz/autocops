@@ -37,9 +37,6 @@ public class reader {
             // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
-            System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
-            System.out.println("------");
-
             // get <staff>
             NodeList list = doc.getElementsByTagName("staff");
 
