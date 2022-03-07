@@ -20,7 +20,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service
@@ -40,11 +43,10 @@ public class Read {
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
             //System.out.println(sheet.getLastRowNum());
-            if (sheet.getLastRowNum()  == 0) {
+            if (sheet.getLastRowNum() == 0) {
                 message = "Input file is empty";
                 response.setMessage(message);
-            }
-            else {
+            } else {
                 for (int j = reading_line; j <= sheet.getLastRowNum(); j++) {
                     Map<String, String> current_record = new HashMap<>();
                     Row row = sheet.getRow(j);
@@ -53,8 +55,7 @@ public class Read {
                             message = "Missing field in row : " + row.getRowNum() + " at index : " + mappings.get(i).getImport_field_index();
                             response.setMessage(message);
                             return response;
-                        }
-                        else {
+                        } else {
                             String type = mappings.get(i).getImport_field_type().getField_type();
                             if (type.equals("Number")) {
                                 try {
@@ -75,7 +76,8 @@ public class Read {
                 message = "Success";
                 response.setMaps(records);
                 response.setMessage(message);
-            } return response;
+            }
+            return response;
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
@@ -97,8 +99,7 @@ public class Read {
             if (list.getLength() == 0) {
                 message = "Input file is empty";
                 response.setMessage(message);
-            }
-            else {
+            } else {
                 for (int temp = 0; temp < list.getLength(); temp++) {
                     Map<String, String> map = new HashMap<>();
                     Node node = list.item(temp);
@@ -116,7 +117,8 @@ public class Read {
                 message = "Success";
                 response.setMessage(message);
                 response.setMaps(maps);
-            } return response;
+            }
+            return response;
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
@@ -138,8 +140,7 @@ public class Read {
             if (list.getLength() == 0) {
                 message = "Input file is empty";
                 response.setMessage(message);
-            }
-            else {
+            } else {
                 for (int i = 0; i < list.getLength(); i++) {
                     Map<String, String> map = new HashMap<>();
                     Node node = list.item(i);
@@ -151,7 +152,8 @@ public class Read {
                 response.setMessage(message);
                 response.setMaps(maps);
 
-            } return response;
+            }
+            return response;
         } catch (Exception e) {
             log.error(e);
             return null;
@@ -159,41 +161,40 @@ public class Read {
     }
 
     // Helper for readXMLNested
-    public void readChildren (Node node, Map<String, String> map, String path) {
+    public void readChildren(Node node, Map<String, String> map, String path) {
         if (node.hasChildNodes()) {
             NodeList nodes = node.getChildNodes();
-            path+= "/"+node.getNodeName();
-            for ( int i = 0 ; i < nodes.getLength() ; i++ )  readChildren(nodes.item(i), map, path);
+            path += "/" + node.getNodeName();
+            for (int i = 0; i < nodes.getLength(); i++) readChildren(nodes.item(i), map, path);
         } else {
-            if (node.getNodeType() == Node.ELEMENT_NODE ) {
-                if (node.getTextContent().trim().length()>0) {
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                if (node.getTextContent().trim().length() > 0) {
                     path += "/" + node.getNodeName();
                     Element current_node = (Element) node;
                     String value = current_node.getTextContent();
                     map.put(path, value);
                 }
-            }
-            else {
-                if (node.getTextContent().trim().length()>0) {
-                    path+="/"+node.getParentNode().getNodeName();
+            } else {
+                if (node.getTextContent().trim().length() > 0) {
+                    path += "/" + node.getParentNode().getNodeName();
                     map.put(path, node.getTextContent());
                 }
             }
-        } }
-
-    // Displays output maps for testing purposes
-    public void displayListOfMaps (List<Map> maps) {
-        for (Map map : maps) {
-            Map<String, String> current = map;
-            for (Map.Entry<String,String> entry : current.entrySet()) {
-                System.out.println("Key = " + entry.getKey() +", Value = " + entry.getValue());
-            }
-            System.out.println("----------------------------------------------------------------------------------------");
         }
     }
+//        Displays output maps for testing purposes
+//    public void displayListOfMaps(List<Map> maps) {
+//        for (Map map : maps) {
+//            Map<String, String> current = map;
+//            for (Map.Entry<String, String> entry : current.entrySet()) {
+//                System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+//            }
+//            System.out.println("----------------------------------------------------------------------------------------");
+//        }
+//    }
 
     // Read CSV Files
-    public ReadingResponse readCSV (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+    public ReadingResponse readCSV(int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
         List<Map> maps = new ArrayList<>();
         ReadingResponse response = new ReadingResponse();
         String message;
@@ -201,8 +202,7 @@ public class Read {
             if (br.readLine() == null) {
                 message = "Input file is empty";
                 response.setMessage(message);
-            }
-            else {
+            } else {
                 String line;
                 int counter = 0;
                 while ((line = br.readLine()) != null) {
@@ -215,7 +215,7 @@ public class Read {
                         maps.add(map);
                     } else counter++;
                 }
-                message="Success";
+                message = "Success";
                 response.setMessage(message);
                 response.setMaps(maps);
             }
@@ -226,8 +226,8 @@ public class Read {
         }
     }
 
-    //Read Text Files
-    public ReadingResponse readText (int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+    // Read Text Files
+    public ReadingResponse readText(int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
         List<Map> maps = new ArrayList<>();
         ReadingResponse response = new ReadingResponse();
         String message;
@@ -235,16 +235,13 @@ public class Read {
             if (br.readLine() == null) {
                 message = "Input file is empty";
                 response.setMessage(message);
-            }
-            else {
+            } else {
                 String line;
                 int counter = 0;
                 while ((line = br.readLine()) != null) {
                     if (counter >= reading_line) {
                         Map<String, String> map = new HashMap<>();
                         for (int j = 0; j < mappings.size(); j++) {
-
-                            // needs to be modified after editing
                             map.put(mappings.get(j).getExport_field_head().getField_name(), line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
                         }
                         maps.add(map);

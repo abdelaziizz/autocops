@@ -1,4 +1,5 @@
 package com.mdp.autocops.config;
+
 import com.mdp.autocops.AutocopsApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

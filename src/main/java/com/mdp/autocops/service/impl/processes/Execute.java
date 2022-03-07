@@ -27,35 +27,33 @@ public class Execute {
     Write write;
     @Autowired
     FileAccess fileAccess;
+
     // Performs the read and write in from the bank to smart vista
-    public String execute (long config_id) {
-         try {
-             InstitutionConfig config = configService.getById(config_id);
-             List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
-             List<Map> maps = new ArrayList<>();
-             ReadingResponse response = new ReadingResponse();
-             if (config.getImport_File_format().getFormat_type().equals("Excel")) {
-                 response = read.readExcel(config.getReading_line(), config.getImport_path(), mappings);
-             }
-             else if ( config.getImport_File_format().getFormat_type().equals("XML")) {
-                 response = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
-             }
-             else if ( config.getImport_File_format().getFormat_type().equals("CSV")) {
-                 response = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
-             }
-             else if ( config.getImport_File_format().getFormat_type().equals("Text")) {
-                 response = read.readText(config.getReading_line(), config.getImport_path(), mappings);
-             }
-             if(maps == null || maps.size() ==0) return response.getMessage();
-             else {
-                 maps = response.getMaps();
-                 String response2 = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
-                 return response2;
-             }
-         } catch (Exception e) {
-             log.error(e.getStackTrace());
-             return "fail";
-         }
+    public String execute(long config_id) {
+        try {
+            InstitutionConfig config = configService.getById(config_id);
+            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
+            List<Map> maps = new ArrayList<>();
+            ReadingResponse response = new ReadingResponse();
+            if (config.getImport_File_format().getFormat_type().equals("Excel")) {
+                response = read.readExcel(config.getReading_line(), config.getImport_path(), mappings);
+            } else if (config.getImport_File_format().getFormat_type().equals("XML")) {
+                response = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
+            } else if (config.getImport_File_format().getFormat_type().equals("CSV")) {
+                response = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
+            } else if (config.getImport_File_format().getFormat_type().equals("Text")) {
+                response = read.readText(config.getReading_line(), config.getImport_path(), mappings);
+            }
+            if (maps == null || maps.size() == 0) return response.getMessage();
+            else {
+                maps = response.getMaps();
+                String response2 = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
+                return response2;
+            }
+        } catch (Exception e) {
+            log.error(e.getStackTrace());
+            return "fail";
+        }
     }
 
 }

@@ -33,7 +33,6 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
     @Autowired
     FileFormatService fileFormatService;
 
-
     @Override
     public InstitutionConfig create(long instId, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
                                     long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root) {

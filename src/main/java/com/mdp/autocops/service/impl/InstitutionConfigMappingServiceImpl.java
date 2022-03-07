@@ -70,8 +70,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             ImportField importField;
             if (imp_field != -1) {
                 importField = importFieldService.getById(imp_field);
-            }
-            else {
+            } else {
                 importField = null;
             }
             instConfigMapping.setExport_field_head(exportField);

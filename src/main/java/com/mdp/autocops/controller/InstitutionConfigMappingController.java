@@ -69,7 +69,7 @@ public class InstitutionConfigMappingController {
     @ResponseBody
     @PutMapping("/{id}")
     public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam String imp_field_index,
-                    @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field,
+                                         @RequestParam long typeId, @RequestParam long formatId, @RequestParam long exp_field, @RequestParam String imp_field,
                                          @RequestParam String start_index, @RequestParam String last_index) {
         int index;
         long imp;

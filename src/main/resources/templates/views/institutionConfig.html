@@ -68,7 +68,9 @@
                                             </button>
                                             <button class="btn btn-primary" data-row="${config}"
                                                     data-toggle="modal"
-                                                    th:attr="data-target=${'#editModal'+config.id}">Update
+                                                    th:attr="data-target=${'#editModal'+config.id}"
+                                                    onclick="disableUpdate($(this).attr('data-config-id'))"
+                                                    th:data-config-id="${config.id}">Update
                                             </button>
                                             <button class="btn btn-primary"
                                                     onclick="redirectMappings($(this).attr('data-config-id'))"
@@ -237,7 +239,10 @@
                                     <div class="col-4">
                                         <h5>Import Format Type</h5>
                                         <select class="form-control form-small"
-                                                th:attr="id=${'serImportUpdate' +config.id}">
+                                                th:attr="id=${'serImportUpdate' +config.id}"
+                                                onchange="disable('serImportUpdate'+$(this).attr('data-config-id'),
+                                                 'reading_line_update'+$(this).attr('data-config-id'),
+                                                 'reading_root_update'+$(this).attr('data-config-id'))" th:data-config-id="${config.id}">
                                             <option th:selected="${config.getImport_File_format.format_type}"
                                                     th:text="${config.getImport_File_format.format_type}"
                                                     th:value="${config.getImport_File_format.format_id}"></option>
@@ -304,7 +309,7 @@
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Reading Root</h5>
-                                        <input class="form-control" th:attr="id=${'reading_root_update' + config.id}"
+                                        <input class="form-control" th:attr="id=${'reading_root_update'+ config.id}"
                                                th:value="${config.reading_root}"
                                                type="text">
                                     </div>
@@ -364,6 +369,11 @@
 
 <div th:insert="layout :: scripts"></div>
 <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var current_inst = [[${inst}]];
+
+
     function createInstitutionConfig() {
         var queryString = window.location.href;
         const words = queryString.split('/');
@@ -465,6 +475,29 @@
         }
     }
 
+    function disableUpdate (id) {
+        var e = document.getElementById('serImportUpdate'+id);
+        var strUser = e.options[e.selectedIndex].text;
+        if(strUser === "Excel" || strUser === "CSV"){
+            document.getElementById('reading_line_update'+id).disabled = false;
+            document.getElementById('reading_root_update'+id).value = document.getElementById('reading_root_update'+id).defaultValue;
+            document.getElementById('reading_root_update'+id).disabled = true;
+        }
+        else{
+            document.getElementById('reading_root_update'+id).disabled = false;
+            document.getElementById('reading_line_update'+id).value = document.getElementById('reading_line_update'+id).defaultValue;
+            document.getElementById('reading_line_update'+id).disabled = true;
+        }
+    }
+
+
+    $(document).ready(function () {
+        var message = current_inst.inst_id;
+        console.log(message);
+    });
+
+
+    /*]]>*/
 </script>
 </body>
 </html>

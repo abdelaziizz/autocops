@@ -21,6 +21,7 @@ public interface InstitutionConfigMappingService {
     List<InstitutionsConfigMapping> findByInstConfig(long id);
 
     List<ExportField> getAvailableExport(long config_id);
+
     List<ImportField> getAvailableImport(long config_id);
 
 
