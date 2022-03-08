@@ -297,6 +297,9 @@
 <div th:insert="layout :: scripts"></div>
 <script th:inline="javascript">
     /*<![CDATA[*/
+
+    var configuration = [[${config}]];
+
     function createInstitutionConfigMapping() {
         var queryString = window.location.href;
         const words = queryString.split('/');
@@ -416,6 +419,20 @@
             }
         });
     }
+
+    $(document).ready(function () {
+        var import_type = configuration.import_File_format.format_type;
+        if(import_type === "Excel" || import_type === "CSV"){
+            document.getElementById("import_index").disabled = false;
+            document.getElementById("import").value = document.getElementById("import").defaultValue;
+            document.getElementById("import").disabled = true;
+        }
+        else{
+            document.getElementById("import").disabled = false;
+            document.getElementById("import_index").value = document.getElementById("import_index").defaultValue;
+            document.getElementById("import_index").disabled = true;
+        }
+    });
 
 
     /*]]>*/
