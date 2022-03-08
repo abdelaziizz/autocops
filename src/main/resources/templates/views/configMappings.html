@@ -68,7 +68,9 @@
                                             </button>
                                             <button class="btn btn-primary" data-row="${mapping}"
                                                     data-toggle="modal"
-                                                    th:attr="data-target=${'#editModal'+mapping.id}">Update
+                                                    th:attr="data-target=${'#editModal'+mapping.id}"
+                                                    onclick="disableUpdate($(this).attr('data-mapping-id'))"
+                                                    th:data-mapping-id="${mapping.id}">Update
                                             </button>
                                         </td>
                                     </tr>
@@ -426,13 +428,43 @@
             document.getElementById("import_index").disabled = false;
             document.getElementById("import").value = document.getElementById("import").defaultValue;
             document.getElementById("import").disabled = true;
+            document.getElementById("start_index").value = document.getElementById("start_index").defaultValue;
+            document.getElementById("start_index").disabled = true;
+            document.getElementById("last_index").value = document.getElementById("last_index").defaultValue;
+            document.getElementById("last_index").disabled = true;
         }
         else{
             document.getElementById("import").disabled = false;
             document.getElementById("import_index").value = document.getElementById("import_index").defaultValue;
             document.getElementById("import_index").disabled = true;
+            document.getElementById("start_index").value = document.getElementById("start_index").defaultValue;
+            document.getElementById("start_index").disabled = true;
+            document.getElementById("last_index").value = document.getElementById("last_index").defaultValue;
+            document.getElementById("last_index").disabled = true;
         }
     });
+
+    function disableUpdate (id) {
+        var strUser = configuration.import_File_format.format_type;
+        if(strUser === "Excel" || strUser === "CSV"){
+            document.getElementById('import_index_update'+id).disabled = false;
+            document.getElementById('import_update'+id).value = document.getElementById('import_update'+id).defaultValue;
+            document.getElementById('import_update'+id).disabled = true;
+            document.getElementById("start_index_update"+id).value = document.getElementById("start_index_update"+id).defaultValue;
+            document.getElementById("start_index_update"+id).disabled = true;
+            document.getElementById("last_index_update"+id).value = document.getElementById("last_index_update"+id).defaultValue;
+            document.getElementById("last_index_update"+id).disabled = true;
+        }
+        else{
+            document.getElementById('import_update'+id).disabled = false;
+            document.getElementById('import_index_update'+id).value = document.getElementById('import_index_update'+id).defaultValue;
+            document.getElementById('import_index_update'+id).disabled = true;
+            document.getElementById("start_index_update"+id).value = document.getElementById("start_index_update"+id).defaultValue;
+            document.getElementById("start_index_update"+id).disabled = true;
+            document.getElementById("last_index_update"+id).value = document.getElementById("last_index_update"+id).defaultValue;
+            document.getElementById("last_index_update"+id).disabled = true;
+        }
+    }
 
 
     /*]]>*/
