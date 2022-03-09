@@ -41,7 +41,6 @@
                                     <th>ID</th>
                                     <th>Import Field Index</th>
                                     <th>Import Field Type</th>
-                                    <th>Import Field Format</th>
                                     <th>Import Field Name</th>
                                     <th>Export Field Name</th>
                                     <th>Start Index</th>
@@ -55,7 +54,6 @@
                                         <td th:text="${mapping.id}"></td>
                                         <td th:text="${mapping.import_field_index}"></td>
                                         <td th:text="${mapping.import_field_type.field_type}"></td>
-                                        <td th:text="${mapping.import_field_format.format}"></td>
                                         <td th:text="${mapping?.import_field?.field_name}"></td>
                                         <td th:text="${mapping.export_field_head.field_name}"></td>
                                         <td th:text="${mapping.start_index}"></td>
@@ -121,12 +119,6 @@
                                             <option th:text="${fileFormat.field_type}"
                                                     th:value="${fileFormat.id}"></option>
                                         </th:block>
-                                    </select>
-                                </div>
-                                <div class="col-4" style="margin-top:10px;">
-                                    <h5>Import Field Format</h5>
-                                    <select class="form-control form-small" id="format">
-                                        <option selected="selected">--- Import Field Format ---</option>
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
@@ -206,16 +198,6 @@
                                                 <option th:text="${type.field_type}"
                                                         th:value="${type.id}"></option>
                                             </th:block>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-4" style="margin-top:10px;">
-                                        <h5>Import Field Format</h5>
-                                        <select class="form-control form-small"
-                                                th:attr="id=${'format_update' +mapping.id}">
-                                            <option th:selected="${mapping.import_field_format.format}"
-                                                    th:text="${mapping.import_field_format.format}"
-                                                    th:value="${mapping.import_field_format.id}"></option>
                                         </select>
                                     </div>
 
@@ -309,7 +291,6 @@
         institution.configId = words[words.length - 1];
         institution.imp_field_index = $("#import_index").val();
         institution.typeId = $("#type").val();
-        institution.formatId = $("#format").val();
         institution.imp_field = $("#import").val();
         institution.exp_field = $("#export").val();
         institution.start_index = $("#start_index").val();
@@ -333,7 +314,6 @@
         institution.configId = words[words.length - 1];
         institution.imp_field_index = $("#import_index_update" + id).val();
         institution.typeId = $("#type_update" + id).val();
-        institution.formatId = $("#format_update" + id).val();
         institution.imp_field = $("#import_update" + id).val();
         institution.exp_field = $("#export_update" + id).val();
         institution.start_index = $("#start_index_update" + id).val();
@@ -349,45 +329,45 @@
         });
     }
 
-    function populateDropdown() {
-        var id = $("#type").val()
-        var select = document.getElementById("format");
-        select.options.length = 0;
-        $.ajax({
-            url: "/autocops/field-formats/type/" + id,
-            type: 'GET',
-            success: function (res) {
-                var options = res;
-                for (var i = 0; i < options.length; i++) {
-                    var opt = options[i];
-                    var el = document.createElement("option");
-                    el.textContent = opt.format;
-                    el.value = opt.id;
-                    select.appendChild(el);
-                }
-            }
-        });
-    }
-
-    function populateUpdateDropdown(id) {
-        var select_id = $("#type_update" + id).val()
-        var select = document.getElementById("format_update" + id);
-        select.options.length = 0;
-        $.ajax({
-            url: "/autocops/field-formats/type/" + select_id,
-            type: 'GET',
-            success: function (res) {
-                var options = res;
-                for (var i = 0; i < options.length; i++) {
-                    var opt = options[i];
-                    var el = document.createElement("option");
-                    el.textContent = opt.format;
-                    el.value = opt.id;
-                    select.appendChild(el);
-                }
-            }
-        });
-    }
+    // function populateDropdown() {
+    //     var id = $("#type").val()
+    //     var select = document.getElementById("format");
+    //     select.options.length = 0;
+    //     $.ajax({
+    //         url: "/autocops/field-formats/type/" + id,
+    //         type: 'GET',
+    //         success: function (res) {
+    //             var options = res;
+    //             for (var i = 0; i < options.length; i++) {
+    //                 var opt = options[i];
+    //                 var el = document.createElement("option");
+    //                 el.textContent = opt.format;
+    //                 el.value = opt.id;
+    //                 select.appendChild(el);
+    //             }
+    //         }
+    //     });
+    // }
+    //
+    // function populateUpdateDropdown(id) {
+    //     var select_id = $("#type_update" + id).val()
+    //     var select = document.getElementById("format_update" + id);
+    //     select.options.length = 0;
+    //     $.ajax({
+    //         url: "/autocops/field-formats/type/" + select_id,
+    //         type: 'GET',
+    //         success: function (res) {
+    //             var options = res;
+    //             for (var i = 0; i < options.length; i++) {
+    //                 var opt = options[i];
+    //                 var el = document.createElement("option");
+    //                 el.textContent = opt.format;
+    //                 el.value = opt.id;
+    //                 select.appendChild(el);
+    //             }
+    //         }
+    //     });
+    // }
 
     function deleteInst(id) {
         $.ajax({

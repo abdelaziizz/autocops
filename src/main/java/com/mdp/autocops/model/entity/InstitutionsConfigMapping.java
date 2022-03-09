@@ -26,10 +26,6 @@ public class InstitutionsConfigMapping {
     private FieldType import_field_type;
 
     @OneToOne
-    @JoinColumn(name = "import_field_format")
-    private FieldFormat import_field_format;
-
-    @OneToOne
     @JoinColumn(name = "export_field_head")
     private ExportField export_field_head;
 

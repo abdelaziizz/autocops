@@ -28,9 +28,6 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     FieldTypeService fieldTypeService;
 
     @Autowired
-    FieldFormatService fieldFormatService;
-
-    @Autowired
     ExportFieldService exportFieldService;
 
     @Autowired
@@ -59,7 +56,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long format_id, long exp_field, long imp_field, Integer start_index, Integer last_index) {
+    public InstitutionsConfigMapping create(long configId, int imp_field_index, long typeId, long exp_field, long imp_field, Integer start_index, Integer last_index) {
 
         InstitutionConfig config = institutionConfigService.getById(configId);
         InstitutionsConfigMapping instConfigMapping = new InstitutionsConfigMapping();
@@ -75,7 +72,6 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             }
             instConfigMapping.setExport_field_head(exportField);
             instConfigMapping.setImport_field_type(fieldTypeService.getById(typeId));
-            instConfigMapping.setImport_field_format(fieldFormatService.getById(format_id));
             instConfigMapping.setImport_field(importField);
             instConfigMapping.setStart_index(start_index);
             instConfigMapping.setLast_index(last_index);
@@ -102,7 +98,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long formatId, long exp_field, long imp_field, int start_index, int last_index) {
+    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, long typeId, long exp_field, long imp_field, int start_index, int last_index) {
 
         Optional<InstitutionsConfigMapping> instConfigMapping = null;
         try {
@@ -114,8 +110,6 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
                 if (import_field_index != null) instConfigMapping.get().setImport_field_index(import_field_index);
                 if (fieldTypeService.getById(typeId) != null)
                     instConfigMapping.get().setImport_field_type(fieldTypeService.getById(typeId));
-                if (fieldFormatService.getAllByType(formatId) != null)
-                    instConfigMapping.get().setImport_field_format(fieldFormatService.getById(formatId));
                 ExportField exportField = exportFieldService.getById(exp_field);
                 if (exportField != null) instConfigMapping.get().setExport_field_head(exportField);
                 ImportField importField = importFieldService.getById(imp_field);

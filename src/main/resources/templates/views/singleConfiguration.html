@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="notranslate" lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="layout :: header"></div>
+<body class="alt-menu sidebar-noneoverflow">
+
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+
+    <div th:insert="layout :: topbar"></div>
+
+    <!--  BEGIN CONTENT PART  -->
+    <div class="main-content" id="content">
+        <div class="layout-px-spacing">
+            <br><br>
+
+
+            <div id="tableHover">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <br>
+                                <h4><a onclick="navInstitutions()" style="cursor: pointer;">Institution : </a><small
+                                        th:text="${inst.inst_name}"></small> →
+                                    Configuration : <small th:text="${config.service.service_name}"></small></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-4" id="inst_table">
+                                <tbody>
+                                <tr>
+                                    <td> ID</td>
+                                    <td th:text="${config.id}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Import Format</td>
+                                    <td th:text="${config.import_File_format.format_type}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Export Format</td>
+                                    <td th:text="${config.export_File_format.format_type}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Import Date Format</td>
+                                    <td th:text="${config.import_date}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Export Date Format</td>
+                                    <td th:text="${config.export_date}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Data Start Line</td>
+                                    <td th:text="${config.reading_line}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Summary Lines</td>
+                                    <td th:text="${config.last_lines}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Fail On Error</td>
+                                    <td th:text="${config.fail_on_error}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Status</td>
+                                    <td>
+                                    <span th:if="${config.active == true}">Active</span>
+                                    <span th:unless="${config.active == true}">Inactive</span></td>
+                                </tr>
+                                <tr>
+                                    <td> Import File Path</td>
+                                    <td th:text="${config.import_path}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Template File Path</td>
+                                    <td th:text="${config.template_path}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Export File Path</td>
+                                    <td th:text="${config.export_path}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Reading Root</td>
+                                    <td th:text="${config.reading_root}"></td>
+                                </tr>
+                                <tr>
+                                    <td> Writing Root</td>
+                                    <td th:text="${config.writing_root}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <input class="mb-4 btn btn-primary" data-target="#editModal" data-toggle="modal"
+                       name="updateConfiguration"
+                       type="submit" value="Update Configuration">
+                <input class="mb-4 btn btn-primary" name="goToMappings"
+                       onclick="redirectMappings($(this).attr('data-config-id'))" th:data-config-id="${config.id}"
+                       type="submit" value="Mappings">
+            </div>
+
+
+            <br><br><br>
+
+            <div th:insert="layout :: footer"></div>
+
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+
+
+    <!--     Update Modal-->
+    <div aria-hidden="true" class="modal fade" id="editModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-body"> Update Configuration
+                        <br>
+                        <div class="container">
+                            <form>
+                                <div class="form-row mb-4">
+                                    <div class="col-4">
+                                        <h5>Service Type</h5>
+                                        <select class="form-control form-small" id="serTypeUpdate">
+                                            <option th:selected="${config.service.service_name}"
+                                                    th:text="${config.service.service_name}"
+                                                    th:value="${config.service.service_id}"></option>
+                                            <th:block th:each="service : ${availableServices}">
+                                                <option th:text="${service.service_name}"
+                                                        th:value="${service.service_id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Data Start Line</h5>
+                                        <input class="form-control" id="reading_line_update"
+                                               th:value="${config.reading_line}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Summary Lines</h5>
+                                        <input class="form-control" id="last_line_update"
+                                               th:value="${config.last_lines}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Input Date Format</h5>
+                                        <select class="form-control form-small" id="dateInputUpdate">
+                                            <option th:selected="${config.getImport_date()}"
+                                                    th:text="${config.getImport_date()}"
+                                                    th:value="${config.getImport_date()}"></option>
+                                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                            <option value="DD/MM/YY">DD/MM/YY</option>
+                                            <option value="MM/DD/YY">MM/DD/YY</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Output Date Format</h5>
+                                        <select class="form-control form-small" id="dateOutputUpdate">
+                                            <option th:selected="${config.getExport_date()}"
+                                                    th:text="${config.getExport_date()}"
+                                                    th:value="${config.getExport_date()}"></option>
+                                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                            <option value="DD/MM/YY">DD/MM/YY</option>
+                                            <option value="MM/DD/YY">MM/DD/YY</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Import Format Type</h5>
+                                        <select class="form-control form-small" id="serImportUpdate"
+                                                onchange="disable('serImportUpdate','reading_line_update','reading_root_update','last_line_update')"
+                                                th:data-config-id="${config.id}">
+                                            <option th:selected="${config.getImport_File_format.format_type}"
+                                                    th:text="${config.getImport_File_format.format_type}"
+                                                    th:value="${config.getImport_File_format.format_id}"></option>
+                                            <th:block th:each="fileFormat : ${formats}">
+                                                <option th:text="${fileFormat.format_type}"
+                                                        th:value="${fileFormat.format_id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Export Format Type</h5>
+                                        <select class="form-control form-small" id="serExportUpdate">
+                                            <option th:selected="${config.getExport_File_format.format_type}"
+                                                    th:text="${config.getExport_File_format.format_type}"
+                                                    th:value="${config.getExport_File_format.format_id}"></option>
+                                            <th:block th:each="fileFormat : ${formats}">
+                                                <option th:text="${fileFormat.format_type}"
+                                                        th:value="${fileFormat.format_id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Fail On Error</h5>
+                                        <select class="form-control form-small" id="failUpdate">
+                                            <option th:selected="${config.fail_on_error}"
+                                                    th:text="${config.fail_on_error}"
+                                                    th:value="${config.fail_on_error}"></option>
+                                            <option th:text="${!config.fail_on_error}"
+                                                    th:value="${!config.fail_on_error}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Status</h5>
+                                        <select class="form-control form-small" id="activeUpdate">
+                                            <option th:selected="${config.active}" th:value="${config.active}">
+                                                <span th:if="${config.active == true}">Active</span>
+                                                <span th:unless="${config.active == true}">Inactive</span>
+                                            </option>
+                                            <option th:value="${!config.active}">
+                                                <span th:if="${config.active == true}">Inactive</span>
+                                                <span th:unless="${config.active == true}">Active</span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Import Path</h5>
+                                        <input class="form-control" id="import_path_update"
+                                               th:value="${config.import_path}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Export Path</h5>
+                                        <input class="form-control" id="export_path_update"
+                                               th:value="${config.export_path}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Template Path</h5>
+                                        <input class="form-control" id="template_path_update"
+                                               th:value="${config.template_path}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Reading Root</h5>
+                                        <input class="form-control" id="reading_root_update"
+                                               th:value="${config.reading_root}"
+                                               type="text">
+                                    </div>
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5>Writing Root</h5>
+                                        <input class="form-control" id="writing_root_update"
+                                               th:value="${config.writing_root}"
+                                               type="text">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                        <button class="btn btn-primary" onclick="update($(this).attr('data-mapping-id'))"
+                                th:data-mapping-id="${config.id}" type="button">Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END MAIN CONTAINER -->
+
+<div th:insert="layout :: scripts"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    function update(id) {
+        var institution = {};
+        institution.reading_line = $("#reading_line_update").val();
+        institution.last_lines = $("#last_line_update").val();
+        institution.import_format = $("#serImportUpdate").val();
+        institution.export_format = $("#serExportUpdate").val();
+        institution.fail_on_error = $("#failUpdate").val();
+        institution.active = $("#activeUpdate").val();
+        institution.service_id = $("#serTypeUpdate").val();
+        institution.import_path = $("#import_path_update").val();
+        institution.export_path = $("#export_path_update").val();
+        institution.template_path = $("#template_path_update").val();
+        institution.reading_root = $("#reading_root_update").val();
+        institution.writing_root = $("#writing_root_update").val();
+        institution.import_date = $("#dateInputUpdate").val();
+        institution.export_date = $("#dateOutputUpdate").val();
+        $.ajax({
+            type: 'put',
+            url: '/autocops/inst-configs/' + id,
+            data: jQuery.param(institution),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+
+
+    function redirectMappings(id) {
+        var queryString = window.location.href;
+        const words = queryString.split('/');
+        var instId = words[words.length - 2];
+        $.ajax({
+            url: "/autocops/inst-configs-mappings/page/" + instId + "/" + id,
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/inst-configs-mappings/page/" + instId + "/" + id;
+            }
+        });
+    }
+
+    function navInstitutions() {
+        $.ajax({
+            url: "/autocops/institutions/page",
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/institutions/page";
+                document.getElementById("institutions").classList.add('active');
+            }
+        });
+    }
+
+
+    function disable(select_val,input_id, input_id2, input_id3) {
+        var e = document.getElementById(select_val);
+        var strUser = e.options[e.selectedIndex].text;
+        if(strUser === "Excel" || strUser === "CSV"){
+            document.getElementById(input_id).disabled = false;
+            document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
+            document.getElementById(input_id2).disabled = true;
+            document.getElementById(input_id3).value = document.getElementById(input_id3).defaultValue;
+            document.getElementById(input_id3).disabled = true;
+        }
+        else{
+            document.getElementById(input_id2).disabled = false;
+            document.getElementById(input_id).value = document.getElementById(input_id).defaultValue;
+            document.getElementById(input_id).disabled = true;
+            document.getElementById(input_id3).value = document.getElementById(input_id3).defaultValue;
+            document.getElementById(input_id3).disabled = true;
+        }
+    }
+
+    $(document).ready(function () {
+        var e = document.getElementById('serImportUpdate');
+        var strUser = e.options[e.selectedIndex].text;
+        if (strUser === "Excel" || strUser === "CSV") {
+            document.getElementById('reading_line_update').disabled = false;
+            document.getElementById('reading_root_update').value = document.getElementById('reading_root_update').defaultValue;
+            document.getElementById('reading_root_update').disabled = true;
+            document.getElementById('last_line_update').value = document.getElementById('last_line_update').defaultValue;
+            document.getElementById('last_line_update').disabled = true;
+        } else {
+            document.getElementById('reading_root_update').disabled = false;
+            document.getElementById('reading_line_update').value = document.getElementById('reading_line_update').defaultValue;
+            document.getElementById('reading_line_update').disabled = true;
+            document.getElementById('last_line_update').value = document.getElementById('last_line_update').defaultValue;
+            document.getElementById('last_line_update').disabled = true;
+        }
+    });
+
+
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -35,7 +35,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
     @Override
     public InstitutionConfig create(long instId, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
-                                    long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root) {
+                                    long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root,
+                                    Integer last_lines, String import_date, String export_date) {
         InstitutionConfig institutionConfigNew = new InstitutionConfig();
         Institution inst = new Institution();
         FileFormat importFileFormat = new FileFormat();
@@ -51,6 +52,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
         }
         institutionConfigNew.setInstitution(inst);
         institutionConfigNew.setReading_line(reading_line);
+        institutionConfigNew.setLast_lines(last_lines);
         institutionConfigNew.setImport_File_format(importFileFormat);
         institutionConfigNew.setExport_File_format(exportFileFormat);
         institutionConfigNew.setImport_path(import_path);
@@ -60,6 +62,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
         institutionConfigNew.setActive(active);
         institutionConfigNew.setTemplate_path(template_path);
         institutionConfigNew.setReading_root(reading_root);
+        institutionConfigNew.setExport_date(export_date);
+        institutionConfigNew.setImport_date(import_date);
         institutionConfigNew.setWriting_root(writing_root);
         try {
             if (getAvailableServices(institutionConfigNew.getInstitution().getInst_id()).contains(institutionConfigNew.getService())) {
@@ -125,7 +129,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
 
     @Override
     public InstitutionConfig put(long id, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
-                                 long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root) {
+                                 long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root,
+                                 Integer last_lines, String import_date, String export_date) {
         Optional<InstitutionConfig> institutionConfigUpdate = null;
         ServiceEntity service = serviceService.getById(service_id);
         FileFormat importFileFormat = fileFormatService.getById(import_format);
@@ -136,6 +141,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             if (!institutionConfigUpdate.isPresent()) log.info("Error retrieving institution configuration");
             else {
                 if (reading_line != null) institutionConfigUpdate.get().setReading_line(reading_line);
+                if (last_lines != null) institutionConfigUpdate.get().setLast_lines(last_lines);
                 if (importFileFormat != null) institutionConfigUpdate.get().setImport_File_format(importFileFormat);
                 if (exportFileFormat != null) institutionConfigUpdate.get().setExport_File_format(exportFileFormat);
                 if (fail_on_error != null) institutionConfigUpdate.get().setFail_on_error(fail_on_error);
@@ -145,6 +151,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
                 if (export_path != null) institutionConfigUpdate.get().setExport_path(export_path);
                 if (template_path != null) institutionConfigUpdate.get().setTemplate_path(template_path);
                 if (reading_root != null) institutionConfigUpdate.get().setReading_root(reading_root);
+                if (import_date != null) institutionConfigUpdate.get().setImport_date(import_date);
+                if (export_date != null) institutionConfigUpdate.get().setExport_date(export_date);
                 if (writing_root != null) institutionConfigUpdate.get().setWriting_root(writing_root);
                 institutionsConfigDao.save(institutionConfigUpdate.get());
 

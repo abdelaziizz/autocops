@@ -53,4 +53,13 @@ public class InstitutionConfig {
 
     @Column(name = "writing_root")
     private String writing_root;
+
+    @Column(name = "last_lines")
+    private Integer last_lines;
+
+    @Column(name = "import_date")
+    private String import_date;
+
+    @Column(name = "export_date")
+    private String export_date;
 }
