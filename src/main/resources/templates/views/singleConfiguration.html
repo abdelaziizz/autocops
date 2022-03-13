@@ -33,61 +33,61 @@
                                 <tbody>
                                 <tr>
                                     <td> ID</td>
-                                    <td th:text="${config.id}"></td>
+                                    <td id="config_id" th:text="${config.id}"></td>
                                 </tr>
-                                <tr>
+                                <tr >
                                     <td> Import Format</td>
-                                    <td th:text="${config.import_File_format}"></td>
+                                    <td id="config_import_format" th:text="${config.import_File_format}"></td>
                                 </tr>
                                 <tr>
                                     <td> Export Format</td>
-                                    <td th:text="${config.export_File_format}"></td>
+                                    <td id="config_export_format" th:text="${config.export_File_format}"></td>
                                 </tr>
                                 <tr>
                                     <td> Import Date Format</td>
-                                    <td th:text="${config.import_date}"></td>
+                                    <td id="config_import_date" th:text="${config.import_date}"></td>
                                 </tr>
                                 <tr>
                                     <td> Export Date Format</td>
-                                    <td th:text="${config.export_date}"></td>
+                                    <td id="config_export_date" th:text="${config.export_date}"></td>
                                 </tr>
                                 <tr>
                                     <td> Data Start Line</td>
-                                    <td th:text="${config.reading_line}"></td>
+                                    <td id="config_start_line" th:text="${config.reading_line}"></td>
                                 </tr>
                                 <tr>
                                     <td> Summary Lines</td>
-                                    <td th:text="${config.last_lines}"></td>
+                                    <td id="config_last_line" th:text="${config.last_lines}"></td>
                                 </tr>
                                 <tr>
                                     <td> Fail On Error</td>
-                                    <td th:text="${config.fail_on_error}"></td>
+                                    <td id="config_fail" th:text="${config.fail_on_error}"></td>
                                 </tr>
                                 <tr>
                                     <td> Status</td>
-                                    <td>
+                                    <td id="config_status">
                                     <span th:if="${config.active == true}">Active</span>
                                     <span th:unless="${config.active == true}">Inactive</span></td>
                                 </tr>
                                 <tr>
                                     <td> Import File Path</td>
-                                    <td th:text="${config.import_path}"></td>
+                                    <td id="config_import_path" th:text="${config.import_path}"></td>
                                 </tr>
                                 <tr>
                                     <td> Template File Path</td>
-                                    <td th:text="${config.template_path}"></td>
+                                    <td id="config_template_path" th:text="${config.template_path}"></td>
                                 </tr>
                                 <tr>
                                     <td> Export File Path</td>
-                                    <td th:text="${config.export_path}"></td>
+                                    <td id="config_export_path" th:text="${config.export_path}"></td>
                                 </tr>
                                 <tr>
                                     <td> Reading Root</td>
-                                    <td th:text="${config.reading_root}"></td>
+                                    <td id="config_reading_root" th:text="${config.reading_root}"></td>
                                 </tr>
                                 <tr>
                                     <td> Writing Root</td>
-                                    <td th:text="${config.writing_root}"></td>
+                                    <td id="config_writing_root" th:text="${config.writing_root}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -334,7 +334,6 @@
     function disable(select_val,input_id, input_id2, input_id3) {
         var e = document.getElementById(select_val);
         var strUser = e.options[e.selectedIndex].text;
-        console.log(strUser);
         if(strUser === "Excel" || strUser === "CSV"){
             document.getElementById(input_id).disabled = false;
             document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
@@ -366,24 +365,34 @@
         var strUser = e.options[e.selectedIndex].text;
         if (strUser === "Excel" || strUser === "CSV") {
             document.getElementById('reading_line_update').disabled = false;
+            document.getElementById('config_start_line').classList.remove("table-warning");
             document.getElementById('reading_root_update').value = document.getElementById('reading_root_update').defaultValue;
             document.getElementById('reading_root_update').disabled = true;
             document.getElementById('last_line_update').value = document.getElementById('last_line_update').defaultValue;
             document.getElementById('last_line_update').disabled = true;
+            document.getElementById('config_reading_root').classList.add("table-warning");
+            document.getElementById('config_last_line').classList.add("table-warning");
+
         } else {
             if (strUser === "XML") {
                 document.getElementById('reading_root_update').disabled = false;
+                document.getElementById('config_reading_root').classList.remove("table-warning");
                 document.getElementById('reading_line_update').value = document.getElementById('reading_line_update').defaultValue;
                 document.getElementById('reading_line_update').disabled = true;
                 document.getElementById('last_line_update').value = document.getElementById('last_line_update').defaultValue;
                 document.getElementById('last_line_update').disabled = true;
+                document.getElementById('config_last_line').classList.add("table-warning");
+                document.getElementById('config_start_line').classList.add("table-warning");
             }
             else {
                 document.getElementById('last_line_update').disabled = false;
+                document.getElementById('config_last_line').classList.remove("table-warning");
                 document.getElementById('reading_line_update').value = document.getElementById('reading_line_update').defaultValue;
                 document.getElementById('reading_line_update').disabled = true;
                 document.getElementById('reading_root_update').value = document.getElementById('reading_root_update').defaultValue;
                 document.getElementById('reading_root_update').disabled = true;
+                document.getElementById('config_start_line').classList.add("table-warning");
+                document.getElementById('config_reading_root').classList.add("table-warning");
             }
         }
     });
