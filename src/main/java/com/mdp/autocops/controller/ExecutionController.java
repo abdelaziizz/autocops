@@ -34,18 +34,18 @@ public class ExecutionController {
         return execute.execute(config_id);
     }
 
-    @ResponseBody
-    @PostMapping("/read/{config_id}")
-    public List<Map> read(@PathVariable long config_id) {
-        try {
-            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
-            InstitutionConfig config = configService.getById(config_id);
-            return read.readCSV(config.getReading_line(), config.getImport_path(), mappings).getMaps();
-        } catch (Exception e) {
-            log.error(e);
-            return null;
-        }
-
-    }
+//    @ResponseBody
+//    @PostMapping("/read/{config_id}")
+//    public List<Map> read(@PathVariable long config_id) {
+//        try {
+//            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
+//            InstitutionConfig config = configService.getById(config_id);
+//            return read.readCSV(config.getReading_line(), config.getImport_path(), mappings).getMaps();
+//        } catch (Exception e) {
+//            log.error(e);
+//            return null;
+//        }
+//
+//    }
 
 }

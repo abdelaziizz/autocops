@@ -35,14 +35,16 @@ public class Execute {
             List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
             List<Map> maps = new ArrayList<>();
             ReadingResponse response = new ReadingResponse();
+            String input_date = config.getImport_date();
+            String output_date = config.getExport_date();
             if (config.getImport_File_format().equals("Excel")) {
-                response = read.readExcel(config.getReading_line(), config.getImport_path(), mappings);
+                response = read.readExcel(config.getReading_line(), config.getImport_path(), mappings, input_date, output_date);
             } else if (config.getImport_File_format().equals("XML")) {
-                response = read.readXML(config.getReading_root(), config.getImport_path(), mappings);
+                response = read.readXML(config.getReading_root(), config.getImport_path(), mappings, input_date, output_date);
             } else if (config.getImport_File_format().equals("CSV")) {
-                response = read.readCSV(config.getReading_line(), config.getImport_path(), mappings);
+                response = read.readCSV(config.getReading_line(), config.getImport_path(), mappings, input_date, output_date);
             } else if (config.getImport_File_format().equals("Text")) {
-                response = read.readText(config.getReading_line(), config.getImport_path(), mappings, config.getLast_lines());
+                response = read.readText(config.getReading_line(), config.getImport_path(), mappings, config.getLast_lines(), input_date, output_date);
             }
             if (maps == null || maps.size() == 0) return response.getMessage();
             else {

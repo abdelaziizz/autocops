@@ -34,7 +34,7 @@ public class Read {
     InstitutionConfigService configService;
 
     // For reading Excel files produced by banks.
-    public ReadingResponse readExcel(int reading_line, String path, List<InstitutionsConfigMapping> mappings) throws IOException {
+    public ReadingResponse readExcel(int reading_line, String path, List<InstitutionsConfigMapping> mappings, String input_date, String output_date) throws IOException {
         String message = "";
         ReadingResponse response = new ReadingResponse();
         List<Map> records = new ArrayList<>();
@@ -69,6 +69,47 @@ public class Read {
                             if (type.equals("String")) {
                                 current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
                             }
+                            if (type.equals("Date")) {
+                                String day = "";
+                                String month = "";
+                                String year = "";
+                                String date = "";
+                                if (input_date.equals(output_date)) {
+                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
+                                }
+                                else {
+                                    String date_on_hand = row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue();
+                                    if ( input_date.equals("DD/MM/YYYY") || input_date.equals("DD-MM-YYYY") ) {
+                                        day = date_on_hand.substring(0, 2);
+                                        month = date_on_hand.substring(3, 5);
+                                        year = date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("MM/DD/YYYY") || input_date.equals("MM-DD-YYYY") ) {
+                                        month = date_on_hand.substring(0, 2);
+                                        day = date_on_hand.substring(3, 5);
+                                        year = date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("MM/DD/YY") || input_date.equals("MM-DD-YY") ) {
+                                        month = date_on_hand.substring(0, 2);
+                                        day = date_on_hand.substring(3, 5);
+                                        year = "20"+date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("DD/MM/YY") || input_date.equals("DD-MM-YY") ) {
+                                        day = date_on_hand.substring(0, 2);
+                                        month = date_on_hand.substring(3, 5);
+                                        year = "20"+date_on_hand.substring(6);
+                                    }
+                                    if (output_date.equals("DD/MM/YYYY")) date = day+"/"+month+"/"+year;
+                                    if (output_date.equals("DD-MM-YYYY")) date = day+"-"+month+"-"+year;
+                                    if (output_date.equals("MM/DD/YYYY")) date = month+"/"+day+"/"+year;
+                                    if (output_date.equals("MM-DD-YYYY")) date = month+"-"+day+"-"+year;
+                                    if (output_date.equals("DD/MM/YY")) date = day+"/"+month+"/"+year.substring(0,2);
+                                    if (output_date.equals("DD-MM-YY")) date = day+"-"+month+"-"+year.substring(0,2);
+                                    if (output_date.equals("MM/DD/YY")) date = month+"/"+day+"/"+year.substring(0,2);
+                                    if (output_date.equals("MM-DD-YY")) date = month+"-"+day+"-"+year.substring(0,2);
+                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(),date);
+                                }
+                            }
                         }
                     }
                     records.add(current_record);
@@ -85,7 +126,7 @@ public class Read {
     }
 
     // For reading XMLs produced by banks (Only ADCB in our case)
-    public ReadingResponse readXML(String reading_root, String fileName, List<InstitutionsConfigMapping> mappings) throws ParserConfigurationException {
+    public ReadingResponse readXML(String reading_root, String fileName, List<InstitutionsConfigMapping> mappings, String input_date, String output_date) throws ParserConfigurationException {
         String message;
         ReadingResponse response = new ReadingResponse();
         try {
@@ -107,8 +148,50 @@ public class Read {
                         Element element = (Element) node;
                         for (int i = 0; i < mappings.size(); i++) {
                             InstitutionsConfigMapping mapping = mappings.get(i);
+                            String type = mapping.getImport_field_type();
                             if (element.getElementsByTagName(mapping.getImport_field().getField_name()).getLength() != 0) {
-                                map.put(mapping.getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
+                                if (type.equals("Date")) {
+                                    String day = "";
+                                    String month = "";
+                                    String year = "";
+                                    String date = "";
+                                    if (input_date.equals(output_date)) {
+                                        map.put(mappings.get(i).getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
+                                    }
+                                    else {
+                                        String date_on_hand = element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent();
+                                        if ( input_date.equals("DD/MM/YYYY") || input_date.equals("DD-MM-YYYY") ) {
+                                            day = date_on_hand.substring(0, 2);
+                                            month = date_on_hand.substring(3, 5);
+                                            year = date_on_hand.substring(6);
+                                        }
+                                        else if ( input_date.equals("MM/DD/YYYY") || input_date.equals("MM-DD-YYYY") ) {
+                                            month = date_on_hand.substring(0, 2);
+                                            day = date_on_hand.substring(3, 5);
+                                            year = date_on_hand.substring(6);
+                                        }
+                                        else if ( input_date.equals("MM/DD/YY") || input_date.equals("MM-DD-YY") ) {
+                                            month = date_on_hand.substring(0, 2);
+                                            day = date_on_hand.substring(3, 5);
+                                            year = "20"+date_on_hand.substring(6);
+                                        }
+                                        else if ( input_date.equals("DD/MM/YY") || input_date.equals("DD-MM-YY") ) {
+                                            day = date_on_hand.substring(0, 2);
+                                            month = date_on_hand.substring(3, 5);
+                                            year = "20"+date_on_hand.substring(6);
+                                        }
+                                        if (output_date.equals("DD/MM/YYYY")) date = day+"/"+month+"/"+year;
+                                        if (output_date.equals("DD-MM-YYYY")) date = day+"-"+month+"-"+year;
+                                        if (output_date.equals("MM/DD/YYYY")) date = month+"/"+day+"/"+year;
+                                        if (output_date.equals("MM-DD-YYYY")) date = month+"-"+day+"-"+year;
+                                        if (output_date.equals("DD/MM/YY")) date = day+"/"+month+"/"+year.substring(0,2);
+                                        if (output_date.equals("DD-MM-YY")) date = day+"-"+month+"-"+year.substring(0,2);
+                                        if (output_date.equals("MM/DD/YY")) date = month+"/"+day+"/"+year.substring(0,2);
+                                        if (output_date.equals("MM-DD-YY")) date = month+"-"+day+"-"+year.substring(0,2);
+                                        map.put(mappings.get(i).getExport_field_head().getField_name(),date);
+                                    }
+                                }
+                                else map.put(mapping.getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
                             }
                         }
                     }
@@ -194,7 +277,7 @@ public class Read {
 //    }
 
     // Read CSV Files
-    public ReadingResponse readCSV(int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+    public ReadingResponse readCSV(int reading_line, String path, List<InstitutionsConfigMapping> mappings, String input_date, String output_date) {
         List<Map> maps = new ArrayList<>();
         ReadingResponse response = new ReadingResponse();
         String message;
@@ -210,7 +293,49 @@ public class Read {
                         Map<String, String> map = new HashMap<>();
                         String[] values = line.split(",");
                         for (int j = 0; j < mappings.size(); j++) {
-                            map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index() - 1]);
+                            String type = mappings.get(j).getImport_field_type();
+                            if (type.equals("Date")) {
+                                String day = "";
+                                String month = "";
+                                String year = "";
+                                String date = "";
+                                if (input_date.equals(output_date)) {
+                                    map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index() - 1]);
+                                }
+                                else {
+                                    String date_on_hand = values[mappings.get(j).getImport_field_index() - 1];
+                                    if ( input_date.equals("DD/MM/YYYY") || input_date.equals("DD-MM-YYYY") ) {
+                                        day = date_on_hand.substring(0, 2);
+                                        month = date_on_hand.substring(3, 5);
+                                        year = date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("MM/DD/YYYY") || input_date.equals("MM-DD-YYYY") ) {
+                                        month = date_on_hand.substring(0, 2);
+                                        day = date_on_hand.substring(3, 5);
+                                        year = date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("MM/DD/YY") || input_date.equals("MM-DD-YY") ) {
+                                        month = date_on_hand.substring(0, 2);
+                                        day = date_on_hand.substring(3, 5);
+                                        year = "20"+date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("DD/MM/YY") || input_date.equals("DD-MM-YY") ) {
+                                        day = date_on_hand.substring(0, 2);
+                                        month = date_on_hand.substring(3, 5);
+                                        year = "20"+date_on_hand.substring(6);
+                                    }
+                                    if (output_date.equals("DD/MM/YYYY")) date = day+"/"+month+"/"+year;
+                                    if (output_date.equals("DD-MM-YYYY")) date = day+"-"+month+"-"+year;
+                                    if (output_date.equals("MM/DD/YYYY")) date = month+"/"+day+"/"+year;
+                                    if (output_date.equals("MM-DD-YYYY")) date = month+"-"+day+"-"+year;
+                                    if (output_date.equals("DD/MM/YY")) date = day+"/"+month+"/"+year.substring(0,2);
+                                    if (output_date.equals("DD-MM-YY")) date = day+"-"+month+"-"+year.substring(0,2);
+                                    if (output_date.equals("MM/DD/YY")) date = month+"/"+day+"/"+year.substring(0,2);
+                                    if (output_date.equals("MM-DD-YY")) date = month+"-"+day+"-"+year.substring(0,2);
+                                    map.put(mappings.get(j).getExport_field_head().getField_name(),date);
+                                }
+                            }
+                            else map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index() - 1]);
                         }
                         maps.add(map);
                     } else counter++;
@@ -227,7 +352,7 @@ public class Read {
     }
 
     // Read Text Files
-    public ReadingResponse readText(int reading_line, String path, List<InstitutionsConfigMapping> mappings, int last_lines) {
+    public ReadingResponse readText(int reading_line, String path, List<InstitutionsConfigMapping> mappings, int last_lines, String input_date, String output_date) {
         List<Map> maps = new ArrayList<>();
         ReadingResponse response = new ReadingResponse();
         String message;
@@ -242,7 +367,49 @@ public class Read {
                     if (counter >= reading_line) {
                         Map<String, String> map = new HashMap<>();
                         for (int j = 0; j < mappings.size(); j++) {
-                            map.put(mappings.get(j).getExport_field_head().getField_name(), line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
+                            String type = mappings.get(j).getImport_field_type();
+                            if (type.equals("Date")) {
+                                String day = "";
+                                String month = "";
+                                String year = "";
+                                String date = "";
+                                if (input_date.equals(output_date)) {
+                                    map.put(mappings.get(j).getExport_field_head().getField_name(), line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
+                                }
+                                else {
+                                    String date_on_hand = line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index());
+                                    if ( input_date.equals("DD/MM/YYYY") || input_date.equals("DD-MM-YYYY") ) {
+                                        day = date_on_hand.substring(0, 2);
+                                        month = date_on_hand.substring(3, 5);
+                                        year = date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("MM/DD/YYYY") || input_date.equals("MM-DD-YYYY") ) {
+                                        month = date_on_hand.substring(0, 2);
+                                        day = date_on_hand.substring(3, 5);
+                                        year = date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("MM/DD/YY") || input_date.equals("MM-DD-YY") ) {
+                                        month = date_on_hand.substring(0, 2);
+                                        day = date_on_hand.substring(3, 5);
+                                        year = "20"+date_on_hand.substring(6);
+                                    }
+                                    else if ( input_date.equals("DD/MM/YY") || input_date.equals("DD-MM-YY") ) {
+                                        day = date_on_hand.substring(0, 2);
+                                        month = date_on_hand.substring(3, 5);
+                                        year = "20"+date_on_hand.substring(6);
+                                    }
+                                    if (output_date.equals("DD/MM/YYYY")) date = day+"/"+month+"/"+year;
+                                    if (output_date.equals("DD-MM-YYYY")) date = day+"-"+month+"-"+year;
+                                    if (output_date.equals("MM/DD/YYYY")) date = month+"/"+day+"/"+year;
+                                    if (output_date.equals("MM-DD-YYYY")) date = month+"-"+day+"-"+year;
+                                    if (output_date.equals("DD/MM/YY")) date = day+"/"+month+"/"+year.substring(0,2);
+                                    if (output_date.equals("DD-MM-YY")) date = day+"-"+month+"-"+year.substring(0,2);
+                                    if (output_date.equals("MM/DD/YY")) date = month+"/"+day+"/"+year.substring(0,2);
+                                    if (output_date.equals("MM-DD-YY")) date = month+"-"+day+"-"+year.substring(0,2);
+                                    map.put(mappings.get(j).getExport_field_head().getField_name(),date);
+                                }
+                            }
+                            else map.put(mappings.get(j).getExport_field_head().getField_name(), line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
                         }
                         maps.add(map);
                     } else counter++;
