@@ -50,14 +50,14 @@
                                 </thead>
                                 <tbody>
                                 <th:block th:each="mapping : ${mappings}">
-                                    <tr>
-                                        <td th:text="${mapping.id}"></td>
-                                        <td th:text="${mapping.import_field_index}"></td>
-                                        <td th:text="${mapping.import_field_type}"></td>
-                                        <td th:text="${mapping?.import_field?.field_name}"></td>
-                                        <td th:text="${mapping.export_field_head.field_name}"></td>
-                                        <td th:text="${mapping.start_index}"></td>
-                                        <td th:text="${mapping.last_index}"></td>
+                                    <tr th:attr="id=${mapping.id}">
+                                        <td th:attr="data-element-id=${mapping.id}" th:text="${mapping.id}"></td>
+                                        <td th:attr="id=${'table_import_index' + mapping.id}" th:text="${mapping.import_field_index}"></td>
+                                        <td th:attr="id=${'table_import_type' + mapping.id}" th:text="${mapping.import_field_type}"></td>
+                                        <td th:attr="id=${'table_import_name' + mapping.id}" th:text="${mapping?.import_field?.field_name}"></td>
+                                        <td th:attr="id=${'table_export_name' + mapping.id}" th:text="${mapping.export_field_head.field_name}"></td>
+                                        <td th:attr="id=${'table_start_index' + mapping.id}" th:text="${mapping.start_index}"></td>
+                                        <td th:attr="id=${'table_last_index' + mapping.id}" th:text="${mapping.last_index}"></td>
 
                                         <td>
                                             <button class="btn btn-danger"  data-row="${mapping}"
@@ -66,8 +66,8 @@
                                             </button>
                                             <button class="btn btn-primary" data-row="${mapping}"
                                                     data-toggle="modal"
-                                                    th:attr="data-target=${'#editModal'+mapping.id}"
-                                                    onclick="disableUpdate($(this).attr('data-mapping-id'))"
+                                                    th:attr="data-target=${'#editModal'}"
+                                                    onclick="multiple($(this).attr('data-mapping-id'))"
                                                     th:data-mapping-id="${mapping.id}">Update
                                             </button>
                                         </td>
@@ -100,8 +100,8 @@
                     <h4 class="modal-title">Choose Configuration Mapping Details</h4>
                 </div>
                 <div class="modal-body">
-                    <div hidden id="configError" style="color: red;margin: 10px 10px 20px 10px;"
-                         th:text="#{CONFIG_ERROR}"></div>
+<!--                    <div hidden id="configError" style="color: red;margin: 10px 10px 20px 10px;"-->
+<!--                         th:text="#{CONFIG_ERROR}"></div>-->
                     <div class="container">
                         <form>
                             <div class="form-row mb-4">
@@ -168,73 +168,42 @@
     </div>
 
     <!-- Update Modal -->
-    <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1" th:attr="id=${'editModal' + mapping.id}"
-         th:each="mapping : ${mappings}">
+    <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1" id="editModal">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="modal-body"> You are about to edit mapping with id :
-                        <div th:text="${mapping.id}"/>
+                    <div class="modal-body"> You are about to edit mapping with id : <span id="modal_id"></span>
                         <div class="container">
                             <form>
                                 <div class="form-row mb-4">
 
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Import Field Index</h5>
-                                        <input class="form-control" th:attr="id=${'import_index_update' + mapping.id}"
-                                               th:value="${mapping.import_field_index}"
-                                               type="text">
+                                        <input class="form-control" id="modal_import_index" value="" type="text">
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Import Field Type</h5>
-                                        <select class="form-control form-small"
-                                                th:attr="id=${'type_update' +mapping.id}"
-                                                th:data-mapping-id="${mapping.id}">
-                                            <option th:selected="${mapping.import_field_type}"
-                                                    th:text="${mapping.import_field_type}"
-                                                    th:value="${mapping.import_field_type}"></option>
-                                            <option value="String">String</option>
+                                        <select class="form-control form-small" id="modal_import_type" value="">
                                             <option value="Number">Number</option>
+                                            <option value="String">String</option>
                                             <option value="Date">Date</option>
                                         </select>
                                     </div>
-
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Import Field Name</h5>
-                                        <select class="form-control form-small"
-                                                th:attr="id=${'import_update' +mapping.id}">
-                                            <option th:selected="${mapping?.import_field?.field_name}"
-                                                    th:text="${mapping?.import_field?.field_name}"th:value="${mapping?.import_field?.id}"></option>
-                                            <th:block th:each="field : ${importFields}">
-                                                <option th:text="${field.field_name}"
-                                                        th:value="${field.id}"></option>
-                                            </th:block>
-                                        </select>
+                                        <select class="form-control form-small" value="" id="modal_import_name"></select>
                                     </div>
-
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Export Field Name</h5>
-                                        <select class="form-control form-small"
-                                                th:attr="id=${'export_update' +mapping.id}">
-                                            <option th:selected="${mapping.export_field_head.field_name}"
-                                                    th:text="${mapping.export_field_head.field_name}"th:value="${mapping.export_field_head.id}"></option>
-                                            <th:block th:each="field : ${exportFields}">
-                                                <option th:text="${field.field_name}"
-                                                        th:value="${field.id}"></option>
-                                            </th:block>
-                                        </select>
+                                        <select class="form-control form-small" value="" id="modal_export_name"></select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Start Index</h5>
-                                        <input class="form-control" th:attr="id=${'start_index_update' + mapping.id}"
-                                               th:value="${mapping.start_index}"
-                                               type="text">
+                                        <input class="form-control" id="modal_start_index" value="" type="text">
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Last Index</h5>
-                                        <input class="form-control" th:attr="id=${'last_index_update' + mapping.id}"
-                                               th:value="${mapping.last_index}"
-                                               type="text">
+                                        <input class="form-control" id="modal_last_index" value="" type="text">
                                     </div>
                                 </div>
 
@@ -244,14 +213,19 @@
 
                     <div class="modal-footer">
                         <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
-                        <button class="btn btn-primary" onclick="update($(this).attr('data-mapping-id'))"
-                                th:data-mapping-id="${mapping.id}" type="button">Save Changes
+                        <button class="btn btn-primary" onclick="update($(this).attr('data-id'))" type="button" id="updateBtnId">Save Changes
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+
 
     <div aria-hidden="true" class="modal fade" role="alert" tabindex="-1" th:attr="id=${'deleteModal' + mapping.id}"
          th:each="mapping : ${mappings}">
@@ -281,6 +255,71 @@
     /*<![CDATA[*/
 
     var configuration = [[${config}]];
+    var export_fields = [[${exportFields}]];
+    var import_fields = [[${importFields}]];
+
+    function multiple (id) {
+        disableUpdate(id);
+        populateUpdateModal(id);
+    }
+
+    function populateUpdateModal (id) {
+        let row = document.getElementById(id);
+        var mapping_id = row.childNodes[1].textContent;
+        var import_index = $("#table_import_index"+id).text();
+        var import_type = $("#table_import_type"+id).text();
+        var import_name = $("#table_import_name"+id).text();
+        var export_name = $("#table_export_name"+id).text();
+        var start_index = $("#table_start_index"+id).text();
+        var last_index = $("#table_last_index"+id).text();
+
+        document.getElementById("modal_id").textContent = mapping_id;
+        $("#updateBtnId").attr("data-id",mapping_id)
+        document.getElementById("modal_import_index").value = import_index;
+        document.getElementById("modal_start_index").value = start_index;
+        document.getElementById("modal_last_index").value = last_index;
+        document.getElementById("modal_export_name").textContent = export_name;
+
+        var export_name_select = document.getElementById("modal_export_name");
+        export_name_select.options.length = 0;
+        var selected =  document.createElement("selected");
+        for ( var i = 0 ; i < export_fields.length ; i++ ) {
+            var opt = export_fields[i];
+            var el = document.createElement("option");
+            el.textContent = opt.field_name;
+            el.value = opt.id;
+            export_name_select.appendChild(el);
+            if (opt.field_name === export_name) {
+                selected.textContent = opt.field_name;
+                selected.value = opt.id;
+            }
+        }
+        export_name_select.selected = selected.textContent;
+        export_name_select.value = selected.value;
+
+        var import_name_select = document.getElementById("modal_import_name");
+        import_name_select.options.length = 0;
+        var selected_import =  document.createElement("selected_import");
+        for ( var i = 0 ; i < import_fields.length ; i++ ) {
+            var opt = import_fields[i];
+            var el = document.createElement("option");
+            el.textContent = opt.field_name;
+            el.value = opt.id;
+            import_name_select.appendChild(el);
+            if (opt.field_name === import_name) {
+                selected_import.textContent = opt.field_name;
+                selected_import.value = opt.id;
+            }
+        }
+        import_name_select.selected = selected_import.textContent;
+        import_name_select.value = selected_import.value;
+
+        var import_type_select = document.getElementById("modal_import_type");
+        import_type_select.selected = import_type;
+        import_type_select.value = import_type;
+
+
+    }
 
     function createInstitutionConfigMapping() {
         var queryString = window.location.href;
@@ -306,16 +345,17 @@
     }
 
     function update(id) {
+        console.log(id)
         var queryString = window.location.href;
         const words = queryString.split('/');
         var institution = {};
         institution.configId = words[words.length - 1];
-        institution.imp_field_index = $("#import_index_update" + id).val();
-        institution.type = $("#type_update" + id).val();
-        institution.imp_field = $("#import_update" + id).val();
-        institution.exp_field = $("#export_update" + id).val();
-        institution.start_index = $("#start_index_update" + id).val();
-        institution.last_index = $("#last_index_update" + id).val();
+        institution.imp_field_index = $("#modal_import_index").val();
+        institution.type = $("#modal_import_type").val();
+        institution.imp_field = $("#modal_import_name").val();
+        institution.exp_field = $("#modal_export_name").val();
+        institution.start_index = $("#modal_start_index").val();
+        institution.last_index = $("#modal_last_index").val();
         $.ajax({
             type: 'put',
             url: '/autocops/inst-configs-mappings/' + id,
@@ -326,46 +366,6 @@
             }
         });
     }
-
-    // function populateDropdown() {
-    //     var id = $("#type").val()
-    //     var select = document.getElementById("format");
-    //     select.options.length = 0;
-    //     $.ajax({
-    //         url: "/autocops/field-formats/type/" + id,
-    //         type: 'GET',
-    //         success: function (res) {
-    //             var options = res;
-    //             for (var i = 0; i < options.length; i++) {
-    //                 var opt = options[i];
-    //                 var el = document.createElement("option");
-    //                 el.textContent = opt.format;
-    //                 el.value = opt.id;
-    //                 select.appendChild(el);
-    //             }
-    //         }
-    //     });
-    // }
-    //
-    // function populateUpdateDropdown(id) {
-    //     var select_id = $("#type_update" + id).val()
-    //     var select = document.getElementById("format_update" + id);
-    //     select.options.length = 0;
-    //     $.ajax({
-    //         url: "/autocops/field-formats/type/" + select_id,
-    //         type: 'GET',
-    //         success: function (res) {
-    //             var options = res;
-    //             for (var i = 0; i < options.length; i++) {
-    //                 var opt = options[i];
-    //                 var el = document.createElement("option");
-    //                 el.textContent = opt.format;
-    //                 el.value = opt.id;
-    //                 select.appendChild(el);
-    //             }
-    //         }
-    //     });
-    // }
 
     function deleteInst(id) {
         $.ajax({
@@ -402,7 +402,6 @@
 
     $(document).ready(function () {
         var import_type = configuration.import_File_format;
-        console.log("import type refresh : " + import_type);
         if(import_type === "Excel" || import_type === "CSV"){
             document.getElementById("import_index").disabled = false;
             document.getElementById("import").value = document.getElementById("import").defaultValue;
@@ -435,33 +434,32 @@
 
     function disableUpdate (id) {
         var strUser = configuration.import_File_format;
-        console.log("import type on change : " + strUser);
         if(strUser === "Excel" || strUser === "CSV"){
-            document.getElementById('import_index_update'+id).disabled = false;
-            document.getElementById('import_update'+id).value = document.getElementById('import_update'+id).defaultValue;
-            document.getElementById('import_update'+id).disabled = true;
-            document.getElementById("start_index_update"+id).value = document.getElementById("start_index_update"+id).defaultValue;
-            document.getElementById("start_index_update"+id).disabled = true;
-            document.getElementById("last_index_update"+id).value = document.getElementById("last_index_update"+id).defaultValue;
-            document.getElementById("last_index_update"+id).disabled = true;
+            document.getElementById('modal_import_index').disabled = false;
+            document.getElementById('modal_import_name').value = document.getElementById('modal_import_name'+id).defaultValue;
+            document.getElementById('modal_import_name').disabled = true;
+            document.getElementById("modal_start_index").value = document.getElementById("modal_start_index"+id).defaultValue;
+            document.getElementById("modal_start_index").disabled = true;
+            document.getElementById("modal_last_index").value = document.getElementById("modal_last_index"+id).defaultValue;
+            document.getElementById("modal_last_index").disabled = true;
         }
         else{
             if (strUser === "XML") {
-                document.getElementById('import_update' + id).disabled = false;
-                document.getElementById('import_index_update' + id).value = document.getElementById('import_index_update' + id).defaultValue;
-                document.getElementById('import_index_update' + id).disabled = true;
-                document.getElementById("start_index_update" + id).value = document.getElementById("start_index_update" + id).defaultValue;
-                document.getElementById("start_index_update" + id).disabled = true;
-                document.getElementById("last_index_update" + id).value = document.getElementById("last_index_update" + id).defaultValue;
-                document.getElementById("last_index_update" + id).disabled = true;
+                document.getElementById('modal_import_name').disabled = false;
+                document.getElementById('modal_import_index').value = document.getElementById('modal_import_index').defaultValue;
+                document.getElementById('modal_import_index').disabled = true;
+                document.getElementById("modal_start_index").value = document.getElementById("modal_start_index").defaultValue;
+                document.getElementById("modal_start_index").disabled = true;
+                document.getElementById("modal_last_index").value = document.getElementById("modal_last_index").defaultValue;
+                document.getElementById("modal_last_index").disabled = true;
             }
             else {
-                    document.getElementById("start_index_update"+id).disabled = false;
-                    document.getElementById("last_index_update"+id).disabled = false;
-                    document.getElementById("import_update"+id).value = document.getElementById("import_update"+id).defaultValue;
-                    document.getElementById("import_update"+id).disabled = true;
-                    document.getElementById("import_index_update"+id).value = document.getElementById("import_index_update"+id).defaultValue;
-                    document.getElementById("import_index_update"+id).disabled = true;
+                    document.getElementById("modal_start_index").disabled = false;
+                    document.getElementById("modal_last_index").disabled = false;
+                    document.getElementById("modal_import_name").value = document.getElementById("modal_import_name").defaultValue;
+                    document.getElementById("modal_import_name").disabled = true;
+                    document.getElementById("modal_import_index").value = document.getElementById("modal_import_index").defaultValue;
+                    document.getElementById("modal_import_index").disabled = true;
                 }
         }
     }

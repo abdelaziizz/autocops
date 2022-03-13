@@ -21,6 +21,7 @@ public class InstitutionConfigMappingController {
     private final InstitutionService institutionService;
     private final InstitutionConfigMappingService mappingService;
     private final ImportFieldService importFieldService;
+    private final ExportFieldService exportFieldService;
 
     @ResponseBody
     @GetMapping
@@ -99,7 +100,8 @@ public class InstitutionConfigMappingController {
         List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(configId);
         Institution institution = institutionService.getById(institutionId);
         InstitutionConfig config = institutionConfigService.getById(configId);
-        List<ExportField> exportFields = mappingService.getAvailableExport(configId);
+//        List<ExportField> exportFields = mappingService.getAvailableExport(configId);
+        List<ExportField> exportFields = exportFieldService.getAllByService(config.getService().getService_id());
         List<ImportField> importFields = importFieldService.getAllByService(config.getService().getService_id());
         model.addAttribute("exportFields", exportFields);
         model.addAttribute("importFields", importFields);
