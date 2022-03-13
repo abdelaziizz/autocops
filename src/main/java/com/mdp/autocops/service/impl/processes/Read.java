@@ -56,7 +56,7 @@ public class Read {
                             response.setMessage(message);
                             return response;
                         } else {
-                            String type = mappings.get(i).getImport_field_type().getField_type();
+                            String type = mappings.get(i).getImport_field_type();
                             if (type.equals("Number")) {
                                 try {
                                     current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf((long) row.getCell(mappings.get(i).getImport_field_index()).getNumericCellValue()));
@@ -227,7 +227,7 @@ public class Read {
     }
 
     // Read Text Files
-    public ReadingResponse readText(int reading_line, String path, List<InstitutionsConfigMapping> mappings) {
+    public ReadingResponse readText(int reading_line, String path, List<InstitutionsConfigMapping> mappings, int last_lines) {
         List<Map> maps = new ArrayList<>();
         ReadingResponse response = new ReadingResponse();
         String message;

@@ -53,7 +53,7 @@
                                     <tr>
                                         <td th:text="${mapping.id}"></td>
                                         <td th:text="${mapping.import_field_index}"></td>
-                                        <td th:text="${mapping.import_field_type.field_type}"></td>
+                                        <td th:text="${mapping.import_field_type}"></td>
                                         <td th:text="${mapping?.import_field?.field_name}"></td>
                                         <td th:text="${mapping.export_field_head.field_name}"></td>
                                         <td th:text="${mapping.start_index}"></td>
@@ -113,12 +113,12 @@
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
                                     <h5>Import Field Type</h5>
-                                    <select class="form-control form-small" id="type" onchange="populateDropdown()">
+                                    <select class="form-control form-small" id="type">
                                         <option selected="selected">--- Import Field Type ---</option>
-                                        <th:block th:each="fileFormat : ${fieldTypes}">
-                                            <option th:text="${fileFormat.field_type}"
-                                                    th:value="${fileFormat.id}"></option>
-                                        </th:block>
+                                        <option value="String">String</option>
+                                        <option value="Number">Number</option>
+                                        <option value="Date">Date</option>
+
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
@@ -188,16 +188,14 @@
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Import Field Type</h5>
                                         <select class="form-control form-small"
-                                                onchange="populateUpdateDropdown($(this).attr('data-mapping-id'))"
                                                 th:attr="id=${'type_update' +mapping.id}"
                                                 th:data-mapping-id="${mapping.id}">
-                                            <option th:selected="${mapping.import_field_type.field_type}"
-                                                    th:text="${mapping.import_field_type.field_type}"
-                                                    th:value="${mapping.import_field_type.id}"></option>
-                                            <th:block th:each="type : ${fieldTypes}">
-                                                <option th:text="${type.field_type}"
-                                                        th:value="${type.id}"></option>
-                                            </th:block>
+                                            <option th:selected="${mapping.import_field_type}"
+                                                    th:text="${mapping.import_field_type}"
+                                                    th:value="${mapping.import_field_type}"></option>
+                                            <option value="String">String</option>
+                                            <option value="Number">Number</option>
+                                            <option value="Date">Date</option>
                                         </select>
                                     </div>
 
@@ -290,7 +288,7 @@
         var institution = {};
         institution.configId = words[words.length - 1];
         institution.imp_field_index = $("#import_index").val();
-        institution.typeId = $("#type").val();
+        institution.type = $("#type").val();
         institution.imp_field = $("#import").val();
         institution.exp_field = $("#export").val();
         institution.start_index = $("#start_index").val();
@@ -313,7 +311,7 @@
         var institution = {};
         institution.configId = words[words.length - 1];
         institution.imp_field_index = $("#import_index_update" + id).val();
-        institution.typeId = $("#type_update" + id).val();
+        institution.type = $("#type_update" + id).val();
         institution.imp_field = $("#import_update" + id).val();
         institution.exp_field = $("#export_update" + id).val();
         institution.start_index = $("#start_index_update" + id).val();
@@ -403,7 +401,8 @@
     }
 
     $(document).ready(function () {
-        var import_type = configuration.import_File_format.format_type;
+        var import_type = configuration.import_File_format;
+        console.log("import type refresh : " + import_type);
         if(import_type === "Excel" || import_type === "CSV"){
             document.getElementById("import_index").disabled = false;
             document.getElementById("import").value = document.getElementById("import").defaultValue;
@@ -413,19 +412,30 @@
             document.getElementById("last_index").value = document.getElementById("last_index").defaultValue;
             document.getElementById("last_index").disabled = true;
         }
-        else{
-            document.getElementById("import").disabled = false;
-            document.getElementById("import_index").value = document.getElementById("import_index").defaultValue;
-            document.getElementById("import_index").disabled = true;
-            document.getElementById("start_index").value = document.getElementById("start_index").defaultValue;
-            document.getElementById("start_index").disabled = true;
-            document.getElementById("last_index").value = document.getElementById("last_index").defaultValue;
-            document.getElementById("last_index").disabled = true;
+        else {
+            if (import_type === "XML") {
+                document.getElementById("import").disabled = false;
+                document.getElementById("import_index").value = document.getElementById("import_index").defaultValue;
+                document.getElementById("import_index").disabled = true;
+                document.getElementById("start_index").value = document.getElementById("start_index").defaultValue;
+                document.getElementById("start_index").disabled = true;
+                document.getElementById("last_index").value = document.getElementById("last_index").defaultValue;
+                document.getElementById("last_index").disabled = true;
+            }
+            else {
+                document.getElementById("start_index").disabled = false;
+                document.getElementById("last_index").disabled = false;
+                document.getElementById("import").value = document.getElementById("import").defaultValue;
+                document.getElementById("import").disabled = true;
+                document.getElementById("import_index").value = document.getElementById("import_index").defaultValue;
+                document.getElementById("import_index").disabled = true;
+            }
         }
     });
 
     function disableUpdate (id) {
-        var strUser = configuration.import_File_format.format_type;
+        var strUser = configuration.import_File_format;
+        console.log("import type on change : " + strUser);
         if(strUser === "Excel" || strUser === "CSV"){
             document.getElementById('import_index_update'+id).disabled = false;
             document.getElementById('import_update'+id).value = document.getElementById('import_update'+id).defaultValue;
@@ -436,13 +446,23 @@
             document.getElementById("last_index_update"+id).disabled = true;
         }
         else{
-            document.getElementById('import_update'+id).disabled = false;
-            document.getElementById('import_index_update'+id).value = document.getElementById('import_index_update'+id).defaultValue;
-            document.getElementById('import_index_update'+id).disabled = true;
-            document.getElementById("start_index_update"+id).value = document.getElementById("start_index_update"+id).defaultValue;
-            document.getElementById("start_index_update"+id).disabled = true;
-            document.getElementById("last_index_update"+id).value = document.getElementById("last_index_update"+id).defaultValue;
-            document.getElementById("last_index_update"+id).disabled = true;
+            if (strUser === "XML") {
+                document.getElementById('import_update' + id).disabled = false;
+                document.getElementById('import_index_update' + id).value = document.getElementById('import_index_update' + id).defaultValue;
+                document.getElementById('import_index_update' + id).disabled = true;
+                document.getElementById("start_index_update" + id).value = document.getElementById("start_index_update" + id).defaultValue;
+                document.getElementById("start_index_update" + id).disabled = true;
+                document.getElementById("last_index_update" + id).value = document.getElementById("last_index_update" + id).defaultValue;
+                document.getElementById("last_index_update" + id).disabled = true;
+            }
+            else {
+                    document.getElementById("start_index_update"+id).disabled = false;
+                    document.getElementById("last_index_update"+id).disabled = false;
+                    document.getElementById("import_update"+id).value = document.getElementById("import_update"+id).defaultValue;
+                    document.getElementById("import_update"+id).disabled = true;
+                    document.getElementById("import_index_update"+id).value = document.getElementById("import_index_update"+id).defaultValue;
+                    document.getElementById("import_index_update"+id).disabled = true;
+                }
         }
     }
 

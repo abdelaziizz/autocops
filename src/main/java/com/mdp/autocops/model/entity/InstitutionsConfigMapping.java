@@ -21,9 +21,8 @@ public class InstitutionsConfigMapping {
     @Column(name = "import_field_index")
     private int import_field_index;
 
-    @OneToOne
-    @JoinColumn(name = "import_field_type")
-    private FieldType import_field_type;
+    @Column(name = "import_field_type")
+    private String import_field_type;
 
     @OneToOne
     @JoinColumn(name = "export_field_head")

@@ -92,20 +92,20 @@
                                     <h5>Import Format</h5>
                                     <select class="form-control form-small" id="inputFormatDropdown" onchange="disable('inputFormatDropdown', 'reading_line','reading_root','last_line')">
                                         <option selected="selected">--- Import Format ---</option>
-                                        <th:block th:each="fileFormat : ${formats}">
-                                            <option th:text="${fileFormat.format_type}"
-                                                    th:value="${fileFormat.format_id}"></option>
-                                        </th:block>
+                                        <option value="XML">XML</option>
+                                        <option value="Text">Text</option>
+                                        <option value="Excel">Excel</option>
+                                        <option value="CSV">CSV</option>
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
                                     <h5>Export Format</h5>
                                     <select class="form-control form-small" id="outputFormatDropdown">
                                         <option selected="selected">--- Export Format ---</option>
-                                        <th:block th:each="fileFormat : ${formats}">
-                                            <option th:text="${fileFormat.format_type}"
-                                                    th:value="${fileFormat.format_id}"></option>
-                                        </th:block>
+                                        <option value="XML">XML</option>
+                                        <option value="Text">Text</option>
+                                        <option value="Excel">Excel</option>
+                                        <option value="CSV">CSV</option>
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">

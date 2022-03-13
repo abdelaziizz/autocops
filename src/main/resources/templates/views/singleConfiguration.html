@@ -37,11 +37,11 @@
                                 </tr>
                                 <tr>
                                     <td> Import Format</td>
-                                    <td th:text="${config.import_File_format.format_type}"></td>
+                                    <td th:text="${config.import_File_format}"></td>
                                 </tr>
                                 <tr>
                                     <td> Export Format</td>
-                                    <td th:text="${config.export_File_format.format_type}"></td>
+                                    <td th:text="${config.export_File_format}"></td>
                                 </tr>
                                 <tr>
                                     <td> Import Date Format</td>
@@ -178,25 +178,25 @@
                                         <select class="form-control form-small" id="serImportUpdate"
                                                 onchange="disable('serImportUpdate','reading_line_update','reading_root_update','last_line_update')"
                                                 th:data-config-id="${config.id}">
-                                            <option th:selected="${config.getImport_File_format.format_type}"
-                                                    th:text="${config.getImport_File_format.format_type}"
-                                                    th:value="${config.getImport_File_format.format_id}"></option>
-                                            <th:block th:each="fileFormat : ${formats}">
-                                                <option th:text="${fileFormat.format_type}"
-                                                        th:value="${fileFormat.format_id}"></option>
-                                            </th:block>
+                                            <option th:selected="${config.getImport_File_format}"
+                                                    th:text="${config.getImport_File_format}"
+                                                    th:value="${config.getImport_File_format}"></option>
+                                            <option value="XML">XML</option>
+                                            <option value="Text">Text</option>
+                                            <option value="Excel">Excel</option>
+                                            <option value="CSV">CSV</option>
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5>Export Format Type</h5>
                                         <select class="form-control form-small" id="serExportUpdate">
-                                            <option th:selected="${config.getExport_File_format.format_type}"
-                                                    th:text="${config.getExport_File_format.format_type}"
-                                                    th:value="${config.getExport_File_format.format_id}"></option>
-                                            <th:block th:each="fileFormat : ${formats}">
-                                                <option th:text="${fileFormat.format_type}"
-                                                        th:value="${fileFormat.format_id}"></option>
-                                            </th:block>
+                                            <option th:selected="${config.getExport_File_format}"
+                                                    th:text="${config.getExport_File_format}"
+                                                    th:value="${config.getExport_File_format}"></option>
+                                            <option value="XML">XML</option>
+                                            <option value="Text">Text</option>
+                                            <option value="Excel">Excel</option>
+                                            <option value="CSV">CSV</option>
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
@@ -334,6 +334,7 @@
     function disable(select_val,input_id, input_id2, input_id3) {
         var e = document.getElementById(select_val);
         var strUser = e.options[e.selectedIndex].text;
+        console.log(strUser);
         if(strUser === "Excel" || strUser === "CSV"){
             document.getElementById(input_id).disabled = false;
             document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
@@ -342,11 +343,21 @@
             document.getElementById(input_id3).disabled = true;
         }
         else{
-            document.getElementById(input_id2).disabled = false;
-            document.getElementById(input_id).value = document.getElementById(input_id).defaultValue;
-            document.getElementById(input_id).disabled = true;
-            document.getElementById(input_id3).value = document.getElementById(input_id3).defaultValue;
-            document.getElementById(input_id3).disabled = true;
+            if (strUser === "XML") {
+                document.getElementById(input_id2).disabled = false;
+                document.getElementById(input_id).value = document.getElementById(input_id).defaultValue;
+                document.getElementById(input_id).disabled = true;
+                document.getElementById(input_id3).value = document.getElementById(input_id3).defaultValue;
+                document.getElementById(input_id3).disabled = true;
+            }
+            else {
+                document.getElementById(input_id3).disabled = false;
+                document.getElementById(input_id).value = document.getElementById(input_id).defaultValue;
+                document.getElementById(input_id).disabled = true;
+                document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
+                document.getElementById(input_id2).disabled = true;
+
+            }
         }
     }
 
@@ -360,11 +371,20 @@
             document.getElementById('last_line_update').value = document.getElementById('last_line_update').defaultValue;
             document.getElementById('last_line_update').disabled = true;
         } else {
-            document.getElementById('reading_root_update').disabled = false;
-            document.getElementById('reading_line_update').value = document.getElementById('reading_line_update').defaultValue;
-            document.getElementById('reading_line_update').disabled = true;
-            document.getElementById('last_line_update').value = document.getElementById('last_line_update').defaultValue;
-            document.getElementById('last_line_update').disabled = true;
+            if (strUser === "XML") {
+                document.getElementById('reading_root_update').disabled = false;
+                document.getElementById('reading_line_update').value = document.getElementById('reading_line_update').defaultValue;
+                document.getElementById('reading_line_update').disabled = true;
+                document.getElementById('last_line_update').value = document.getElementById('last_line_update').defaultValue;
+                document.getElementById('last_line_update').disabled = true;
+            }
+            else {
+                document.getElementById('last_line_update').disabled = false;
+                document.getElementById('reading_line_update').value = document.getElementById('reading_line_update').defaultValue;
+                document.getElementById('reading_line_update').disabled = true;
+                document.getElementById('reading_root_update').value = document.getElementById('reading_root_update').defaultValue;
+                document.getElementById('reading_root_update').disabled = true;
+            }
         }
     });
 

@@ -20,7 +20,6 @@ public class InstitutionConfigMappingController {
     private final InstitutionConfigService institutionConfigService;
     private final InstitutionService institutionService;
     private final InstitutionConfigMappingService mappingService;
-    private final FieldTypeService fieldTypeService;
     private final ImportFieldService importFieldService;
 
     @ResponseBody
@@ -43,7 +42,7 @@ public class InstitutionConfigMappingController {
 
     @ResponseBody
     @PostMapping
-    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam String imp_field_index, @RequestParam long typeId,
+    public InstitutionsConfigMapping create(@RequestParam long configId, @RequestParam String imp_field_index, @RequestParam String type,
                                             @RequestParam long exp_field, @RequestParam String imp_field,
                                             @RequestParam String start_index, @RequestParam String last_index) {
         int index;
@@ -62,13 +61,13 @@ public class InstitutionConfigMappingController {
         if (imp_field.equals("")) imp = -1;
         else imp = Long.valueOf(imp_field);
 
-        return mappingService.create(configId, index, typeId, exp_field, imp, start, last);
+        return mappingService.create(configId, index, type, exp_field, imp, start, last);
     }
 
     @ResponseBody
     @PutMapping("/{id}")
     public InstitutionsConfigMapping put(@PathVariable long id, @RequestParam long configId, @RequestParam String imp_field_index,
-                                         @RequestParam long typeId, @RequestParam long exp_field, @RequestParam String imp_field,
+                                         @RequestParam String type, @RequestParam long exp_field, @RequestParam String imp_field,
                                          @RequestParam String start_index, @RequestParam String last_index) {
         int index;
         long imp;
@@ -86,7 +85,7 @@ public class InstitutionConfigMappingController {
         if (imp_field.equals("")) imp = -1;
         else imp = Long.valueOf(imp_field);
 
-        return mappingService.put(id, configId, index, typeId, exp_field, imp, start, last);
+        return mappingService.put(id, configId, index, type, exp_field, imp, start, last);
     }
 
     @ResponseBody
@@ -100,12 +99,10 @@ public class InstitutionConfigMappingController {
         List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(configId);
         Institution institution = institutionService.getById(institutionId);
         InstitutionConfig config = institutionConfigService.getById(configId);
-        List<FieldType> fieldTypes = fieldTypeService.getAll();
         List<ExportField> exportFields = mappingService.getAvailableExport(configId);
         List<ImportField> importFields = importFieldService.getAllByService(config.getService().getService_id());
         model.addAttribute("exportFields", exportFields);
         model.addAttribute("importFields", importFields);
-        model.addAttribute("fieldTypes", fieldTypes);
         model.addAttribute("mappings", mappings);
         model.addAttribute("inst", institution);
         model.addAttribute("config", config);

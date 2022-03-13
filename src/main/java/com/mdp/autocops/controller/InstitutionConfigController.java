@@ -1,10 +1,8 @@
 package com.mdp.autocops.controller;
 
-import com.mdp.autocops.model.entity.FileFormat;
 import com.mdp.autocops.model.entity.Institution;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.ServiceEntity;
-import com.mdp.autocops.service.framework.FileFormatService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import com.mdp.autocops.service.framework.InstitutionService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ public class InstitutionConfigController {
 
     private final InstitutionConfigService institutionConfigService;
     private final InstitutionService institutionService;
-    private final FileFormatService fileFormatService;
 
 
     @ResponseBody
@@ -46,7 +43,7 @@ public class InstitutionConfigController {
 
     @ResponseBody
     @PutMapping("/{id}")
-    public InstitutionConfig put(@PathVariable long id, @RequestParam(required = false) Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
+    public InstitutionConfig put(@PathVariable long id, @RequestParam(required = false) Integer reading_line, @RequestParam String import_format, @RequestParam String export_format,
                                  @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id,
                                  @RequestParam String import_path, @RequestParam String export_path, @RequestParam String template_path,
                                  @RequestParam String reading_root, @RequestParam String writing_root,
@@ -58,7 +55,7 @@ public class InstitutionConfigController {
 
     @ResponseBody
     @PostMapping("/{instId}")
-    public InstitutionConfig create(@PathVariable long instId, @RequestParam(required = false) Integer reading_line, @RequestParam long import_format, @RequestParam long export_format,
+    public InstitutionConfig create(@PathVariable long instId, @RequestParam(required = false) Integer reading_line, @RequestParam String import_format, @RequestParam String export_format,
                                     @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id,
                                     @RequestParam String import_path, @RequestParam String export_path, @RequestParam String template_path,
                                     @RequestParam(required = false) String reading_root, @RequestParam String writing_root,
@@ -88,9 +85,7 @@ public class InstitutionConfigController {
         model.addAttribute("configs", institutionConfigs);
         model.addAttribute("inst", institution);
         List<ServiceEntity> availableServices = institutionConfigService.getAvailableServices(institution.getInst_id());
-        List<FileFormat> fileFormats = fileFormatService.getAll();
         model.addAttribute("availableServices", availableServices);
-        model.addAttribute("formats", fileFormats);
         return "views/institutionConfig";
     }
     @GetMapping("/{institutionId}/{configId}")
@@ -100,9 +95,7 @@ public class InstitutionConfigController {
         model.addAttribute("inst", institution);
         model.addAttribute("config", config);
         List<ServiceEntity> availableServices = institutionConfigService.getAvailableServices(institution.getInst_id());
-        List<FileFormat> fileFormats = fileFormatService.getAll();
         model.addAttribute("availableServices", availableServices);
-        model.addAttribute("formats", fileFormats);
         return "views/singleConfiguration";
     }
 

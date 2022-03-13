@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InstitutionConfigService {
 
-    InstitutionConfig create(long id, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
+    InstitutionConfig create(long id, Integer reading_line, String import_format, String export_format, Boolean fail_on_error, Boolean active,
                              long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root,
                              Integer last_lines, String import_date, String export_date);
 
@@ -17,7 +17,7 @@ public interface InstitutionConfigService {
 
     InstitutionConfig delete(long id);
 
-    InstitutionConfig put(long id, Integer reading_line, long import_format, long export_format, Boolean fail_on_error, Boolean active,
+    InstitutionConfig put(long id, Integer reading_line, String import_format, String export_format, Boolean fail_on_error, Boolean active,
                           long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root,
                           Integer last_lines, String import_date, String export_date);
 
