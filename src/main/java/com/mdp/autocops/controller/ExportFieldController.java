@@ -1,10 +1,15 @@
 package com.mdp.autocops.controller;
 
 import com.mdp.autocops.model.entity.ExportField;
+import com.mdp.autocops.model.entity.Institution;
+import com.mdp.autocops.model.entity.InstitutionConfig;
+import com.mdp.autocops.model.entity.ServiceEntity;
 import com.mdp.autocops.service.framework.ExportFieldService;
+import com.mdp.autocops.service.framework.ServiceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +21,7 @@ import java.util.List;
 public class ExportFieldController {
 
     private final ExportFieldService exportFieldService;
+    private final ServiceService serviceService;
 
     @ResponseBody
     @GetMapping
@@ -51,6 +57,15 @@ public class ExportFieldController {
     @GetMapping("/available/{service_id}")
     public List<ExportField> getAvailableByService(@PathVariable long service_id) {
         return exportFieldService.getAllByService(service_id);
+    }
+
+    @GetMapping("/page/{serviceId}")
+    public String institutionConfigPage(@PathVariable long serviceId, Model model) {
+        List<ExportField> fields = exportFieldService.getAllByService(serviceId);
+        ServiceEntity service = serviceService.getById(serviceId);
+        model.addAttribute("fields", fields);
+        model.addAttribute("service", service);
+        return "views/exportFields";
     }
 
 }

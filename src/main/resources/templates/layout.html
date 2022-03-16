@@ -907,13 +907,13 @@
             var url = window.location.href;
             const urlSplit = url.split('/');
             const length = urlSplit.length;
-            if (urlSplit[length - 2] == "institutions" || urlSplit[length - 3] == "inst-configs" || urlSplit[length - 4] == "inst-configs-mappings") {
+            if (urlSplit[length - 2] == "institutions" || urlSplit[length - 3] == "inst-configs" || urlSplit[length - 4] == "inst-configs-mappings" ) {
                 if (document.getElementById("services").classList.contains('active')) {
                     document.getElementById("services").classList.remove('active');
                 }
                 document.getElementById("institutions").classList.add('active');
             }
-            if (urlSplit[length - 2] == "services") {
+            if (urlSplit[length - 2] == "services" || urlSplit[length - 3] == "import-fields" || urlSplit[length - 3] == "export-fields") {
                 if (document.getElementById("institutions").classList.contains('active')) {
                     document.getElementById("institutions").classList.remove('active');
                 }

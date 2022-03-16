@@ -61,6 +61,14 @@
                                                     data-toggle="modal"
                                                     th:attr="data-target=${'#editModal'+service.service_id}">Update
                                             </button>
+                                            <button class="btn btn-primary" data-row="${service}"
+                                                    onclick="goToImport($(this).attr('data-service-id'))"
+                                                    th:data-service-id="${service.service_id}">Import Fields
+                                            </button>
+                                            <button class="btn btn-primary" data-row="${service}"
+                                                    onclick="goToExport($(this).attr('data-service-id'))"
+                                                    th:data-service-id="${service.service_id}">Export Fields
+                                            </button>
                                         </td>
                                     </tr>
                                 </th:block>
@@ -249,6 +257,28 @@
             type: 'DELETE',
             success: function (result) {
                 window.location.reload();
+            }
+        });
+    }
+
+    function goToImport(id) {
+        $.ajax({
+            url: "/autocops/import-fields/page/"+id,
+            type: 'GET',
+            success: function (res) {
+                window.location.href = "/autocops/import-fields/page/"+id;
+                document.getElementById("services").classList.add('active');
+            }
+        });
+    }
+
+    function goToExport(id) {
+        $.ajax({
+            url: "/autocops/export-fields/page/"+id,
+            type: 'GET',
+            success: function (res) {
+                window.location.href ="/autocops/export-fields/page/"+id;
+                document.getElementById("services").classList.add('active');
             }
         });
     }
