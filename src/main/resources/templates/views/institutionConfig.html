@@ -311,26 +311,19 @@
         var strUser = e.options[e.selectedIndex].text;
         if(strUser === "Excel" || strUser === "CSV"){
             document.getElementById(input_id).disabled = false;
-            document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
             document.getElementById(input_id2).disabled = true;
-            document.getElementById(input_id3).value = document.getElementById(input_id3).defaultValue;
             document.getElementById(input_id3).disabled = true;
         }
         else{
             if (strUser === "XML") {
                 document.getElementById(input_id2).disabled = false;
-                document.getElementById(input_id).value = document.getElementById(input_id).defaultValue;
                 document.getElementById(input_id).disabled = true;
-                document.getElementById(input_id3).value = document.getElementById(input_id3).defaultValue;
                 document.getElementById(input_id3).disabled = true;
             }
             else {
                 document.getElementById(input_id3).disabled = false;
-                document.getElementById(input_id).value = document.getElementById(input_id).defaultValue;
-                document.getElementById(input_id).disabled = true;
-                document.getElementById(input_id2).value = document.getElementById(input_id2).defaultValue;
+                document.getElementById(input_id).disabled = false;
                 document.getElementById(input_id2).disabled = true;
-
             }
         }
     }

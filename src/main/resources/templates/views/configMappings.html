@@ -259,8 +259,8 @@
     var import_fields = [[${importFields}]];
 
     function multiple (id) {
-        disableUpdate(id);
         populateUpdateModal(id);
+        disableUpdate(id);
     }
 
     function populateUpdateModal (id) {
@@ -404,29 +404,21 @@
         var import_type = configuration.import_File_format;
         if(import_type === "Excel" || import_type === "CSV"){
             document.getElementById("import_index").disabled = false;
-            document.getElementById("import").value = document.getElementById("import").defaultValue;
             document.getElementById("import").disabled = true;
-            document.getElementById("start_index").value = document.getElementById("start_index").defaultValue;
             document.getElementById("start_index").disabled = true;
-            document.getElementById("last_index").value = document.getElementById("last_index").defaultValue;
             document.getElementById("last_index").disabled = true;
         }
         else {
             if (import_type === "XML") {
                 document.getElementById("import").disabled = false;
-                document.getElementById("import_index").value = document.getElementById("import_index").defaultValue;
                 document.getElementById("import_index").disabled = true;
-                document.getElementById("start_index").value = document.getElementById("start_index").defaultValue;
                 document.getElementById("start_index").disabled = true;
-                document.getElementById("last_index").value = document.getElementById("last_index").defaultValue;
                 document.getElementById("last_index").disabled = true;
             }
             else {
                 document.getElementById("start_index").disabled = false;
                 document.getElementById("last_index").disabled = false;
-                document.getElementById("import").value = document.getElementById("import").defaultValue;
                 document.getElementById("import").disabled = true;
-                document.getElementById("import_index").value = document.getElementById("import_index").defaultValue;
                 document.getElementById("import_index").disabled = true;
             }
         }
@@ -436,29 +428,21 @@
         var strUser = configuration.import_File_format;
         if(strUser === "Excel" || strUser === "CSV"){
             document.getElementById('modal_import_index').disabled = false;
-            document.getElementById('modal_import_name').value = document.getElementById('modal_import_name'+id).defaultValue;
             document.getElementById('modal_import_name').disabled = true;
-            document.getElementById("modal_start_index").value = document.getElementById("modal_start_index"+id).defaultValue;
             document.getElementById("modal_start_index").disabled = true;
-            document.getElementById("modal_last_index").value = document.getElementById("modal_last_index"+id).defaultValue;
             document.getElementById("modal_last_index").disabled = true;
         }
         else{
             if (strUser === "XML") {
                 document.getElementById('modal_import_name').disabled = false;
-                document.getElementById('modal_import_index').value = document.getElementById('modal_import_index').defaultValue;
                 document.getElementById('modal_import_index').disabled = true;
-                document.getElementById("modal_start_index").value = document.getElementById("modal_start_index").defaultValue;
                 document.getElementById("modal_start_index").disabled = true;
-                document.getElementById("modal_last_index").value = document.getElementById("modal_last_index").defaultValue;
                 document.getElementById("modal_last_index").disabled = true;
             }
             else {
                     document.getElementById("modal_start_index").disabled = false;
                     document.getElementById("modal_last_index").disabled = false;
-                    document.getElementById("modal_import_name").value = document.getElementById("modal_import_name").defaultValue;
                     document.getElementById("modal_import_name").disabled = true;
-                    document.getElementById("modal_import_index").value = document.getElementById("modal_import_index").defaultValue;
                     document.getElementById("modal_import_index").disabled = true;
                 }
         }

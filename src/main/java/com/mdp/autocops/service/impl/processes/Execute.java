@@ -44,16 +44,22 @@ public class Execute {
             } else if (config.getImport_File_format().equals("CSV")) {
                 response = read.readCSV(config.getReading_line(), config.getImport_path(), mappings, input_date, output_date);
             } else if (config.getImport_File_format().equals("Text")) {
+                System.out.println(config.getReading_line());
+                System.out.println(config.getImport_path());
+                System.out.println(mappings.size());
+                System.out.println(config.getLast_lines());
+                System.out.println(input_date);
+                System.out.println(output_date);
                 response = read.readText(config.getReading_line(), config.getImport_path(), mappings, config.getLast_lines(), input_date, output_date);
             }
-            if (maps == null || maps.size() == 0) return response.getMessage();
+            if (response.getMaps() == null || response.getMaps().size() == 0) return response.getMessage();
             else {
                 maps = response.getMaps();
                 String response2 = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
                 return response2;
             }
         } catch (Exception e) {
-            log.error(e.getStackTrace());
+            log.error(e.getMessage());
             return "fail";
         }
     }
