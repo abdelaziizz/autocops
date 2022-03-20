@@ -84,12 +84,21 @@
                 <div class="modal-body">
                     <!--                    <div hidden id="configError" style="color: red;margin: 10px 10px 20px 10px;"-->
                     <!--                         th:text="#{CONFIG_ERROR}"></div>-->
-                    <div class="container">
+                    <div class="container" id="modal_container">
                         <form>
 
                             <div class="form-row mb-4">
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Import Format</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a> Import Format
+                                    </h5>
+<!--                                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">-->
+<!--                                        Import Format-->
+<!--                                    </button>-->
                                     <select class="form-control form-small" id="inputFormatDropdown" onchange="disable('inputFormatDropdown', 'reading_line','reading_root','last_line')">
                                         <option selected="selected">--- Import Format ---</option>
                                         <option value="XML">XML</option>
@@ -99,7 +108,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Export Format</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Export Format</h5>
                                     <select class="form-control form-small" id="outputFormatDropdown">
                                         <option selected="selected">--- Export Format ---</option>
                                         <option value="XML">XML</option>
@@ -109,7 +123,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Service</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Service</h5>
                                     <select class="form-control form-small" id="serviceDropdown">
                                         <option selected="selected">--- Service ---</option>
                                         <th:block th:each="service : ${availableServices}">
@@ -119,17 +138,32 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Start Line</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Start Line</h5>
                                     <input class="form-control" id="reading_line" placeholder="--- Data Start Line ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Summary Lines</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Summary Lines</h5>
                                     <input class="form-control" id="last_line" placeholder="--- Summary Lines ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Fail On Error</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Fail On Error</h5>
                                     <select class="form-control form-small" id="failDropdown">
                                         <option selected="selected">--- Fail On Error ---</option>
                                         <option value="true">True</option>
@@ -137,7 +171,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Input Date Format</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Input Date Format</h5>
                                     <select class="form-control form-small" id="dateInput">
                                         <option selected="selected">--- Input Date Format ---</option>
                                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -147,7 +186,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Output Date Format</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Output Date Format</h5>
                                     <select class="form-control form-small" id="dateOutput">
                                         <option selected="selected">--- Output Date Format ---</option>
                                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -157,7 +201,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Status</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Status</h5>
                                     <select class="form-control form-small" id="activeDropdown">
                                         <option selected="selected">--- Status ---</option>
                                         <option value="true">Active</option>
@@ -165,27 +214,52 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Import Path</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Import Path</h5>
                                     <input class="form-control" id="import_path" placeholder="--- Import Path ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Export Path</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Export Path</h5>
                                     <input class="form-control" id="export_path" placeholder="--- Export Path ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Template Path</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Template Path</h5>
                                     <input class="form-control" id="template_path" placeholder="--- Template Path ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Reading Root</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Reading Root</h5>
                                     <input class="form-control" id="reading_root" placeholder="--- Reading Root ---"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Writing Root</h5>
+                                    <h5> <a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Writing Root</h5>
                                     <input class="form-control" id="writing_root" placeholder="--- Writing Root ---"
                                            type="text">
                                 </div>
@@ -328,7 +402,9 @@
         }
     }
 
-
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
 
 
 

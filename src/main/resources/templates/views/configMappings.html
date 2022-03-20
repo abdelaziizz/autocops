@@ -107,12 +107,22 @@
                             <div class="form-row mb-4">
 
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Field Index</h5>
+                                    <h5><a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Field Index</h5>
                                     <input class="form-control" id="import_index" placeholder="Import Field Index"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Import Field Type</h5>
+                                    <h5><a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Import Field Type</h5>
                                     <select class="form-control form-small" id="type">
                                         <option selected="selected">--- Import Field Type ---</option>
                                         <option value="String">String</option>
@@ -122,7 +132,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Import Field Name</h5>
+                                    <h5><a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Import Field Name</h5>
                                     <select class="form-control form-small" id="import">
                                         <option selected="selected" value="">--- Import Field ---</option>
                                         <th:block th:each="field : ${importFields}">
@@ -132,7 +147,12 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Export Field Name</h5>
+                                    <h5><a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Export Field Name</h5>
                                     <select class="form-control form-small" id="export">
                                         <option selected="selected">--- Export Field ---</option>
                                         <th:block th:each="field : ${exportFields}">
@@ -142,12 +162,22 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Start Index</h5>
+                                    <h5><a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Start Index</h5>
                                     <input class="form-control" id="start_index" placeholder="Start Index"
                                            type="text">
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
-                                    <h5>Last Index</h5>
+                                    <h5><a data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Last Index</h5>
                                     <input class="form-control" id="last_index" placeholder="Last Index"
                                            type="text">
                                 </div>
@@ -178,11 +208,21 @@
                                 <div class="form-row mb-4">
 
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Import Field Index</h5>
+                                        <h5><a data-container='#editModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a>Import Field Index</h5>
                                         <input class="form-control" id="modal_import_index" value="" type="text">
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Import Field Type</h5>
+                                        <h5><a data-container='#editModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a>Import Field Type</h5>
                                         <select class="form-control form-small" id="modal_import_type" value="">
                                             <option value="Number">Number</option>
                                             <option value="String">String</option>
@@ -190,19 +230,39 @@
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Import Field Name</h5>
+                                        <h5><a data-container='#editModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a>Import Field Name</h5>
                                         <select class="form-control form-small" value="" id="modal_import_name"></select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Export Field Name</h5>
+                                        <h5><a data-container='#editModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a>Export Field Name</h5>
                                         <select class="form-control form-small" value="" id="modal_export_name"></select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Start Index</h5>
+                                        <h5><a data-container='#editModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a>Start Index</h5>
                                         <input class="form-control" id="modal_start_index" value="" type="text">
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
-                                        <h5>Last Index</h5>
+                                        <h5><a data-container='#editModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a>Last Index</h5>
                                         <input class="form-control" id="modal_last_index" value="" type="text">
                                     </div>
                                 </div>
@@ -220,11 +280,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 
 
     <div aria-hidden="true" class="modal fade" role="alert" tabindex="-1" th:attr="id=${'deleteModal' + mapping.id}"
@@ -447,6 +502,10 @@
                 }
         }
     }
+
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
 
 
     /*]]>*/
