@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="notranslate" lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="layout :: header"></div>
+<body class="alt-menu sidebar-noneoverflow">
+<!-- BEGIN LOADER -->
+<div id="load_screen">
+    <div class="loader">
+        <div class="loader-content">
+            <div class="spinner-grow align-self-center"></div>
+        </div>
+    </div>
+</div>
+<!--  END LOADER -->
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+
+    <div th:insert="layout :: topbar"></div>
+
+    <!--  BEGIN CONTENT PART  -->
+    <div class="main-content" id="content">
+        <div class="layout-px-spacing">
+            <br><br>
+            <div id="tableHover">
+                <div class="statbox widget box box-shadow">
+                    <div class="widget-header">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                <br>
+                                <h4> Field Descriptions </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content widget-content-area">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-4" id="inst_table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="fieldDescription : ${fieldDescriptions}">
+                                    <tr>
+                                        <td th:attr="id=${'id' + fieldDescription.id}" th:text="${fieldDescription.id}"></td>
+                                        <td th:attr="id=${'name' + fieldDescription.id}" th:text="${fieldDescription.field_name}"></td>
+                                        <td th:attr="id=${'des' + fieldDescription.id}" th:text="${fieldDescription.description}"></td>
+                                        <td>
+                                            <button class="btn btn-primary" data-row="${mapping}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#editModal'}"
+                                                    onclick="fill($(this).attr('data-mapping-id'))"
+                                                    th:data-mapping-id="${fieldDescription.id}">Update
+                                            </button>
+                                            <button class="btn btn-danger"  data-row="${fieldDescription}"
+                                                    data-toggle="modal"
+                                                    th:attr="data-target=${'#deleteModal'+fieldDescription.id}">Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h6>Add New Field Description</h6>
+            <input class="mb-4 btn btn-primary" data-target="#myModal" data-toggle="modal" name="newConfiguration"
+                   type="submit" value="New Description">
+            <br><br><br>
+            <div class="footer-wrapper">
+                <div class="footer-section f-section-1">
+                    <p class="">Copyright © 2020 <a href="https://designreset.com" target="_blank">DesignReset</a>, All
+                        rights reserved.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Please Enter Field Description Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form>
+                            <div class="form-row mb-6">
+                                <div class="col-6">
+                                    <input class="form-control" id="field_name" placeholder="Field Name" type="text">
+                                </div>
+                                <div class="col-6">
+                                    <input class="form-control" id="field_description" placeholder="Field Description" type="text">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" onclick="createField()"
+                            type="submit">Save
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="editModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Please Enter Field Description Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form>
+                            <div class="form-row mb-6">
+                                <div class="col-6">
+                                    <input class="form-control" id="field_name_update" placeholder="Field Name" type="text">
+                                </div>
+                                <div class="col-6">
+                                    <input class="form-control" id="field_description_update" placeholder="Field Description" type="text">
+                                </div>
+                                <input hidden="true" class="form-control" id="id_update" type="text">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" onclick="update()" type="submit">Save</button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div aria-hidden="true" class="modal fade" role="alert" tabindex="-1" th:attr="id=${'deleteModal' + field.id}" th:each="field : ${fieldDescriptions}">
+        <div class="modal-dialog" role="alert">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <h5>Are you sure you want to delete ?!</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" onclick="deleteField($(this).attr('data-field-id'))"
+                            th:data-field-id="${field.id}" type="button">Delete
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END MAIN CONTAINER -->
+
+<div th:insert="layout :: scripts"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function fill (id) {
+        var name = $("#name"+id).text();
+        var description = $("#des"+id).text();
+        document.getElementById("field_name_update").value = name;
+        document.getElementById("field_description_update").value = description;
+        document.getElementById("id_update").value = id;
+    }
+
+
+    function createField () {
+        var fieldName = $("#field_name").val();
+        var fieldDes = $("#field_description").val();
+        var field = {};
+        field.field_name = fieldName;
+        field.description = fieldDes;
+        console.log(field);
+        $.ajax({
+            type: 'post',
+            url: '/autocops/field-descriptions',
+            data: jQuery.param(field),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (res) {
+                window.location.reload();
+            }
+        });
+    }
+
+    function deleteField(id) {
+        $.ajax({
+            url: '/autocops/field-descriptions/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+
+    function update () {
+        var id = $("#id_update").val();
+        var field = {};
+        field.field_name = $("#field_name_update").val();
+        field.description = $("#field_description_update").val();
+        $.ajax({
+            type: 'put',
+            url: '/autocops/field-descriptions/' + id,
+            data: jQuery.param(field),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+    /*]]>*/
+</script>
+</body>
+</html>
