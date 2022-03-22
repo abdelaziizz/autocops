@@ -80,6 +80,11 @@
 			<artifactId>dom4j</artifactId>
 			<version>1.6</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mdp.integration.OmniChannelsWSClient</groupId>
+			<artifactId>OmniChannelsWSClient</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

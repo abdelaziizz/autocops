@@ -1,7 +1,5 @@
 package com.mdp.autocops.controller;
 
-import com.mdp.autocops.model.entity.InstitutionConfig;
-import com.mdp.autocops.model.entity.InstitutionsConfigMapping;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import com.mdp.autocops.service.impl.processes.Execute;
@@ -13,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor

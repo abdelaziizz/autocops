@@ -1,6 +1,5 @@
 package com.mdp.autocops.controller;
 
-import com.mdp.autocops.model.entity.ExportField;
 import com.mdp.autocops.model.entity.ImportField;
 import com.mdp.autocops.model.entity.ServiceEntity;
 import com.mdp.autocops.service.framework.ImportFieldService;
