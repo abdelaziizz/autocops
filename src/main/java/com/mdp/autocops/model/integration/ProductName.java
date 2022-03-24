@@ -1,13 +1,12 @@
 package com.mdp.autocops.model.integration;
-
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "name")
-public class Name {
+@Table(name = "product_names")
+public class ProductName {
 
     @Id
     @Column(name = "id")

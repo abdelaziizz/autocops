@@ -19,14 +19,15 @@ public class Execute {
 
     @Autowired
     InstitutionConfigMappingService mappingService;
+
     @Autowired
     InstitutionConfigService configService;
+
     @Autowired
     Read read;
+
     @Autowired
     Write write;
-    @Autowired
-    FileAccess fileAccess;
 
     // Performs the read and write in from the bank to smart vista
     public String execute(long config_id) {

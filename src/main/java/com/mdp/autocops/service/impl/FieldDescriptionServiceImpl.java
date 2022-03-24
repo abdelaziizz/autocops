@@ -18,7 +18,6 @@ public class FieldDescriptionServiceImpl  implements FieldDescriptionService {
     @Autowired
     FieldDescriptionDao descriptionDao;
 
-
     @Override
     public List<FieldDescription> getAll() {
        try {

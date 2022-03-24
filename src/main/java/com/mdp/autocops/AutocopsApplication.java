@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties
-@EntityScan(basePackages = {"com.mdp.autocops.model.entity"})
+@EntityScan(basePackages = {"com.mdp.autocops.model.*"})
 public class AutocopsApplication {
 
     public static void main(String[] args) {
