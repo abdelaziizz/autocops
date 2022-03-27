@@ -38,4 +38,7 @@ public class InstitutionsConfigMapping {
     @Column(name = "last_index")
     private int last_index;
 
+    @Column(name = "required")
+    private boolean required;
+
 }

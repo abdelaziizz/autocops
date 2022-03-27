@@ -53,7 +53,8 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping create(long configId, int imp_field_index, String type, long exp_field, long imp_field, Integer start_index, Integer last_index) {
+    public InstitutionsConfigMapping create(long configId, int imp_field_index, String type, long exp_field, long imp_field,
+                                            Integer start_index, Integer last_index, Boolean required) {
 
         InstitutionConfig config = institutionConfigService.getById(configId);
         InstitutionsConfigMapping instConfigMapping = new InstitutionsConfigMapping();
@@ -72,6 +73,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
             instConfigMapping.setImport_field(importField);
             instConfigMapping.setStart_index(start_index);
             instConfigMapping.setLast_index(last_index);
+            instConfigMapping.setRequired(required);
             institutionsConfigMappingDao.save(instConfigMapping);
             return instConfigMapping;
         } catch (Exception e) {
@@ -95,7 +97,8 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
     }
 
     @Override
-    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, String type, long exp_field, long imp_field, int start_index, int last_index) {
+    public InstitutionsConfigMapping put(long id, long configId, int imp_field_index, String type, long exp_field, long imp_field,
+                                         int start_index, int last_index, Boolean requied) {
 
         Optional<InstitutionsConfigMapping> instConfigMapping = null;
         try {
@@ -112,6 +115,7 @@ public class InstitutionConfigMappingServiceImpl implements InstitutionConfigMap
                 if (importField != null) instConfigMapping.get().setImport_field(importField);
                 instConfigMapping.get().setStart_index(start_index);
                 instConfigMapping.get().setLast_index(last_index);
+                instConfigMapping.get().setRequired(requied);
                 institutionsConfigMappingDao.save(instConfigMapping.get());
             } else log.info("Error retrieving Institution Configuration Mapping");
         } catch (Exception e) {

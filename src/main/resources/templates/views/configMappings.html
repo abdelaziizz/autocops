@@ -39,6 +39,7 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Required Mapping</th>
                                     <th>Import Field Index</th>
                                     <th>Import Field Type</th>
                                     <th>Import Field Name</th>
@@ -52,6 +53,7 @@
                                 <th:block th:each="mapping : ${mappings}">
                                     <tr th:attr="id=${mapping.id}">
                                         <td th:attr="data-element-id=${mapping.id}" th:text="${mapping.id}"></td>
+                                        <td th:attr="id=${'table_required' + mapping.id}" th:text="${mapping.required}"></td>
                                         <td th:attr="id=${'table_import_index' + mapping.id}" th:text="${mapping.import_field_index}"></td>
                                         <td th:attr="id=${'table_import_type' + mapping.id}" th:text="${mapping.import_field_type}"></td>
                                         <td th:attr="id=${'table_import_name' + mapping.id}" th:text="${mapping?.import_field?.field_name}"></td>
@@ -105,7 +107,19 @@
                     <div class="container">
                         <form>
                             <div class="form-row mb-4">
-
+                                <div class="col-4" style="margin-top:10px;">
+                                    <h5> <a id="required_des" data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Required Mapping</h5>
+                                    <select class="form-control form-small" id="required_dropdown">
+                                        <option selected="selected">--- Fail On Error ---</option>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
                                 <div class="col-4" style="margin-top:10px;">
                                     <h5><a id="field_index" data-container='#myModal' data-toggle="popover" data-content="Explanation">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -206,7 +220,18 @@
                         <div class="container">
                             <form>
                                 <div class="form-row mb-4">
-
+                                    <div class="col-4" style="margin-top:10px;">
+                                        <h5><a id="des_required" data-container='#editModal' data-toggle="popover" data-content="Explanation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                                <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                            </svg>
+                                        </a>Required Mapping</h5>
+                                        <select class="form-control form-small" id="modal_required" value="">
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                    </div>
                                     <div class="col-4" style="margin-top:10px;">
                                         <h5><a id="import_index_des" data-container='#editModal' data-toggle="popover" data-content="Explanation">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -327,6 +352,13 @@
         var export_name = $("#table_export_name"+id).text();
         var start_index = $("#table_start_index"+id).text();
         var last_index = $("#table_last_index"+id).text();
+        var req = $("#table_required"+id).text();
+        var isTrueSet = false;
+        var other = true;
+        if (req === 'true'){
+            isTrueSet = true;
+            other = false;
+        }
 
         document.getElementById("modal_id").textContent = mapping_id;
         $("#updateBtnId").attr("data-id",mapping_id)
@@ -351,6 +383,15 @@
         }
         export_name_select.selected = selected.textContent;
         export_name_select.value = selected.value;
+
+
+
+        var required_dropdown = document.getElementById("modal_required");
+        required_dropdown.value = isTrueSet;
+
+
+
+
 
         var import_name_select = document.getElementById("modal_import_name");
         import_name_select.options.length = 0;
@@ -387,7 +428,7 @@
         institution.exp_field = $("#export").val();
         institution.start_index = $("#start_index").val();
         institution.last_index = $("#last_index").val();
-        console.log(institution)
+        institution.required = $("#required_dropdown").val();
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs-mappings',
@@ -411,6 +452,7 @@
         institution.exp_field = $("#modal_export_name").val();
         institution.start_index = $("#modal_start_index").val();
         institution.last_index = $("#modal_last_index").val();
+        institution.required = $("#modal_required").val();
         $.ajax({
             type: 'put',
             url: '/autocops/inst-configs-mappings/' + id,
@@ -537,6 +579,10 @@
                     if (res[i].field_name === 'Import Field Index') {
                         document.getElementById("import_index_des").setAttribute('data-content', res[i].description);
                         document.getElementById("field_index").setAttribute('data-content', res[i].description);
+                    }
+                    if (res[i].field_name === 'Required Mapping') {
+                        document.getElementById("required_des").setAttribute('data-content', res[i].description);
+                        document.getElementById("des_required").setAttribute('data-content', res[i].description);
                     }
                 }}});
     });

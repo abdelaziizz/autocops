@@ -42,7 +42,6 @@ public class Read {
             FileInputStream file = new FileInputStream(path);
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
-            //System.out.println(sheet.getLastRowNum());
             if (sheet.getLastRowNum() == 0) {
                 message = "Input file is empty";
                 response.setMessage(message);
@@ -110,6 +109,11 @@ public class Read {
                                     current_record.put(mappings.get(i).getExport_field_head().getField_name(),date);
                                 }
                             }
+                        }
+                        if ( mappings.get(i).isRequired() && !current_record.containsKey(mappings.get(i).getExport_field_head().getField_name())) {
+                            response.setMessage("Mandatory Field Missing");
+                            response.setMaps(null);
+                            return response;
                         }
                     }
                     records.add(current_record);
@@ -192,6 +196,11 @@ public class Read {
                                     }
                                 }
                                 else map.put(mapping.getExport_field_head().getField_name(), element.getElementsByTagName(mapping.getImport_field().getField_name()).item(0).getTextContent());
+                            }
+                            if ( mapping.isRequired() && !map.containsKey(mapping.getExport_field_head().getField_name())) {
+                                response.setMessage("Mandatory Field Missing");
+                                response.setMaps(null);
+                                return response;
                             }
                         }
                     }
@@ -336,6 +345,11 @@ public class Read {
                                 }
                             }
                             else map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index() - 1]);
+                            if ( mappings.get(j).isRequired() && !map.containsKey(mappings.get(j).getExport_field_head().getField_name())) {
+                                response.setMessage("Mandatory Field Missing");
+                                response.setMaps(null);
+                                return response;
+                            }
                         }
                         maps.add(map);
                     } else counter++;
@@ -410,6 +424,11 @@ public class Read {
                                 }
                             }
                             else map.put(mappings.get(j).getExport_field_head().getField_name(), line.substring(mappings.get(j).getStart_index(), mappings.get(j).getLast_index()));
+                            if ( mappings.get(j).isRequired() && !map.containsKey(mappings.get(j).getExport_field_head().getField_name())) {
+                                response.setMessage("Mandatory Field Missing");
+                                response.setMaps(null);
+                                return response;
+                            }
                         }
                         maps.add(map);
                     } else counter++;
