@@ -15,6 +15,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +46,8 @@ public class Write {
             Transformer transformer = transformerFactory.newTransformer();
             doc.normalize();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(output_path));
+            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+            StreamResult result = new StreamResult(new File(output_path+"/"+timeStamp+".xml"));
             transformer.transform(source, result);
             return "success";
         } catch (Exception e) {

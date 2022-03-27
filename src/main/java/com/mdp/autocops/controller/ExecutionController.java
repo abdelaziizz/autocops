@@ -8,6 +8,7 @@ import com.mdp.autocops.service.impl.processes.Execute;
 import com.mdp.autocops.service.impl.processes.Read;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,6 @@ import java.util.Map;
 public class ExecutionController {
 
     private final Execute execute;
-    private final Read read;
-    private final InstitutionConfigMappingService mappingService;
     private final InstitutionConfigService configService;
 
     @ResponseBody
@@ -34,18 +33,15 @@ public class ExecutionController {
         return execute.execute(config_id);
     }
 
-//    @ResponseBody
-//    @PostMapping("/read/{config_id}")
-//    public List<Map> read(@PathVariable long config_id) {
-//        try {
-//            List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
-//            InstitutionConfig config = configService.getById(config_id);
-//            return read.readCSV(config.getReading_line(), config.getImport_path(), mappings).getMaps();
-//        } catch (Exception e) {
-//            log.error(e);
-//            return null;
-//        }
-//
-//    }
+//    @Scheduled(fixedRate = 60000)
+    @ResponseBody
+    @PostMapping
+    public String executeScheduled() {
+        List<InstitutionConfig> configs = configService.getAll();
+        for (int i = 0 ; i < configs.size() ; i++ ) {
+             execute.execute(configs.get(i).getId());
+        }
+        return "success";
+    }
 
 }

@@ -9,9 +9,11 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Log4j2
 @Service
@@ -33,31 +35,53 @@ public class Execute {
         try {
             InstitutionConfig config = configService.getById(config_id);
             List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
-            List<Map> maps = new ArrayList<>();
-            ReadingResponse response = new ReadingResponse();
-            String input_date = config.getImport_date();
-            String output_date = config.getExport_date();
-            if (config.getImport_File_format().equals("Excel")) {
-                response = read.readExcel(config.getReading_line(), config.getImport_path(), mappings, input_date, output_date);
-            } else if (config.getImport_File_format().equals("XML")) {
-                response = read.readXML(config.getReading_root(), config.getImport_path(), mappings, input_date, output_date);
-            } else if (config.getImport_File_format().equals("CSV")) {
-                response = read.readCSV(config.getReading_line(), config.getImport_path(), mappings, input_date, output_date);
-            } else if (config.getImport_File_format().equals("Text")) {
-                System.out.println(config.getReading_line());
-                System.out.println(config.getImport_path());
-                System.out.println(mappings.size());
-                System.out.println(config.getLast_lines());
-                System.out.println(input_date);
-                System.out.println(output_date);
-                response = read.readText(config.getReading_line(), config.getImport_path(), mappings, config.getLast_lines(), input_date, output_date);
+            List<String> import_paths = new ArrayList<>();
+            File folder = new File(config.getImport_path());
+            File[] listOfFiles = folder.listFiles();
+            if (listOfFiles.length == 0) return "folder is empty";
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    import_paths.add(config.getImport_path()+"/"+file.getName());
+                }
             }
-            if (response.getMaps() == null || response.getMaps().size() == 0) return response.getMessage();
-            else {
-                maps = response.getMaps();
-                String response2 = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
-                return response2;
+            for (String file : import_paths) {
+                List<Map> maps = new ArrayList<>();
+                String extension = file.substring(file.length()-3);
+                System.out.println(extension);
+                ReadingResponse response = new ReadingResponse();
+                String input_date = config.getImport_date();
+                String output_date = config.getExport_date();
+                if (config.getImport_File_format().equals("Excel")) {
+                    if (extension.equals("xlsx")) {
+                        response = read.readExcel(config.getReading_line(), file, mappings, input_date, output_date);
+                    } else System.out.println("wrong file type");
+                } else if (config.getImport_File_format().equals("XML")) {
+                    if (extension.equals("xml")) {
+                        response = read.readXML(config.getReading_root(), file, mappings, input_date, output_date);
+                    } else System.out.println("wrong file type");
+                } else if (config.getImport_File_format().equals("CSV")) {
+                    if (extension.equals("csv")) {
+                        response = read.readCSV(config.getReading_line(), file, mappings, input_date, output_date);
+                    } else System.out.println("wrong file type");
+                } else if (config.getImport_File_format().equals("Text")) {
+                    if (extension.equals("txt")) {
+                        response = read.readText(config.getReading_line(), file, mappings, config.getLast_lines(), input_date, output_date);
+                    } else System.out.println("wrong file type");
+                }
+                if (response.getMaps() == null || response.getMaps().size() == 0) {
+//                return response.getMessage();
+                } else {
+                    maps = response.getMaps();
+                    String response2 = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
+                    if (response2.equals("success")) {
+                        File file_to_be_deleted = new File(file);
+                        file_to_be_deleted.delete();
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+//                return response2;
+                }
             }
+            return "success";
         } catch (Exception e) {
             log.error(e.getMessage());
             return "fail";
