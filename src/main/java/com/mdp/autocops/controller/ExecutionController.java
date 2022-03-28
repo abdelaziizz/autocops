@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,19 +30,21 @@ public class ExecutionController {
 
     @ResponseBody
     @PostMapping("/{config_id}")
-    public String execute(@PathVariable long config_id) {
+    public List<String> execute(@PathVariable long config_id) {
         return execute.execute(config_id);
     }
 
 //    @Scheduled(fixedRate = 60000)
     @ResponseBody
     @PostMapping
-    public String executeScheduled() {
+    public List<List<String>> executeScheduled() {
         List<InstitutionConfig> configs = configService.getAll();
+        List<List<String>> responses = new ArrayList<>();
         for (int i = 0 ; i < configs.size() ; i++ ) {
-             execute.execute(configs.get(i).getId());
+            List<String> response = execute.execute(configs.get(i).getId());
+            responses.add(response);
         }
-        return "success";
+        return responses;
     }
 
 }

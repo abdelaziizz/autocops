@@ -31,21 +31,29 @@ public class Execute {
     FileAccess fileAccess;
 
     // Performs the read and write in from the bank to smart vista
-    public String execute(long config_id) {
+    public List<String> execute(long config_id) {
         try {
             InstitutionConfig config = configService.getById(config_id);
             List<InstitutionsConfigMapping> mappings = mappingService.findByInstConfig(config_id);
             List<String> import_paths = new ArrayList<>();
             File folder = new File(config.getImport_path());
             File[] listOfFiles = folder.listFiles();
-            if (listOfFiles.length == 0) return "folder is empty";
+            List<String> responses = new ArrayList<>();
+            if (listOfFiles.length == 0) {
+                String res = "folder is empty";
+                responses.add(res);
+                return responses;
+            }
             for (File file : listOfFiles) {
                 if (file.isFile()) {
                     import_paths.add(config.getImport_path()+"/"+file.getName());
                 }
             }
+
             for (String file : import_paths) {
                 List<Map> maps = new ArrayList<>();
+                String [] fileNameParsed = file.split("/");
+                String config_response = "For configuration with id : " + config_id + ", the response for file : " + fileNameParsed[fileNameParsed.length -1] + " is ---> ";
                 String extension = file.substring(file.length()-3);
                 System.out.println(extension);
                 ReadingResponse response = new ReadingResponse();
@@ -54,25 +62,30 @@ public class Execute {
                 if (config.getImport_File_format().equals("Excel")) {
                     if (extension.equals("xlsx")) {
                         response = read.readExcel(config.getReading_line(), file, mappings, input_date, output_date);
-                    } else System.out.println("wrong file type");
+                        config_response += response.getMessage();
+                    } else config_response += "wrong file type";
                 } else if (config.getImport_File_format().equals("XML")) {
                     if (extension.equals("xml")) {
                         response = read.readXML(config.getReading_root(), file, mappings, input_date, output_date);
-                    } else System.out.println("wrong file type");
+                        config_response += response.getMessage();
+                    } else config_response += "wrong file type";
                 } else if (config.getImport_File_format().equals("CSV")) {
                     if (extension.equals("csv")) {
                         response = read.readCSV(config.getReading_line(), file, mappings, input_date, output_date);
-                    } else System.out.println("wrong file type");
+                        config_response += response.getMessage();
+                    } else config_response += "wrong file type";
                 } else if (config.getImport_File_format().equals("Text")) {
                     if (extension.equals("txt")) {
                         response = read.readText(config.getReading_line(), file, mappings, config.getLast_lines(), input_date, output_date);
-                    } else System.out.println("wrong file type");
+                        config_response += response.getMessage();
+                    } else config_response += "wrong file type";
                 }
                 if (response.getMaps() == null || response.getMaps().size() == 0) {
-//                return response.getMessage();
+                    config_response = "For configuration with id : " + config_id + ", the response for file : " + fileNameParsed[fileNameParsed.length -1] + " is ---> no data read";
                 } else {
                     maps = response.getMaps();
                     String response2 = write.writeXML(config.getWriting_root(), config.getTemplate_path(), config.getExport_path(), maps);
+                    config_response = "For configuration with id : " + config_id + ", the response for file : " + fileNameParsed[fileNameParsed.length -1] + " is ---> " + response2;
                     if (response2.equals("success")) {
                         File file_to_be_deleted = new File(file);
                         file_to_be_deleted.delete();
@@ -80,11 +93,12 @@ public class Execute {
                     }
 //                return response2;
                 }
+                responses.add(config_response);
             }
-            return "success";
+            return responses;
         } catch (Exception e) {
             log.error(e.getMessage());
-            return "fail";
+            return null;
         }
     }
 
