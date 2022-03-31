@@ -46,21 +46,20 @@ public class Execute {
             }
             for (File file : listOfFiles) {
                 if (file.isFile()) {
-                    import_paths.add(config.getImport_path()+"/"+file.getName());
+                    import_paths.add(config.getImport_path()+"\\"+file.getName());
                 }
             }
 
             for (String file : import_paths) {
                 List<Map> maps = new ArrayList<>();
-                String [] fileNameParsed = file.split("/");
+                String [] fileNameParsed = file.split("\\\\");
                 String config_response = "For configuration with id : " + config_id + ", the response for file : " + fileNameParsed[fileNameParsed.length -1] + " is ---> ";
                 String extension = file.substring(file.length()-3);
-                System.out.println(extension);
                 ReadingResponse response = new ReadingResponse();
                 String input_date = config.getImport_date();
                 String output_date = config.getExport_date();
                 if (config.getImport_File_format().equals("Excel")) {
-                    if (extension.equals("xlsx")) {
+                    if (file.substring(file.length()-4).equals("xlsx")) {
                         response = read.readExcel(config.getReading_line(), file, mappings, input_date, output_date);
                         config_response += response.getMessage();
                     } else config_response += "wrong file type";

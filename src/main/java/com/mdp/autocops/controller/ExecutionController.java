@@ -38,11 +38,14 @@ public class ExecutionController {
     @ResponseBody
     @PostMapping
     public List<List<String>> executeScheduled() {
+        System.out.println("Running Configurations");
         List<InstitutionConfig> configs = configService.getAll();
         List<List<String>> responses = new ArrayList<>();
         for (int i = 0 ; i < configs.size() ; i++ ) {
-            List<String> response = execute.execute(configs.get(i).getId());
-            responses.add(response);
+            if (configs.get(i).isActive()) {
+                List<String> response = execute.execute(configs.get(i).getId());
+                responses.add(response);
+            }
         }
         return responses;
     }

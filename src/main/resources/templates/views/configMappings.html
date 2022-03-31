@@ -115,7 +115,7 @@
                                         </svg>
                                     </a>Required Mapping</h5>
                                     <select class="form-control form-small" id="required_dropdown">
-                                        <option selected="selected">--- Fail On Error ---</option>
+                                        <option selected="selected">--- Required ---</option>
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
@@ -366,7 +366,6 @@
         document.getElementById("modal_start_index").value = start_index;
         document.getElementById("modal_last_index").value = last_index;
         document.getElementById("modal_export_name").textContent = export_name;
-
         var export_name_select = document.getElementById("modal_export_name");
         export_name_select.options.length = 0;
         var selected =  document.createElement("selected");
@@ -379,20 +378,11 @@
             if (opt.field_name === export_name) {
                 selected.textContent = opt.field_name;
                 selected.value = opt.id;
-            }
-        }
+            }}
         export_name_select.selected = selected.textContent;
         export_name_select.value = selected.value;
-
-
-
         var required_dropdown = document.getElementById("modal_required");
         required_dropdown.value = isTrueSet;
-
-
-
-
-
         var import_name_select = document.getElementById("modal_import_name");
         import_name_select.options.length = 0;
         var selected_import =  document.createElement("selected_import");
@@ -405,16 +395,12 @@
             if (opt.field_name === import_name) {
                 selected_import.textContent = opt.field_name;
                 selected_import.value = opt.id;
-            }
-        }
+            }}
         import_name_select.selected = selected_import.textContent;
         import_name_select.value = selected_import.value;
-
         var import_type_select = document.getElementById("modal_import_type");
         import_type_select.selected = import_type;
         import_type_select.value = import_type;
-
-
     }
 
     function createInstitutionConfigMapping() {

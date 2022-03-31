@@ -53,20 +53,34 @@ public class Read {
                         if (row.getCell(mappings.get(i).getImport_field_index()) == null) {
                             message = "Missing field in row : " + row.getRowNum() + " at index : " + mappings.get(i).getImport_field_index();
                             response.setMessage(message);
+                            System.out.println(message);
                             return response;
                         } else {
                             String type = mappings.get(i).getImport_field_type();
+//                            System.out.println(row.getCell(mappings.get(i).getImport_field_index()).getCellFormula());
                             if (type.equals("Number")) {
                                 try {
+                                    //System.out.println(row.getCell(mappings.get(i).getImport_field_index()).getCellFormula());
                                     current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf((long) row.getCell(mappings.get(i).getImport_field_index()).getNumericCellValue()));
                                 } catch (Exception e) {
                                     message = "Cannot get a NUMERIC value from a STRING cell in row : " + row.getRowNum() + " at index : " + mappings.get(i).getImport_field_index();
                                     response.setMessage(message);
+                                    System.out.println(message);
+                                    System.out.println(e.getMessage());
                                     return response;
                                 }
                             }
                             if (type.equals("String")) {
-                                current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
+                                try{
+                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
+                                } catch (Exception e) {
+                                    message = "Cannot get a STRING value from a NUMERIC cell in row : " + row.getRowNum() + " at index : " + mappings.get(i).getImport_field_index();
+                                    response.setMessage(message);
+                                    System.out.println(message);
+                                    System.out.println(e.getMessage());
+                                    return response;
+                                }
+
                             }
                             if (type.equals("Date")) {
                                 String day = "";
@@ -74,10 +88,10 @@ public class Read {
                                 String year = "";
                                 String date = "";
                                 if (input_date.equals(output_date)) {
-                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(), row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue());
+                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf(row.getCell(mappings.get(i).getImport_field_index()).getDateCellValue()));
                                 }
                                 else {
-                                    String date_on_hand = row.getCell(mappings.get(i).getImport_field_index()).getStringCellValue();
+                                    String date_on_hand = String.valueOf(row.getCell(mappings.get(i).getImport_field_index()).getDateCellValue());
                                     if ( input_date.equals("DD/MM/YYYY") || input_date.equals("DD-MM-YYYY") ) {
                                         day = date_on_hand.substring(0, 2);
                                         month = date_on_hand.substring(3, 5);
@@ -113,12 +127,14 @@ public class Read {
                         if ( mappings.get(i).isRequired() && !current_record.containsKey(mappings.get(i).getExport_field_head().getField_name())) {
                             response.setMessage("Mandatory Field Missing");
                             response.setMaps(null);
+                            System.out.println(response.getMessage());
                             return response;
                         }
                     }
                     records.add(current_record);
                 }
                 message = "Success";
+                System.out.println(message);
                 response.setMaps(records);
                 response.setMessage(message);
             }
@@ -309,10 +325,10 @@ public class Read {
                                 String year = "";
                                 String date = "";
                                 if (input_date.equals(output_date)) {
-                                    map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index() - 1]);
+                                    map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index()]);
                                 }
                                 else {
-                                    String date_on_hand = values[mappings.get(j).getImport_field_index() - 1];
+                                    String date_on_hand = values[mappings.get(j).getImport_field_index()];
                                     if ( input_date.equals("DD/MM/YYYY") || input_date.equals("DD-MM-YYYY") ) {
                                         day = date_on_hand.substring(0, 2);
                                         month = date_on_hand.substring(3, 5);
@@ -344,7 +360,7 @@ public class Read {
                                     map.put(mappings.get(j).getExport_field_head().getField_name(),date);
                                 }
                             }
-                            else map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index() - 1]);
+                            else map.put(mappings.get(j).getExport_field_head().getField_name(), values[mappings.get(j).getImport_field_index()]);
                             if ( mappings.get(j).isRequired() && !map.containsKey(mappings.get(j).getExport_field_head().getField_name())) {
                                 response.setMessage("Mandatory Field Missing");
                                 response.setMaps(null);

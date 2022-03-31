@@ -47,7 +47,7 @@ public class Write {
             doc.normalize();
             DOMSource source = new DOMSource(doc);
             String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-            StreamResult result = new StreamResult(new File(output_path+"/"+timeStamp+".xml"));
+            StreamResult result = new StreamResult(new File(output_path+"\\"+timeStamp+".xml"));
             transformer.transform(source, result);
             return "success";
         } catch (Exception e) {
