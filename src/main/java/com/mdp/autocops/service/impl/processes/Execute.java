@@ -46,13 +46,13 @@ public class Execute {
             }
             for (File file : listOfFiles) {
                 if (file.isFile()) {
-                    import_paths.add(config.getImport_path()+"\\"+file.getName());
+                    import_paths.add(config.getImport_path()+"/"+file.getName());
                 }
             }
 
             for (String file : import_paths) {
                 List<Map> maps = new ArrayList<>();
-                String [] fileNameParsed = file.split("\\\\");
+                String [] fileNameParsed = file.split("/");
                 String config_response = "For configuration with id : " + config_id + ", the response for file : " + fileNameParsed[fileNameParsed.length -1] + " is ---> ";
                 String extension = file.substring(file.length()-3);
                 ReadingResponse response = new ReadingResponse();

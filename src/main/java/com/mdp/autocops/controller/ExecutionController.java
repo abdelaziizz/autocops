@@ -34,7 +34,7 @@ public class ExecutionController {
         return execute.execute(config_id);
     }
 
-//    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 300000)
     @ResponseBody
     @PostMapping
     public List<List<String>> executeScheduled() {

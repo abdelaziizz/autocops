@@ -88,7 +88,7 @@ public class Read {
                                 String year = "";
                                 String date = "";
                                 if (input_date.equals(output_date)) {
-                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf(row.getCell(mappings.get(i).getImport_field_index()).getDateCellValue()));
+                                    current_record.put(mappings.get(i).getExport_field_head().getField_name(), String.valueOf(row.getCell(mappings.get(i).getImport_field_index()).getDateCellValue().getDate()));
                                 }
                                 else {
                                     String date_on_hand = String.valueOf(row.getCell(mappings.get(i).getImport_field_index()).getDateCellValue());
