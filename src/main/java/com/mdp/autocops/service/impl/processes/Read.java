@@ -28,8 +28,10 @@ import java.util.Map;
 @Log4j2
 @Service
 public class Read {
+
     @Autowired
     InstitutionConfigMappingService mappingService;
+
     @Autowired
     InstitutionConfigService configService;
 

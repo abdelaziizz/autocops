@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @EnableConfigurationProperties
-@EntityScan(basePackages = {"com.mdp.autocops.model.entity"})
+@EntityScan(basePackages = {"com.mdp.autocops.model.*"})
 public class AutocopsApplication {
 
     public static void main(String[] args) {
