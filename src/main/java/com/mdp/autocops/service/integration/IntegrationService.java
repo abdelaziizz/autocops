@@ -44,13 +44,14 @@ public class IntegrationService {
             for (int i = 0; i < list.getProduct().size(); i++) {
                 generatedSources.cxf.ru.bpc.svxp.omnichannels.Product current = list.getProduct().get(i);
                 Product new_product = new Product();
+                new_product.setInstitution_id(id);
                 new_product.setProductNumber(current.getProductNumber());
                 new_product.setProductStatus(current.getProductStatus());
                 ProductName name = new ProductName();
                 name.setName(current.getProductName().getName());
                 name.setDescription(current.getProductName().getDescription());
                 name.setLang(current.getProductName().getLanguage());
-                productNameDao.save(name);
+                //productNameDao.save(name);
                 new_product.setProductName(name);
                 new_product.setContractType(current.getProductType());
                 new_product.setContractType(current.getContractType());
@@ -59,7 +60,7 @@ public class IntegrationService {
                     CustomerType new_type = new CustomerType();
                     new_type.setCustomerType(types.getCustomerType().get(j));
                     new_product.addCustomerType(new_type);
-                    customerTypeDao.save(new_type);
+                    //customerTypeDao.save(new_type);
                 }
                 List<ProductAccounts> accounts = list.getProduct().get(i).getProductAccounts();
                 for (int k = 0; k < accounts.size(); k++) {
@@ -68,14 +69,14 @@ public class IntegrationService {
                     new_account.setCurrency(accounts.get(k).getCurrency());
                     new_account.setServiceNumber(accounts.get(k).getServiceNumber());
                     new_product.addProductAccount(new_account);
-                    productAccountDao.save(new_account);
+                    //productAccountDao.save(new_account);
                 }
                 List<ProductCards> cards = list.getProduct().get(i).getProductCards();
                 for (int l = 0; l < cards.size(); l++) {
                     ProductCard new_card = new ProductCard();
                     new_card.setCardTypeId(cards.get(l).getCardTypeId());
                     new_product.addProductCard(new_card);
-                    productCardDao.save(new_card);
+                    //productCardDao.save(new_card);
                 }
                 List<ProductService> services = list.getProduct().get(i).getProductService();
                 for (int m = 0; m < services.size(); m++) {
@@ -91,12 +92,18 @@ public class IntegrationService {
                         new_service_name.setDescription(services.get(m).getServiceName().get(o).getDescription());
                         new_service_name.setLang(services.get(m).getServiceName().get(o).getLanguage());
                         new_service.addServiceName(new_service_name);
-                        serviceNameDao.save(new_service_name);
+                        //serviceNameDao.save(new_service_name);
                     }
-                    serviceDao.save(new_service);
+                    //serviceDao.save(new_service);
                     new_product.addService(new_service);
                 }
-                productDao.save(new_product);
+                if (!productDao.findById(new_product.getProductNumber()).isPresent()) {
+                    productDao.save(new_product);
+                    log.info("Product with id : {} saved successfully in database",new_product.getProductNumber());
+                }
+                else {
+                    log.info("Product with id : {} already exists in database",new_product.getProductNumber());
+                }
             } return "success";
         } catch (Exception e) {
             log.error(e.getMessage());

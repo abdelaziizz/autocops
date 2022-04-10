@@ -39,9 +39,6 @@ public class Service {
     public void addServiceName(ServiceName serviceName){
         serviceNames.add(serviceName);
     }
-    public void removeServiceName(ServiceName serviceName){
-        serviceNames.remove(serviceName);
-    }
 
 
 }

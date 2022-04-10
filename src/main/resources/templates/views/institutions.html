@@ -56,6 +56,10 @@
                                                     data-toggle="modal"
                                                     th:attr="data-target=${'#editModal'+institution.inst_id}">Update
                                             </button>
+                                            <button class="btn btn-primary"
+                                                    onclick="fetchData($(this).attr('data-inst-id'))"
+                                                    th:data-inst-id="${institution.inst_id}">Fetch Products
+                                            </button>
                                         </td>
                                     </tr>
                                 </th:block>
@@ -175,6 +179,23 @@
 <!-- END MAIN CONTAINER -->
 <div th:insert="layout :: scripts"></div>
 <script>
+
+    function fetchData(id) {
+        var msg = {};
+        msg.omniVersion = "2.0";
+        msg.lang = 'LANGENG';
+        msg.id = id;
+        $.ajax({
+            type: 'GET',
+            url: '/autocops/integration/fetch',
+            data: jQuery.param(msg),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+
     function createInstitution() {
         var inst_Id = $("#instId").val();
         var inst_Name = $("#instName").val();

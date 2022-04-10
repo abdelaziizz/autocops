@@ -14,13 +14,16 @@ public class Product {
     @Column(name = "product_number")
     private String productNumber;
 
+    @Column(name = "institution_id")
+    private long institution_id;
+
     @Column(name = "product_type")
     private String productType;
 
     @Column(name = "contract_type")
     private String contractType;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_name")
     private ProductName productName;
 
@@ -42,29 +45,14 @@ public class Product {
     public void addCustomerType(CustomerType customerType){
         customerTypes.add(customerType);
     }
-    public void removeCustomerType(CustomerType customerType){
-        customerTypes.remove(customerType);
-    }
-
     public void addProductAccount(ProductAccount productAccount){
         productAccounts.add(productAccount);
     }
-    public void removeProductAccount(ProductAccount productAccount){
-        productAccounts.remove(productAccount);
-    }
-
     public void addProductCard(ProductCard productCard){
         productCards.add(productCard);
     }
-    public void removeProductCard(ProductCard productCard){
-        productCards.remove(productCard);
-    }
-
     public void addService(Service service){
         services.add(service);
-    }
-    public void removeService(Service service){
-        services.remove(service);
     }
 
 

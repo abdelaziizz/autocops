@@ -175,10 +175,10 @@
                                             <option th:selected="${config.getImport_date()}"
                                                     th:text="${config.getImport_date()}"
                                                     th:value="${config.getImport_date()}"></option>
-                                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                                            <option value="DD/MM/YY">DD/MM/YY</option>
-                                            <option value="MM/DD/YY">MM/DD/YY</option>
+                                            <option value="DD/MM/YYYY">YYYY/DD/MM</option>
+                                            <option value="MM/DD/YYYY">YYYY/MM/DD</option>
+                                            <option value="DD/MM/YYYY">YYYY-DD-MM</option>
+                                            <option value="MM/DD/YYYY">YYYY-MM-DD</option>
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
@@ -192,10 +192,10 @@
                                             <option th:selected="${config.getExport_date()}"
                                                     th:text="${config.getExport_date()}"
                                                     th:value="${config.getExport_date()}"></option>
-                                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                                            <option value="DD/MM/YY">DD/MM/YY</option>
-                                            <option value="MM/DD/YY">MM/DD/YY</option>
+                                            <option value="DD/MM/YYYY">YYYY/DD/MM</option>
+                                            <option value="MM/DD/YYYY">YYYY/MM/DD</option>
+                                            <option value="DD/MM/YYYY">YYYY-DD-MM</option>
+                                            <option value="MM/DD/YYYY">YYYY-MM-DD</option>
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">
@@ -230,8 +230,6 @@
                                                     th:value="${config.getExport_File_format}"></option>
                                             <option value="XML">XML</option>
                                             <option value="Text">Text</option>
-                                            <option value="Excel">Excel</option>
-                                            <option value="CSV">CSV</option>
                                         </select>
                                     </div>
                                     <div class="col-4" style="margin-top:10px;">

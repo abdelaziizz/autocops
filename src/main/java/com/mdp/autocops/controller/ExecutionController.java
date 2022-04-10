@@ -1,5 +1,6 @@
 package com.mdp.autocops.controller;
 
+import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.service.framework.InstitutionConfigMappingService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import com.mdp.autocops.service.impl.processes.Execute;
@@ -31,7 +32,7 @@ public class ExecutionController {
         return execute.execute(config_id);
     }
 
-    @Scheduled(fixedRate = 300000)
+//    @Scheduled(fixedRate = 300000)
     @ResponseBody
     @PostMapping
     public List<List<String>> executeScheduled() {
