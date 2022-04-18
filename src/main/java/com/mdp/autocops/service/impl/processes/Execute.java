@@ -8,9 +8,17 @@ import com.mdp.autocops.service.framework.InstitutionConfigService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -99,6 +107,68 @@ public class Execute {
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
+        }
+    }
+
+    // For reading XMLs produced by Smart Vista
+    public ReadingResponse readXMLNested(String reading_root, String fileName) {
+        String message;
+        ReadingResponse response = new ReadingResponse();
+        try {
+            List<Map> maps = new ArrayList<>();
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(new File(fileName));
+            doc.getDocumentElement().normalize();
+            NodeList list = doc.getElementsByTagName(reading_root);
+            if (list.getLength() == 0) {
+                message = "Input file is empty";
+                response.setMessage(message);
+            } else {
+                for (int i = 0; i < list.getLength(); i++) {
+                    Map<String, String> map = new HashMap<>();
+                    Node node = list.item(i);
+                    String path = "";
+                    readChildren(node, map, path);
+                    maps.add(map);
+                }
+                message = "Success";
+                response.setMessage(message);
+                response.setMaps(maps);
+
+            }
+            return response;
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
+    }
+
+    // Helper for readXMLNested
+    public void readChildren(Node node, Map<String, String> map, String path) {
+        if (node.hasChildNodes()) {
+            NodeList nodes = node.getChildNodes();
+            path += "/" + node.getNodeName();
+            for (int i = 0; i < nodes.getLength(); i++) readChildren(nodes.item(i), map, path);
+        } else {
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                if (node.getTextContent().trim().length() > 0) {
+                    path += "/" + node.getNodeName();
+                    Element current_node = (Element) node;
+                    String value = current_node.getTextContent();
+
+
+
+
+                    map.put(path, value);
+                }
+            } else {
+                if (node.getTextContent().trim().length() > 0) {
+                    path += "/" + node.getParentNode().getNodeName();
+                    map.put(path, node.getTextContent());
+                }
+            }
         }
     }
 

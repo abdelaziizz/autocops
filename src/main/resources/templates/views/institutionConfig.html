@@ -198,6 +198,36 @@
                                     </select>
                                 </div>
                                 <div class="col-4" style="margin-top:10px;">
+                                <h5> <a id="product_des" data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                        <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                    </svg>
+                                </a>Default Product ID</h5>
+                                <select class="form-control form-small" id="product">
+                                    <option selected="selected">--- Product ID ---</option>
+                                    <th:block th:each="product : ${products}">
+                                        <option th:text="${product.productNumber}"
+                                                th:value="${product.productNumber}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                                <div class="col-4" style="margin-top:10px;">
+                                    <h5> <a id="prefix_des" data-container='#myModal' data-toggle="popover" data-content="Explanation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                                            <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </a>Output File Prefix</h5>
+                                    <select class="form-control form-small" id="prefix">
+                                        <option selected="selected">--- File Name Prefix ---</option>
+                                        <th:block th:each="prefix : ${prefixes}">
+                                            <option th:text="${prefix.prefix}"
+                                                    th:value="${prefix.prefix}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                                <div class="col-4" style="margin-top:10px;">
                                     <h5> <a id="status_des" data-container='#myModal' data-toggle="popover" data-content="Explanation">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
@@ -345,6 +375,10 @@
 
                     if (res[i].field_name === 'Writing Root') document.getElementById("writing_root_des").setAttribute('data-content', res[i].description);
 
+                    if (res[i].field_name === 'Default Product ID') document.getElementById("product_des").setAttribute('data-content', res[i].description);
+
+                    if (res[i].field_name === 'Output File Prefix') document.getElementById("prefix_des").setAttribute('data-content', res[i].description);
+
                 }}});
     });
 
@@ -368,6 +402,8 @@
         institution.writing_root = $("#writing_root").val();
         institution.import_date = $("#dateInput").val();
         institution.export_date = $("#dateOutput").val();
+        institution.product_id = $("#product").val();
+        institution.file_prefix = $("#prefix").val()
         $.ajax({
             type: 'post',
             url: '/autocops/inst-configs/' + instId,

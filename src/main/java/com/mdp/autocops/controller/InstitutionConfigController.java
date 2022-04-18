@@ -1,8 +1,11 @@
 package com.mdp.autocops.controller;
 
+import com.mdp.autocops.model.entity.FilePrefix;
 import com.mdp.autocops.model.entity.Institution;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.ServiceEntity;
+import com.mdp.autocops.model.integration.Product;
+import com.mdp.autocops.service.framework.FilePrefixService;
 import com.mdp.autocops.service.framework.InstitutionConfigService;
 import com.mdp.autocops.service.framework.InstitutionService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,7 @@ public class InstitutionConfigController {
 
     private final InstitutionConfigService institutionConfigService;
     private final InstitutionService institutionService;
+    private final FilePrefixService prefixService;
 
 
     @ResponseBody
@@ -47,9 +51,10 @@ public class InstitutionConfigController {
                                  @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id,
                                  @RequestParam String import_path, @RequestParam String export_path, @RequestParam String template_path,
                                  @RequestParam String reading_root, @RequestParam String writing_root,
-                                 @RequestParam(required = false) Integer last_lines, @RequestParam(required = false) String import_date, @RequestParam(required = false) String export_date) {
+                                 @RequestParam(required = false) Integer last_lines, @RequestParam(required = false) String import_date,
+                                 @RequestParam(required = false) String export_date, @RequestParam String product_id, @RequestParam String file_prefix) {
         return institutionConfigService.put(id, reading_line, import_format, export_format, fail_on_error, active, service_id, import_path,
-                export_path, template_path, reading_root, writing_root, last_lines, import_date, export_date);
+                export_path, template_path, reading_root, writing_root, last_lines, import_date, export_date, product_id, file_prefix);
     }
 
 
@@ -59,9 +64,10 @@ public class InstitutionConfigController {
                                     @RequestParam Boolean fail_on_error, @RequestParam Boolean active, @RequestParam long service_id,
                                     @RequestParam String import_path, @RequestParam String export_path, @RequestParam String template_path,
                                     @RequestParam(required = false) String reading_root, @RequestParam String writing_root,
-                                    @RequestParam(required = false) Integer last_lines, @RequestParam(required = false) String import_date, @RequestParam(required = false) String export_date) {
+                                    @RequestParam(required = false) Integer last_lines, @RequestParam(required = false) String import_date,
+                                    @RequestParam(required = false) String export_date, @RequestParam String product_id, @RequestParam String file_prefix) {
         return institutionConfigService.create(instId, reading_line, import_format, export_format, fail_on_error, active, service_id, import_path,
-                export_path, template_path, reading_root, writing_root, last_lines, import_date, export_date);
+                export_path, template_path, reading_root, writing_root, last_lines, import_date, export_date, product_id, file_prefix);
     }
 
     @ResponseBody
@@ -86,6 +92,10 @@ public class InstitutionConfigController {
         model.addAttribute("inst", institution);
         List<ServiceEntity> availableServices = institutionConfigService.getAvailableServices(institution.getInst_id());
         model.addAttribute("availableServices", availableServices);
+        List<Product> products = institutionConfigService.getInstProducts(institutionId);
+        model.addAttribute("products", products);
+        List<FilePrefix> prefixes = prefixService.getAll();
+        model.addAttribute("prefixes", prefixes);
         return "views/institutionConfig";
     }
     @GetMapping("/{institutionId}/{configId}")
@@ -95,7 +105,11 @@ public class InstitutionConfigController {
         model.addAttribute("inst", institution);
         model.addAttribute("config", config);
         List<ServiceEntity> availableServices = institutionConfigService.getAvailableServices(institution.getInst_id());
+        List<Product> products = institutionConfigService.getInstProducts(institutionId);
+        model.addAttribute("products", products);
         model.addAttribute("availableServices", availableServices);
+        List<FilePrefix> prefixes = prefixService.getAll();
+        model.addAttribute("prefixes", prefixes);
         return "views/singleConfiguration";
     }
 

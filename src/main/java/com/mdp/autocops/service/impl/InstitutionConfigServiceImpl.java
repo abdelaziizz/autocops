@@ -1,10 +1,13 @@
 package com.mdp.autocops.service.impl;
 
 import com.mdp.autocops.dao.InstitutionsConfigDao;
+import com.mdp.autocops.dao.integration.ProductDao;
 import com.mdp.autocops.model.entity.Institution;
 import com.mdp.autocops.model.entity.InstitutionConfig;
 import com.mdp.autocops.model.entity.ServiceEntity;
+import com.mdp.autocops.model.integration.Product;
 import com.mdp.autocops.service.framework.*;
+import generatedSources.cxf.ru.bpc.svxp.omnichannels.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +32,13 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
     @Autowired
     ServiceService serviceService;
 
+    @Autowired
+    ProductDao productDao;
+
     @Override
     public InstitutionConfig create(long instId, Integer reading_line, String import_format, String export_format, Boolean fail_on_error, Boolean active,
                                     long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root,
-                                    Integer last_lines, String import_date, String export_date) {
+                                    Integer last_lines, String import_date, String export_date, String product_id, String file_prefix) {
         InstitutionConfig institutionConfigNew = new InstitutionConfig();
         Institution inst = new Institution();
         ServiceEntity service = new ServiceEntity();
@@ -57,6 +63,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
         institutionConfigNew.setExport_date(export_date);
         institutionConfigNew.setImport_date(import_date);
         institutionConfigNew.setWriting_root(writing_root);
+        institutionConfigNew.setProduct_id(product_id);
+        institutionConfigNew.setFile_prefix(file_prefix);
         try {
             if (getAvailableServices(institutionConfigNew.getInstitution().getInst_id()).contains(institutionConfigNew.getService())) {
                 institutionsConfigDao.save(institutionConfigNew);
@@ -122,7 +130,7 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
     @Override
     public InstitutionConfig put(long id, Integer reading_line, String import_format, String export_format, Boolean fail_on_error, Boolean active,
                                  long service_id, String import_path, String export_path, String template_path, String reading_root, String writing_root,
-                                 Integer last_lines, String import_date, String export_date) {
+                                 Integer last_lines, String import_date, String export_date, String product_id, String file_prefix) {
         Optional<InstitutionConfig> institutionConfigUpdate = null;
         ServiceEntity service = serviceService.getById(service_id);
 
@@ -144,6 +152,8 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
                 if (import_date != null) institutionConfigUpdate.get().setImport_date(import_date);
                 if (export_date != null) institutionConfigUpdate.get().setExport_date(export_date);
                 if (writing_root != null) institutionConfigUpdate.get().setWriting_root(writing_root);
+                if (product_id != null) institutionConfigUpdate.get().setProduct_id(product_id);
+                if (file_prefix != null) institutionConfigUpdate.get().setFile_prefix(file_prefix);
                 institutionsConfigDao.save(institutionConfigUpdate.get());
 
             }
@@ -171,5 +181,19 @@ public class InstitutionConfigServiceImpl implements InstitutionConfigService {
             services.remove(configs.get(i).getService());
         }
         return services;
+    }
+
+    @Override
+    public List<Product> getInstProducts(long inst_id) {
+        try {
+            List<Product> products = productDao.findAll();
+            for (int i = 0 ; i < products.size() ; i++) {
+                if (products.get(i).getInstitution_id() != inst_id) products.remove(i);
+            }
+            return products;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
     }
 }

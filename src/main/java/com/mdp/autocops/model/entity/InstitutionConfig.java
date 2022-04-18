@@ -60,4 +60,10 @@ public class InstitutionConfig {
 
     @Column(name = "export_date")
     private String export_date;
+
+    @Column(name = "product_id")
+    private String product_id;
+
+    @Column(name = "file_prefix")
+    private String file_prefix;
 }
